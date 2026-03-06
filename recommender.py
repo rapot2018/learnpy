@@ -72,34 +72,17 @@ def get_recommendations(user_requirement: str) -> dict:
             "count": len(recommended_products)
         }
     
-    # Create a prompt for Groq to understand user requirements
-    products_info = json.dumps([
-        {
-            "id": p["id"],
-            "name": p["name"],
-            "category": p["category"],
-            "price": p["price"],
-            "specs": p["specs"],
-            "rating": p["rating"],
-            "description": p["description"]
-        }
-        for p in PRODUCTS
-    ], indent=2)
-    
-    prompt = f"""You are a helpful shopping assistant. Based on the user's requirement, recommend the best products from our inventory.
-
-Available Products:
-{products_info}
+    prompt = f"""You are a helpful shopping assistant. Recommend real products that match the user's requirement. Use your knowledge of actual products (brands, models, prices) available in the market.
 
 User Requirement: {user_requirement}
 
-Please respond with a JSON object containing:
-1. "recommendations": an array of product IDs (integers) that best match the requirement
+Respond with a JSON object containing:
+1. "recommendations": an array of 3-5 product objects. Each product MUST have: id (integer 1-99), name (string), category (string, e.g. electronics/audio/mobile/peripherals/wearables), price (number in USD), specs (array of strings, key features), rating (number 0-5), description (string).
 2. "reasoning": a brief explanation of why these products were chosen
 3. "filters_applied": any filters applied (e.g., price range, category)
 4. "summary": a helpful summary for the user
 
-Respond ONLY with valid JSON, no other text."""
+Use real product names and approximate real prices. Respond ONLY with valid JSON, no other text."""
 
     try:
         # Call Groq API with latest available model
@@ -109,7 +92,7 @@ Respond ONLY with valid JSON, no other text."""
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=1024,
+            max_tokens=2048,
         )
         
         response_text = response.choices[0].message.content
@@ -125,15 +108,28 @@ Respond ONLY with valid JSON, no other text."""
         # Parse the JSON response
         recommendation_data = json.loads(json_str)
         
-        # Get the actual product objects
-        product_ids = recommendation_data.get("recommendations", [])
+        # Use products directly from Groq response (real products from Groq's knowledge)
+        raw_products = recommendation_data.get("recommendations", [])
         recommended_products = []
-        
-        for pid in product_ids:
-            product = next((p for p in PRODUCTS if p["id"] == pid), None)
-            if product:
+        for i, p in enumerate(raw_products):
+            if isinstance(p, dict) and "name" in p:
+                specs = p.get("specs", [])
+                if isinstance(specs, str):
+                    specs = [s.strip() for s in specs.split(",")] if specs else []
+                product = {
+                    "id": int(p["id"]) if isinstance(p.get("id"), (int, float)) else (i + 1),
+                    "name": str(p["name"]),
+                    "category": str(p.get("category", "electronics")),
+                    "price": int(p["price"]) if isinstance(p.get("price"), (int, float)) else int(float(p.get("price", 0))),
+                    "specs": specs if isinstance(specs, list) else [],
+                    "rating": float(p["rating"]) if isinstance(p.get("rating"), (int, float)) else float(p.get("rating", 4.0)),
+                    "description": str(p.get("description", "")),
+                }
                 recommended_products.append(product)
-        
+
+        if not recommended_products:
+            recommended_products = PRODUCTS[:3]
+
         return {
             "success": True,
             "user_requirement": user_requirement,

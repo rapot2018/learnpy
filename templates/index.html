@@ -61,11 +61,224 @@
       padding: 3rem 2rem;
     }
 
+    main {
+      padding: 3.5rem 2rem 1rem;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      letter-spacing: -0.04em;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      max-width: 640px;
+      margin: 0 auto 1.8rem;
+      font-size: 1rem;
+      color: #64748b;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-primary,
+    .hero-secondary {
+      padding: 0.9rem 1.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .hero-primary {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+    }
+
+    .hero-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(59, 130, 246, 0.3);
+    }
+
+    .hero-secondary {
+      background: white;
+      color: #0f172a;
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .hero-secondary:hover {
+      background: #f8fafc;
+      border-color: rgba(148, 163, 184, 0.8);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-link {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0;
+      font: inherit;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover {
+      color: #0f172a;
+    }
+
+    .section {
+      padding: 3.5rem 2rem 0;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #94a3b8;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .section-description {
+      max-width: 640px;
+      color: #64748b;
+      font-size: 0.98rem;
+      margin-bottom: 2rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      padding: 1.5rem 1.6rem;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .feature-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: #0f172a;
+    }
+
+    .feature-text {
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 0.1rem;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .metric {
+      min-width: 140px;
+    }
+
+    .metric-value {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
     .main-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2.5rem;
-      height: calc(100vh - 120px);
+      align-items: flex-start;
     }
 
     .chat-panel {
@@ -603,6 +816,15 @@
       background: #e2e8f0;
     }
 
+    footer {
+      border-top: 1px solid rgba(226, 232, 240, 0.7);
+      margin-top: 4rem;
+      padding: 1.5rem 0 2rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      background: #f9fafb;
+    }
+
     @media (max-width: 1024px) {
       .main-grid {
         grid-template-columns: 1fr;
@@ -623,8 +845,20 @@
         padding: 0 1rem;
       }
 
+      main {
+        padding: 2.5rem 1.25rem 0.5rem;
+      }
+
+      .section {
+        padding: 2.5rem 1.25rem 0;
+      }
+
       .container {
         padding: 1.5rem 1rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
       }
 
       .products-grid {
@@ -640,10 +874,94 @@
         <div class="logo">⚡ Lifez.AI</div>
         <div class="tagline">Smart Product Recommendations</div>
       </div>
+      <div class="nav-links">
+        <button class="nav-link" onclick="scrollToSection('features')">Features</button>
+        <button class="nav-link" onclick="scrollToSection('how-it-works')">How it works</button>
+        <button class="nav-link" onclick="scrollToApp()">Demo</button>
+      </div>
     </nav>
   </header>
 
-  <div class="container">
+  <main>
+    <section class="hero">
+      <p class="hero-eyebrow">Welcome to Lifez.ai</p>
+      <h1 class="hero-title">Let AI find the right products for your life.</h1>
+      <p class="hero-subtitle">
+        Type what you need in natural language and Lifez.ai instantly curates smart product recommendations—no filters,
+        no endless scrolling.
+      </p>
+      <div class="hero-actions">
+        <button class="hero-primary" onclick="scrollToApp()">Start exploring</button>
+        <button class="hero-secondary" onclick="scrollToApp()">See it in action</button>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-inner">
+        <p class="section-eyebrow">Why Lifez.ai</p>
+        <h2 class="section-heading">From vague idea to the right product in seconds.</h2>
+        <p class="section-description">
+          Lifez.ai understands plain language like “a quiet laptop for travel” and translates it into concrete products
+          that match your needs, budget, and preferences.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3 class="feature-title">Natural language search</h3>
+            <p class="feature-text">Describe what you need in your own words—no more endless filters and dropdowns.</p>
+          </div>
+          <div class="feature-card">
+            <h3 class="feature-title">Curated recommendations</h3>
+            <p class="feature-text">We score and rank products based on suitability, not just popularity.</p>
+          </div>
+          <div class="feature-card">
+            <h3 class="feature-title">Transparent reasoning</h3>
+            <p class="feature-text">See why each product was chosen so you can decide with confidence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="section-inner">
+        <p class="section-eyebrow">How it works</p>
+        <h2 class="section-heading">A simple, conversational flow.</h2>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div>
+              <h3 class="step-title">Tell us your need</h3>
+              <p class="step-text">Type a short description such as “wireless headphones for working in a noisy office”.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div>
+              <h3 class="step-title">We search the space</h3>
+              <p class="step-text">Our AI matches your requirements with products and specifications in real time.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div>
+              <h3 class="step-title">You compare and choose</h3>
+              <p class="step-text">Review a small, focused set of options with clear pros, cons, and key specs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="section" id="demo">
+    <div class="section-inner">
+      <p class="section-eyebrow">Live demo</p>
+      <h2 class="section-heading">Try the Lifez.ai product finder.</h2>
+      <p class="section-description">
+        Ask for anything—from laptops to headphones—and see how Lifez.ai narrows it down for you.
+      </p>
+    </div>
+
+    <div class="container" id="app">
     <div class="main-grid">
       <div class="chat-panel">
         <div class="panel-header">
@@ -670,6 +988,8 @@
     </div>
   </div>
 
+  </section>
+
   <!-- Product Details Modal -->
   <div id="detailModal" class="modal">
     <div class="modal-content">
@@ -680,10 +1000,30 @@
     </div>
   </div>
 
+  <footer>
+    <div class="container">
+      <span>© 2026 Lifez.ai. All rights reserved.</span>
+    </div>
+  </footer>
+
   <script>
     const chatMessages = document.getElementById('chatMessages');
     const recommendationsContainer = document.getElementById('recommendationsContainer');
     const requirementInput = document.getElementById('requirementInput');
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function scrollToApp() {
+      const appSection = document.getElementById('app');
+      if (appSection) {
+        appSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
 
     function addMessage(text, isUser = false) {
       const messageDiv = document.createElement('div');
