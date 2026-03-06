@@ -3,7 +3,507 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FutureLife - Modern Living Reimagined</title>
+  <title>Lifez.AI - Buy Confidently with Smart AI Technology</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #FF9900;
+      --primary-dark: #E67E00;
+      --accent: #146EB4;
+      --bg-light: #F5F5F5;
+      --bg-lighter: #FFFFFF;
+      --text-dark: #111111;
+      --text-light: #666666;
+      --border: #DDDDDD;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-lighter);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #FF9900 0%, #146EB4 100%);
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+    }
+
+    /* Search Section */
+    .search-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-light);
+    }
+
+    .search-btn {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .search-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .search-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Loading & Status */
+    .status {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+    }
+
+    .loading {
+      display: inline-block;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Results Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .product-card {
+      background: var(--bg-lighter);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 4px 16px rgba(255, 153, 0, 0.2);
+      border-color: var(--primary);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 0.95rem;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .stars {
+      color: #FFC107;
+    }
+
+    .rating-count {
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    .product-price {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .product-badge {
+      display: inline-block;
+      background: #29B12D;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-btn {
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.3s ease;
+      margin-top: auto;
+    }
+
+    .product-btn:hover {
+      background: #0052A3;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-light);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state h2 {
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--text-dark);
+      color: white;
+      padding: 2rem;
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      nav ul {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .search-input,
+      .search-btn {
+        border-radius: 4px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav>
+      <a href="#home" class="logo">✨ Lifez.AI</a>
+      <ul>
+        <li><a href="#search">Search</a></li>
+        <li><a href="#deals">Deals</a></li>
+        <li><a href="#help">Help</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <h1>Buy Confidently with Smart AI Technology</h1>
+    <p>Let AI find the perfect product for you instantly</p>
+  </section>
+
+  <!-- Search Section -->
+  <section id="search" class="search-container">
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search for products (e.g., laptop, headphones, phone case...)"
+        autocomplete="off"
+      >
+      <button class="search-btn" onclick="searchProducts()">Search</button>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="results" class="products-grid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Lifez.AI. All rights reserved. | Buy Confidently with Smart AI Technology</p>
+  </footer>
+
+  <script>
+    // Sample product database (can be extended or replaced with API)
+    const productDatabase = [
+      // Laptops
+      { id: 1, name: "Dell XPS 13 Laptop", price: "$999.99", rating: 4.7, reviews: 2541, category: "laptop", image: "💻", prime: true, badge: "Best Seller" },
+      { id: 2, name: "MacBook Air M2", price: "$1,299.99", rating: 4.8, reviews: 3215, category: "laptop", image: "💻", prime: true, badge: "Premium" },
+      { id: 3, name: "HP Pavilion 15", price: "$649.99", rating: 4.5, reviews: 1823, category: "laptop", image: "💻", prime: true },
+      { id: 4, name: "ASUS VivoBook 14", price: "$549.99", rating: 4.6, reviews: 1542, category: "laptop", image: "💻", prime: true },
+
+      // Headphones
+      { id: 5, name: "Sony WH-1000XM4 Headphones", price: "$348.99", rating: 4.7, reviews: 5123, category: "headphones", image: "🎧", prime: true, badge: "Best Seller" },
+      { id: 6, name: "Apple AirPods Pro Max", price: "$549.99", rating: 4.8, reviews: 2341, category: "headphones", image: "🎧", prime: true, badge: "Premium" },
+      { id: 7, name: "Bose QuietComfort 45", price: "$379.95", rating: 4.6, reviews: 3214, category: "headphones", image: "🎧", prime: true },
+      { id: 8, name: "Samsung Galaxy Buds Pro", price: "$199.99", rating: 4.5, reviews: 2812, category: "headphones", image: "🎧", prime: true },
+
+      // Smartphones
+      { id: 9, name: "iPhone 15 Pro", price: "$999.00", rating: 4.8, reviews: 4521, category: "phone", image: "📱", prime: true, badge: "Latest" },
+      { id: 10, name: "Samsung Galaxy S24", price: "$899.99", rating: 4.7, reviews: 3845, category: "phone", image: "📱", prime: true },
+      { id: 11, name: "Google Pixel 8", price: "$799.00", rating: 4.6, reviews: 2156, category: "phone", image: "📱", prime: true },
+      { id: 12, name: "OnePlus 12", price: "$729.99", rating: 4.5, reviews: 1923, category: "phone", image: "📱", prime: true },
+
+      // Phone Accessories
+      { id: 13, name: "Premium Phone Case", price: "$29.99", rating: 4.4, reviews: 8234, category: "case", image: "📦", prime: true },
+      { id: 14, name: "Screen Protector Glass", price: "$9.99", rating: 4.3, reviews: 12543, category: "case", image: "🛡️", prime: true },
+      { id: 15, name: "Fast Charging Cable", price: "$14.99", rating: 4.5, reviews: 9821, category: "case", image: "🔌", prime: true },
+      { id: 16, name: "Wireless Charging Pad", price: "$24.99", rating: 4.6, reviews: 6234, category: "case", image: "🔌", prime: true },
+
+      // Tablets
+      { id: 17, name: "iPad Air", price: "$599.00", rating: 4.7, reviews: 2342, category: "tablet", image: "📱", prime: true },
+      { id: 18, name: "Samsung Galaxy Tab S9", price: "$549.99", rating: 4.6, reviews: 1834, category: "tablet", image: "📱", prime: true },
+      { id: 19, name: "Microsoft Surface Go", price: "$399.99", rating: 4.5, reviews: 1523, category: "tablet", image: "📱", prime: true },
+
+      // Smartwatches
+      { id: 20, name: "Apple Watch Series 9", price: "$399.00", rating: 4.7, reviews: 3421, category: "watch", image: "⌚", prime: true },
+      { id: 21, name: "Garmin Epix Gen 2", price: "$499.99", rating: 4.6, reviews: 1876, category: "watch", image: "⌚", prime: true },
+      { id: 22, name: "Samsung Galaxy Watch 6", price: "$299.99", rating: 4.5, reviews: 2543, category: "watch", image: "⌚", prime: true },
+
+      // Cameras
+      { id: 23, name: "Sony A6700 Mirrorless", price: "$1,398.00", rating: 4.8, reviews: 876, category: "camera", image: "📷", prime: true, badge: "Premium" },
+      { id: 24, name: "Canon EOS R50", price: "$799.00", rating: 4.6, reviews: 654, category: "camera", image: "📷", prime: true },
+      { id: 25, name: "GoPro HERO 12", price: "$399.99", rating: 4.7, reviews: 3456, category: "camera", image: "📷", prime: true },
+
+      // Home Appliances
+      { id: 26, name: "Robot Vacuum Cleaner", price: "$299.99", rating: 4.5, reviews: 4321, category: "appliance", image: "🤖", prime: true },
+      { id: 27, name: "Smart WiFi Speaker", price: "$89.99", rating: 4.4, reviews: 5234, category: "appliance", image: "🔊", prime: true },
+      { id: 28, name: "Smart Thermostat", price: "$249.99", rating: 4.6, reviews: 2134, category: "appliance", image: "🌡️", prime: true },
+    ];
+
+    // Search functionality
+    function searchProducts() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const resultsDiv = document.getElementById('results');
+      const statusDiv = document.getElementById('status');
+
+      if (!query) {
+        resultsDiv.innerHTML = '';
+        statusDiv.innerHTML = '';
+        return;
+      }
+
+      // Show loading state
+      statusDiv.innerHTML = '<span class="loading">⏳</span> Searching for "' + query + '"...';
+      resultsDiv.innerHTML = '';
+
+      // Simulate delay for better UX
+      setTimeout(() => {
+        const results = productDatabase.filter(product => 
+          product.name.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query)
+        );
+
+        if (results.length === 0) {
+          statusDiv.innerHTML = '';
+          resultsDiv.innerHTML = `
+            <div style="grid-column: 1/-1;">
+              <div class="empty-state">
+                <div class="empty-state-icon">🔍</div>
+                <h2>No Products Found</h2>
+                <p>Try searching for different keywords like "laptop", "phone", "headphones", etc.</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        statusDiv.innerHTML = `Found <strong>${results.length}</strong> products matching "${query}"`;
+        displayResults(results);
+      }, 600);
+    }
+
+    function displayResults(products) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = products.map(product => `
+        <div class="product-card">
+          <div class="product-image">${product.image}</div>
+          <div class="product-info">
+            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            <div class="product-name">${product.name}</div>
+            <div class="product-rating">
+              <span class="stars">★</span>
+              <span><strong>${product.rating}</strong></span>
+              <span class="rating-count">(${product.reviews.toLocaleString()} reviews)</span>
+            </div>
+            <div class="product-price">${product.price}</div>
+            ${product.prime ? '<div style="color: #FF9900; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem;">Prime Eligible</div>' : ''}
+            <button class="product-btn" onclick="viewProduct('${product.name}')">View on Amazon</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function viewProduct(name) {
+      // In a real app, this would redirect to Amazon with the product search
+      alert(`Redirecting to Amazon to view: "${name}"\n\nIn production, this would open: https://www.amazon.com/s?k=${encodeURIComponent(name)}`);
+      // window.open(`https://www.amazon.com/s?k=${encodeURIComponent(name)}`, '_blank');
+    }
+
+    // Allow Enter key to search
+    document.getElementById('searchInput').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        searchProducts();
+      }
+    });
+
+    // Focus on search input on load
+    window.addEventListener('load', function() {
+      document.getElementById('searchInput').focus();
+    });
+  </script>
+</body>
+</html>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
