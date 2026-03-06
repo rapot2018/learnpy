@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import os
 
 app = FastAPI()
 
@@ -20,4 +21,6 @@ def hello():
 def goodbye():
     return {"message": "Goodbye Ramesh"}
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Mount static files only if directory exists
+if os.path.isdir("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
