@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Future Life Style Products - Innovation for Tomorrow</title>
+  <title>FutureLife - Modern Living Reimagined</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,219 +12,472 @@
       box-sizing: border-box;
     }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #1E40AF;
+      --secondary: #10B981;
+      --accent: #F59E0B;
+      --bg-light: #F9FAFB;
+      --bg-lighter: #FFFFFF;
+      --text-dark: #1F2937;
+      --text-light: #6B7280;
+      --border: #E5E7EB;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
     header {
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 1rem 0;
+      background: var(--bg-lighter);
+      border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
     }
 
     nav {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 2rem;
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     nav ul {
-      list-style: none;
       display: flex;
-      gap: 2rem;
+      list-style: none;
+      gap: 3rem;
     }
 
     nav a {
-      color: white;
+      color: var(--text-dark);
       text-decoration: none;
-      transition: color 0.3s ease;
       font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      cursor: pointer;
     }
 
     nav a:hover {
-      color: #667eea;
+      color: var(--primary);
     }
 
+    /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
+      padding: 7rem 2rem;
       text-align: center;
-      padding: 6rem 2rem;
-      animation: fadeIn 1s ease-in;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease;
     }
 
     .hero h1 {
+      font-family: 'Poppins', sans-serif;
       font-size: 3.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
     .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
       opacity: 0.95;
+      line-height: 1.8;
     }
 
-    .cta-button {
+    .hero .btn-primary {
       display: inline-block;
       background: white;
-      color: #667eea;
+      color: var(--primary);
       padding: 1rem 2.5rem;
-      border-radius: 50px;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 1rem;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    .hero .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     }
 
+    /* Container */
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 2rem;
     }
 
+    /* Section Title */
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 5rem 0;
+    }
+
+    .stat-card {
+      background: var(--bg-lighter);
+      padding: 2.5rem;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+    }
+
+    .stat-number {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+
+    /* Features Section */
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
       margin: 4rem 0;
     }
 
     .feature-card {
-      background: white;
-      padding: 2rem;
+      background: var(--bg-lighter);
+      padding: 2.5rem;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
       transition: all 0.3s ease;
-      animation: slideUp 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
     }
 
     .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     }
 
     .feature-icon {
       font-size: 3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .feature-card h3 {
-      color: #667eea;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-dark);
       margin-bottom: 1rem;
-      font-size: 1.5rem;
     }
 
     .feature-card p {
-      color: #666;
+      color: var(--text-light);
       line-height: 1.8;
+      font-size: 0.95rem;
     }
 
-    .products {
-      background: white;
-      padding: 4rem 2rem;
-      margin: 2rem 0;
-      border-radius: 12px;
+    /* Products Section */
+    .products-section {
+      background: var(--bg-lighter);
+      padding: 5rem 2rem;
+      margin: 3rem 0;
+      border-radius: 16px;
+      border: 1px solid var(--border);
     }
 
-    .products h2 {
-      text-align: center;
-      color: #667eea;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .product-grid {
+    .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
     }
 
     .product-card {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: var(--bg-light);
       padding: 2rem;
       border-radius: 12px;
+      border: 1px solid var(--border);
       text-align: center;
       transition: all 0.3s ease;
-      border-top: 4px solid #667eea;
+      cursor: pointer;
     }
 
     .product-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.12);
     }
 
     .product-icon {
       font-size: 3.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .product-card h4 {
-      color: #333;
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-    }
-
-    .product-card p {
-      color: #666;
-      font-size: 0.95rem;
-    }
-
-    .section {
-      background: white;
-      padding: 3rem 2rem;
-      margin: 2rem 0;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .section h2 {
-      color: #667eea;
-      font-size: 2rem;
       margin-bottom: 1.5rem;
     }
 
-    .section p {
-      color: #666;
-      font-size: 1.1rem;
-      line-height: 1.9;
-      margin-bottom: 1rem;
+    .product-card h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
     }
 
-    footer {
-      background: rgba(0, 0, 0, 0.8);
+    .product-card p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* About Section */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin: 5rem 0;
+      padding: 4rem;
+      background: var(--bg-lighter);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .about-content h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+
+    .about-content p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .about-feature {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .about-feature-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .about-feature-text h4 {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .about-feature-text p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .about-image {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 3rem;
+      border-radius: 12px;
       color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 5rem 2rem;
+      border-radius: 16px;
+      margin: 4rem 0;
       text-align: center;
+    }
+
+    .contact-content h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .contact-item {
+      background: rgba(255, 255, 255, 0.1);
       padding: 2rem;
-      margin-top: 4rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-item h4 {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .contact-item p {
+      opacity: 0.95;
+      font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #1F2937;
+      color: white;
+      padding: 3rem 2rem;
+      margin-top: 5rem;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h4 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-section a {
+      color: #D1D5DB;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: 2rem;
+      text-align: center;
+      color: #9CA3AF;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fadeIn {
@@ -235,47 +489,10 @@
       }
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .stat-box {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-text {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
+    /* Responsive */
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .hero p {
@@ -283,15 +500,41 @@
       }
 
       nav ul {
-        gap: 1rem;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .about-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 4rem 1.5rem;
+      }
+
+      .contact-info {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Navigation -->
   <header>
     <nav>
-      <div class="logo">🚀 FutureLife</div>
+      <a href="#home" class="logo">
+        <span>🚀</span> FutureLife
+      </a>
       <ul>
         <li><a href="#features">Features</a></li>
         <li><a href="#products">Products</a></li>
@@ -301,292 +544,197 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Welcome to FutureLife</h1>
-    <p>Discover the innovative products shaping the future of lifestyle technology</p>
-    <a href="#products" class="cta-button">Explore Now</a>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Welcome to FutureLife</h1>
+      <p>Discover innovative products that transform the way you live. Simple, elegant, and designed for tomorrow.</p>
+      <a href="#products" class="btn-primary">Explore Our Products</a>
+    </div>
   </section>
 
+  <!-- Main Content -->
   <div class="container">
-    <section class="stats">
-      <div class="stat-box">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
         <div class="stat-number">500K+</div>
-        <div class="stat-text">Happy Users Worldwide</div>
+        <div class="stat-label">Happy Customers Worldwide</div>
       </div>
-      <div class="stat-box">
+      <div class="stat-card">
         <div class="stat-number">150+</div>
-        <div class="stat-text">Innovative Products</div>
+        <div class="stat-label">Innovative Products</div>
       </div>
-      <div class="stat-box">
+      <div class="stat-card">
         <div class="stat-number">50+</div>
-        <div class="stat-text">Countries Served</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features">
+      <div class="section-title">
+        <h2>Why Choose FutureLife?</h2>
+        <p>Experience excellence in every product we create</p>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Cutting-Edge Technology</h3>
+          <p>Advanced innovations that seamlessly integrate with your lifestyle, making everyday tasks simpler and smarter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">♻️</div>
+          <h3>Sustainable Design</h3>
+          <p>Eco-friendly materials and processes that create products you can feel good about using.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>User First</h3>
+          <p>Every detail is thoughtfully designed with you in mind, ensuring intuitive and delightful experiences.</p>
+        </div>
       </div>
     </section>
 
-    <section id="features" class="features">
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Cutting-Edge Technology</h3>
-        <p>Experience the latest innovations in smart living with our advanced technological solutions.</p>
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+      <div class="section-title">
+        <h2>Featured Products</h2>
+        <p>Explore our latest innovations designed for modern living</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🌱</div>
-        <h3>Sustainable Design</h3>
-        <p>Environment-friendly products built with sustainable materials for a better tomorrow.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>User-Centric Innovation</h3>
-        <p>Every product is designed with you in mind, focused on enhancing your daily life.</p>
-      </div>
-    </section>
-
-    <section id="products" class="products">
-      <h2>Our Featured Products</h2>
-      <div class="product-grid">
+      <div class="products-grid">
         <div class="product-card">
           <div class="product-icon">🏠</div>
           <h4>Smart Home Hub</h4>
-          <p>Control your entire home with voice commands and intelligent automation systems.</p>
+          <p>Voice-controlled automation for your entire home. Effortless control of lights, temperature, and security.</p>
         </div>
         <div class="product-card">
           <div class="product-icon">⌚</div>
           <h4>AI Wellness Watch</h4>
-          <p>Advanced health tracking with AI-powered personalized wellness recommendations.</p>
+          <p>Real-time health monitoring with AI insights. Track your fitness, sleep, and wellness in one elegant device.</p>
         </div>
         <div class="product-card">
           <div class="product-icon">🤖</div>
-          <h4>Robot Assistant</h4>
-          <p>Your personal AI assistant that learns your routines and adapts to your needs.</p>
+          <h4>Smart Assistant</h4>
+          <p>Your personal AI companion that learns and adapts to your daily routines and preferences.</p>
         </div>
         <div class="product-card">
-          <div class="product-icon">🔌</div>
+          <div class="product-icon">⚙️</div>
           <h4>Energy Manager</h4>
-          <p>Smart power management system that optimizes energy consumption and reduces costs.</p>
+          <p>Intelligent power management that reduces your energy costs while helping the environment.</p>
         </div>
         <div class="product-card">
           <div class="product-icon">📱</div>
-          <h4>Connected Mobile</h4>
-          <p>Next-gen smartphone with innovative features and seamless ecosystem integration.</p>
+          <h4>Next-Gen Mobile</h4>
+          <p>Premium smartphone with revolutionary features and seamless ecosystem integration.</p>
         </div>
         <div class="product-card">
           <div class="product-icon">🎮</div>
-          <h4>Immersive VR System</h4>
-          <p>Experience virtual reality like never before with our cutting-edge VR platform.</p>
+          <h4>Immersive VR</h4>
+          <p>Step into incredible virtual worlds with our next-generation VR system and experiences.</p>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <h2>About FutureLife</h2>
-      <p>At FutureLife, we believe that technology should enhance and simplify everyday living. Our mission is to create innovative products that bridge the gap between imagination and reality.</p>
-      <p>With over a decade of experience in developing smart lifestyle solutions, we've helped hundreds of thousands of people transform their homes and lives through intelligent technology.</p>
-      <p>Our team of experienced engineers, designers, and innovators work tirelessly to bring you products that are not just advanced, but also intuitive, reliable, and accessible.</p>
-    </section>
-
-    <section id="contact" class="section">
-      <h2>Get In Touch</h2>
-      <p><strong>Email:</strong> rapot2018@gmail.com</p>
-      <p><strong>Phone:</strong> +1(860)8346288</p>
-      <p style="margin-top: 1.5rem;">Follow us on social media for the latest updates and product launches!</p>
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="about-content">
+        <h2>Our Story</h2>
+        <p>At FutureLife, we're not just building products—we're shaping the future of how people live. Founded with a vision to merge technology and lifestyle seamlessly, we've been innovating for over a decade.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">✨</div>
+            <div class="about-feature-text">
+              <h4>Innovation First</h4>
+              <p>Constantly pushing boundaries with the latest technology</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">🌍</div>
+            <div class="about-feature-text">
+              <h4>Global Impact</h4>
+              <p>Serving customers in 50+ countries across the globe</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">❤️</div>
+            <div class="about-feature-text">
+              <h4>Customer Focused</h4>
+              <p>Your satisfaction is our ultimate measure of success</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-image">
+        <div style="text-align: center;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">🌟</div>
+          <p style="font-size: 1.2rem; font-weight: 600;">Building Tomorrow's Lifestyle Today</p>
+        </div>
+      </div>
     </section>
   </div>
 
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="contact-content">
+      <h2>Get In Touch</h2>
+      <p style="font-size: 1.1rem; opacity: 0.95;">Have questions? We'd love to hear from you</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <h4>📧 Email</h4>
+          <p><a href="mailto:rapot2018@gmail.com" style="color: white; text-decoration: none;">rapot2018@gmail.com</a></p>
+        </div>
+        <div class="contact-item">
+          <h4>📱 Phone</h4>
+          <p><a href="tel:+18608346288" style="color: white; text-decoration: none;">+1(860)8346288</a></p>
+        </div>
+        <div class="contact-item">
+          <h4>🌐 Social</h4>
+          <p>Follow us on social media for updates and launches</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 FutureLife Products. All rights reserved. | Building Tomorrow's Lifestyle Today</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#products">Features</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#products">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#about">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <ul>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 FutureLife. All rights reserved. | Building Tomorrow's Lifestyle Today</p>
+    </div>
   </footer>
-
-  <script>
-    const form = document.getElementById('form');
-    const resp = document.getElementById('response');
-
-    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
-
-    function renderPrimitive(v){
-      const span = document.createElement('span');
-      span.textContent = v === undefined ? '' : String(v);
-      return span;
-    }
-
-    function renderValue(v){
-      if(v === null) return renderPrimitive('null');
-      if(Array.isArray(v)) return renderArray(v);
-      if(typeof v === 'object') return renderObject(v);
-      return renderPrimitive(v);
-    }
-
-    function renderArray(arr){
-      const tbl = document.createElement('table');
-      tbl.className = 'resp-table nested';
-      const tbody = document.createElement('tbody');
-      arr.forEach((item, i)=>{
-        const tr = document.createElement('tr');
-        const th = document.createElement('th'); th.textContent = i; tr.appendChild(th);
-        const td = document.createElement('td'); td.appendChild(renderValue(item)); tr.appendChild(td);
-        tbody.appendChild(tr);
-      });
-      tbl.appendChild(tbody);
-      return tbl;
-    }
-
-    function renderObject(obj){
-      const tbl = document.createElement('table');
-      tbl.className = 'resp-table nested';
-      const tbody = document.createElement('tbody');
-      Object.keys(obj).forEach(key=>{
-        const tr = document.createElement('tr');
-        const th = document.createElement('th'); th.textContent = key; tr.appendChild(th);
-        const td = document.createElement('td'); td.appendChild(renderValue(obj[key])); tr.appendChild(td);
-        tbody.appendChild(tr);
-      });
-      tbl.appendChild(tbody);
-      return tbl;
-    }
-
-    function renderJobsTable(arr){
-      // Determine base headers (union of keys)
-      const baseHeaders = Array.from(arr.reduce((set, item) => {
-        if(item && typeof item === 'object') Object.keys(item).forEach(k=>set.add(k));
-        return set;
-      }, new Set()));
-
-      // Find marker tokens like **1, **2 across all string fields
-      const markerRe = /\*\*(\d+)/g;
-      const markers = new Set();
-      arr.forEach(item => {
-        if(!item || typeof item !== 'object') return;
-        Object.values(item).forEach(v => {
-          if(typeof v === 'string'){
-            let m; while((m = markerRe.exec(v)) !== null){ markers.add('**'+m[1]); }
-            markerRe.lastIndex = 0;
-          }
-        });
-      });
-      const markerCols = Array.from(markers).sort();
-
-      const headers = baseHeaders.concat(markerCols);
-
-      const table = document.createElement('table');
-      table.className = 'jobs-table';
-      const thead = document.createElement('thead');
-      const trh = document.createElement('tr');
-      headers.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; trh.appendChild(th); });
-      thead.appendChild(trh);
-      table.appendChild(thead);
-
-      const tbody = document.createElement('tbody');
-
-      // helper: extract text following marker occurrences in a text
-      function extractMarkerTexts(text){
-        const out = {};
-        if(typeof text !== 'string') return out;
-        const rx = /\*\*(\d+)\s*([^\*]*)/g; // capture marker and following text until next *
-        let m;
-        while((m = rx.exec(text)) !== null){
-          const key = '**'+m[1];
-          const txt = m[2].trim();
-          if(!out[key]) out[key] = [];
-          if(txt) out[key].push(txt);
-        }
-        return out;
-      }
-
-      arr.forEach((item, idx)=>{
-        const tr = document.createElement('tr');
-
-        // build map of marker -> collected texts across all fields
-        const markerTexts = {};
-        if(item && typeof item === 'object'){
-          Object.values(item).forEach(v => {
-            const found = extractMarkerTexts(v);
-            Object.keys(found).forEach(k => {
-              if(!markerTexts[k]) markerTexts[k] = [];
-              markerTexts[k] = markerTexts[k].concat(found[k]);
-            });
-          });
-        }
-
-        headers.forEach(h=>{
-          const td = document.createElement('td');
-          if(baseHeaders.includes(h)){
-            let v = item ? item[h] : undefined;
-            if(v === undefined || v === null){ td.textContent = ''; }
-            else if(typeof v === 'object'){
-              const pre = document.createElement('pre');
-              pre.textContent = JSON.stringify(v, null, 2);
-              td.appendChild(pre);
-            } else {
-              const s = String(v);
-              if(s.length > 160){ const pre = document.createElement('pre'); pre.textContent = s; td.appendChild(pre); }
-              else td.textContent = s;
-            }
-          } else {
-            // marker column
-            const arrVals = markerTexts[h] || [];
-            if(arrVals.length === 0) td.textContent = '';
-            else {
-              // tokenize collected texts (split on non-word)
-              const tokens = arrVals.flatMap(t => t.split(/\W+/).filter(Boolean));
-              td.textContent = tokens.join(', ');
-            }
-          }
-          tr.appendChild(td);
-        });
-
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      return table;
-    }
-
-    function renderResponse(json){
-      clear(resp);
-      if(!json){ resp.textContent = '(empty)'; return; }
-      const root = document.createElement('div');
-
-      if(json.query !== undefined){
-        const qBox = document.createElement('div');
-        qBox.className = 'query-box';
-        const label = document.createElement('div'); label.textContent = 'Query'; label.className = 'label';
-        const pre = document.createElement('pre'); pre.textContent = json.query;
-        qBox.appendChild(label); qBox.appendChild(pre);
-        root.appendChild(qBox);
-      }
-
-      const label = document.createElement('div'); label.textContent = 'Result'; label.className = 'label';
-      root.appendChild(label);
-
-      const result = json.result === undefined ? json : json.result;
-
-      // If result is an array of objects, render as jobs table (one job per row)
-      if(Array.isArray(result) && result.length>0 && result.every(it => typeof it === 'object' && it !== null)){
-        root.appendChild(renderJobsTable(result));
-      } else {
-        // Fallback to recursive renderer
-        root.appendChild(renderValue(result));
-      }
-
-      resp.appendChild(root);
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const q = document.getElementById('query').value;
-      clear(resp);
-      resp.textContent = 'Loading...';
-      try {
-        const r = await fetch('/api/groq', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({query: q})
-        });
-        const j = await r.json();
-        renderResponse(j);
-      } catch (err) {
-        clear(resp);
-        resp.textContent = 'Error: ' + err.message;
-      }
-    });
-  </script>
 </body>
 </html>
