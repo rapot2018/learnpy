@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start FastAPI Server",
+			"type": "shell",
+			"command": "python3",
+			"args": [
+				"-m",
+				"uvicorn",
+				"app:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8000",
+				"--reload"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}
