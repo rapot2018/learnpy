@@ -7,6 +7,8 @@ import sys
 import json
 import importlib
 import os
+from recommender import get_recommendations
+from products import get_all_products, filter_products
 
 app = FastAPI()
 
@@ -58,6 +60,57 @@ async def groq_api(request: Request):
     query = payload.get("query", "")
     result = run_groq_query(query)
     return JSONResponse(content={"query": query, "result": result})
+
+
+@app.post("/api/recommend")
+async def get_product_recommendations(request: Request):
+    """
+    Get product recommendations based on user requirement.
+    """
+    try:
+        payload = await request.json()
+        requirement = payload.get("requirement", "")
+        
+        if not requirement:
+            return JSONResponse(
+                status_code=400,
+                content={"error": "Requirement is required"}
+            )
+        
+        result = get_recommendations(requirement)
+        return JSONResponse(content=result)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e)}
+        )
+
+
+@app.get("/api/products")
+async def get_products():
+    """
+    Get all available products.
+    """
+    return JSONResponse(content={"products": get_all_products()})
+
+
+@app.post("/api/products/filter")
+async def filter_product_list(request: Request):
+    """
+    Filter products based on criteria.
+    """
+    try:
+        payload = await request.json()
+        filters = payload.get("filters", {})
+        
+        results = filter_products(filters)
+        return JSONResponse(content={"products": results, "count": len(results)})
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e)}
+        )
+
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

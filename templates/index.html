@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lifez.ai - Find the Best Deals for Buying</title>
+  <title>Lifez.AI - Smart Product Recommendations</title>
   <style>
     * {
       margin: 0;
@@ -12,25 +12,25 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
       line-height: 1.6;
-      color: #333;
-      background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
-      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     header {
-      background: rgba(15, 23, 42, 0.95);
-      color: white;
-      padding: 1rem 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+      padding: 1.5rem 0;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     nav {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -39,207 +39,82 @@
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      transition: color 0.3s ease;
-      font-weight: 500;
-    }
-
-    nav a:hover {
-      color: #10b981;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
-      color: white;
-      text-align: center;
-      padding: 6rem 2rem;
-      animation: fadeIn 1s ease-in;
-    }
-
-    .hero h1 {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      opacity: 0.95;
-    }
-
-    .cta-button {
-      display: inline-block;
-      background: white;
-      color: #059669;
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    .tagline {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      font-weight: 400;
+      letter-spacing: 0.5px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 2rem;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 4rem 0;
-    }
-
-    .feature-card {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      animation: slideUp 0.6s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .feature-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h3 {
-      color: #059669;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-
-    .feature-card p {
-      color: #666;
-      line-height: 1.8;
-    }
-
-    .products {
-      background: white;
-      padding: 4rem 2rem;
-      margin: 2rem 0;
-      border-radius: 12px;
-    }
-
-    .products h2 {
-      text-align: center;
-      color: #059669;
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
-    }
-
-    .product-card {
-      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      transition: all 0.3s ease;
-      border-top: 4px solid #10b981;
-    }
-
-    .product-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-    }
-
-    .product-icon {
-      font-size: 3.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .product-card h4 {
-      color: #333;
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-    }
-
-    .product-card p {
-      color: #666;
-      font-size: 0.95rem;
-    }
-
-    .section {
-      background: white;
       padding: 3rem 2rem;
-      margin: 2rem 0;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      height: calc(100vh - 120px);
+    }
+
+    .chat-panel {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.5);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .panel-header {
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+    }
+
+    .panel-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: #ffffff;
+    }
+
+    .message {
+      padding: 0.95rem 1.2rem;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .section h2 {
-      color: #059669;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .section p {
-      color: #666;
-      font-size: 1.1rem;
-      line-height: 1.9;
-      margin-bottom: 1rem;
-    }
-
-    footer {
-      background: rgba(15, 23, 42, 0.9);
-      color: white;
-      text-align: center;
-      padding: 2rem;
-      margin-top: 4rem;
+      max-width: 85%;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease;
+      font-size: 0.95rem;
+      line-height: 1.5;
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
@@ -247,166 +122,513 @@
       }
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .stat-box {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    .message.user {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
       color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
     }
 
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
+    .message.assistant {
+      background: #f1f5f9;
+      color: #475569;
+      align-self: flex-start;
+      border: 1px solid rgba(226, 232, 240, 0.5);
+      border-bottom-left-radius: 4px;
     }
 
-    .stat-text {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    .query-form {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      margin: 2rem 0;
-    }
-
-    .query-form h2 {
-      color: #059669;
-      margin-bottom: 1.5rem;
-    }
-
-    #form {
+    .input-area {
+      padding: 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid rgba(226, 232, 240, 0.5);
       display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      gap: 0.75rem;
     }
 
-    #query {
+    .input-area input {
       flex: 1;
-      padding: 0.75rem 1rem;
-      border: 2px solid #10b981;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
-
-    #query:focus {
-      outline: none;
-      border-color: #059669;
-    }
-
-    #form button {
-      padding: 0.75rem 2rem;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
+      padding: 0.85rem 1.2rem;
+      background: #ffffff;
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      border-radius: 10px;
+      color: #1e293b;
+      font-size: 0.95rem;
       transition: all 0.3s ease;
     }
 
-    #form button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    .input-area input:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: rgba(96, 165, 250, 0.7);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
     }
 
-    #response {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: #f9f9f9;
-      border-radius: 8px;
-      border-left: 4px solid #10b981;
+    .input-area input::placeholder {
+      color: #94a3b8;
     }
 
-    .query-box {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      border: 1px solid #e0e0e0;
-    }
-
-    .label {
-      font-weight: bold;
-      color: #059669;
-      margin-bottom: 0.5rem;
+    .input-area button {
+      padding: 0.85rem 1.8rem;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
       font-size: 0.95rem;
     }
 
-    .query-box pre {
-      background: #f5f5f5;
-      padding: 0.75rem;
-      border-radius: 4px;
-      overflow-x: auto;
-      margin: 0;
+    .input-area button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .input-area button:active {
+      transform: translateY(0);
+    }
+
+    .products-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.5);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(96, 165, 250, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(96, 165, 250, 0.1);
+    }
+
+    .product-image {
+      height: 180px;
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .product-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-category {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #60a5fa;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-description {
+      color: #64748b;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
       font-size: 0.9rem;
     }
 
-    .resp-table, .jobs-table {
-      width: 100%;
-      border-collapse: collapse;
-      border: 1px solid #ddd;
-      margin-top: 1rem;
+    .stars {
+      color: #fbbf24;
+      font-size: 1rem;
     }
 
-    .resp-table th, .resp-table td,
-    .jobs-table th, .jobs-table td {
-      border: 1px solid #ddd;
+    .rating-value {
+      color: #475569;
+    }
+
+    .product-specs {
+      background: rgba(96, 165, 250, 0.05);
       padding: 0.75rem;
-      text-align: left;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      flex: 1;
     }
 
-    .resp-table th, .jobs-table th {
-      background: #10b981;
-      color: white;
+    .spec-item {
+      font-size: 0.85rem;
+      color: #475569;
+      margin: 0.35rem 0;
+    }
+
+    .spec-item:before {
+      content: "✓ ";
+      color: #60a5fa;
       font-weight: bold;
     }
 
-    .resp-table tr:nth-child(even),
-    .jobs-table tr:nth-child(even) {
-      background: #f9f9f9;
+    .product-actions {
+      display: flex;
+      gap: 0.75rem;
     }
 
-    .resp-table pre, .jobs-table pre {
-      background: #f5f5f5;
-      padding: 0.5rem;
+    .btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(148, 163, 184, 0.1);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(96, 165, 250, 0.1);
+      border-color: rgba(96, 165, 250, 0.5);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: #64748b;
+    }
+
+    .empty-state p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #475569;
+    }
+
+    .spinner {
+      border: 3px solid rgba(96, 165, 250, 0.1);
+      border-top: 3px solid #60a5fa;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .reasoning-box {
+      background: rgba(96, 165, 250, 0.08);
+      padding: 1.2rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      border-left: 4px solid #60a5fa;
+    }
+
+    .reasoning-box h3 {
+      color: #2563eb;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .reasoning-box p {
+      color: #475569;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(226, 232, 240, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(96, 165, 250, 0.4);
       border-radius: 4px;
-      margin: 0;
-      font-size: 0.85rem;
     }
 
-    .resp-table.nested {
-      margin-left: 1rem;
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(96, 165, 250, 0.6);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #1e293b;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+
+    .detail-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .detail-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .detail-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-category {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #60a5fa;
+      margin-bottom: 1rem;
+    }
+
+    .detail-price {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .detail-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-description {
+      color: #475569;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .detail-specs {
+      background: #f8fafc;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .detail-spec-item {
+      padding: 0.5rem 0;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .detail-spec-item:before {
+      content: "✓";
+      color: #60a5fa;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .detail-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .detail-rating .stars {
+      color: #fbbf24;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .detail-actions button {
+      flex: 1;
+      padding: 0.95rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .detail-actions .btn-primary {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      color: white;
+    }
+
+    .detail-actions .btn-primary:hover {
+      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .detail-actions .btn-secondary {
+      background: #f1f5f9;
+      color: #60a5fa;
+      border: 1px solid #e2e8f0;
+    }
+
+    .detail-actions .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .chat-panel {
+        height: 500px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
     }
 
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem;
+      nav {
+        padding: 0 1rem;
       }
 
-      .hero p {
-        font-size: 1rem;
+      .container {
+        padding: 1.5rem 1rem;
       }
 
-      nav ul {
-        gap: 1rem;
-      }
-
-      #form {
-        flex-direction: column;
+      .products-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -414,312 +636,256 @@
 <body>
   <header>
     <nav>
-      <div class="logo">� Lifez.ai</div>
-      <ul>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#deals">Deal Categories</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+      <div>
+        <div class="logo">⚡ Lifez.AI</div>
+        <div class="tagline">Smart Product Recommendations</div>
+      </div>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Find the Best Deals for Buying</h1>
-    <p>Discover unbeatable prices and exclusive offers across thousands of products with AI-powered deal hunting</p>
-    <a href="#deals" class="cta-button">Find Deals Now</a>
-  </section>
-
   <div class="container">
-    <section class="stats">
-      <div class="stat-box">
-        <div class="stat-number">$1.2B+</div>
-        <div class="stat-text">Savings Generated</div>
+    <div class="main-grid">
+      <div class="chat-panel">
+        <div class="panel-header">
+          <h2>💬 What Are You Looking For?</h2>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="input-area">
+          <input 
+            type="text" 
+            id="requirementInput" 
+            placeholder="Describe what you need..." 
+            onkeypress="handleKeyPress(event)"
+          >
+          <button onclick="sendRequirement()">Send</button>
+        </div>
       </div>
-      <div class="stat-box">
-        <div class="stat-number">2.5M+</div>
-        <div class="stat-text">Active Deal Hunters</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-number">50K+</div>
-        <div class="stat-text">Daily Updated Deals</div>
-      </div>
-    </section>
 
-    <section id="features" class="features">
-      <div class="feature-card">
-        <div class="feature-icon">🤖</div>
-        <h3>AI-Powered Search</h3>
-        <p>Our intelligent algorithms scan millions of products to find the absolute best prices and hidden deals you won't find elsewhere.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Real-Time Updates</h3>
-        <p>Get instant notifications when prices drop. Never miss a deal with our live price tracking system.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💳</div>
-        <h3>Multiple Categories</h3>
-        <p>Shop across electronics, fashion, home & garden, sports, and more. One platform for all your deal hunting needs.</p>
-      </div>
-    </section>
-
-    <section id="deals" class="products">
-      <h2>Popular Deal Categories</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <div class="product-icon">📱</div>
-          <h4>Electronics & Gadgets</h4>
-          <p>Save big on smartphones, laptops, tablets, and smart home devices from top brands.</p>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">👕</div>
-          <h4>Fashion & Apparel</h4>
-          <p>Discover incredible discounts on clothing, shoes, and accessories from your favorite retailers.</p>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">🏠</div>
-          <h4>Home & Garden</h4>
-          <p>Transform your space with amazing deals on furniture, decor, and outdoor equipment.</p>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">📚</div>
-          <h4>Books & Media</h4>
-          <p>Find unbeatable prices on books, eBooks, movies, games, and digital content.</p>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">⚽</div>
-          <h4>Sports & Outdoors</h4>
-          <p>Get deals on fitness equipment, sports gear, camping supplies, and outdoor adventures.</p>
-        </div>
-        <div class="product-card">
-          <div class="product-icon">🍔</div>
-          <h4>Food & Groceries</h4>
-          <p>Save on pantry essentials, gourmet products, and specialty food items with exclusive deals.</p>
+      <div class="products-panel">
+        <h1 class="section-title">📦 Recommendations</h1>
+        <div id="recommendationsContainer" class="empty-state">
+          <p>Tell us what you need and we'll find the perfect products for you 🎯</p>
         </div>
       </div>
-    </section>
-
-    <section id="about" class="section">
-      <h2>About Lifez.ai</h2>
-      <p>Lifez.ai is your personal deal-hunting assistant, powered by advanced artificial intelligence. We believe everyone deserves access to the best prices and shouldn't have to spend hours searching for deals.</p>
-      <p>Our mission is to save you money while shopping smarter. Using machine learning algorithms, we analyze prices across retailers in real-time, identify trending deals, and alert you to the products you want at the prices you need.</p>
-      <p>Whether you're looking for everyday essentials or that special gadget you've had your eye on, Lifez.ai makes it easy to find, compare, and purchase items at unbelievable prices.</p>
-    </section>
-
-    <section id="contact" class="section">
-      <h2>Get In Touch</h2>
-      <p><strong>Email:</strong> support@lifez.ai</p>
-      <p><strong>Phone:</strong> +1(860)8346288</p>
-      <p style="margin-top: 1.5rem;">Join our community and follow us on social media for the latest deal alerts and product launches!</p>
-    </section>
-
-    <section class="query-form">
-      <h2>AI Deal Assistant</h2>
-      <p style="margin-bottom: 1.5rem; color: #666;">Ask our AI assistant to help you find deals, compare prices, or get shopping recommendations.</p>
-      <form id="form">
-        <input type="text" id="query" placeholder="What are you looking for? E.g., 'Best laptop deals under $1000'" required>
-        <button type="submit">Ask AI</button>
-      </form>
-      <div id="response"></div>
-    </section>
+    </div>
   </div>
 
-  <footer>
-    <p>&copy; 2026 Lifez.ai - Find the Best Deals. All rights reserved. | Smart Shopping, Better Deals, Happy Life</p>
-  </footer>
+  <!-- Product Details Modal -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeDetailModal()">&times;</button>
+      <div id="detailContent">
+        <!-- Details will be loaded here -->
+      </div>
+    </div>
+  </div>
 
   <script>
-    const form = document.getElementById('form');
-    const resp = document.getElementById('response');
+    const chatMessages = document.getElementById('chatMessages');
+    const recommendationsContainer = document.getElementById('recommendationsContainer');
+    const requirementInput = document.getElementById('requirementInput');
 
-    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
-
-    function renderPrimitive(v){
-      const span = document.createElement('span');
-      span.textContent = v === undefined ? '' : String(v);
-      return span;
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
+      messageDiv.textContent = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function renderValue(v){
-      if(v === null) return renderPrimitive('null');
-      if(Array.isArray(v)) return renderArray(v);
-      if(typeof v === 'object') return renderObject(v);
-      return renderPrimitive(v);
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendRequirement();
+      }
     }
 
-    function renderArray(arr){
-      const tbl = document.createElement('table');
-      tbl.className = 'resp-table nested';
-      const tbody = document.createElement('tbody');
-      arr.forEach((item, i)=>{
-        const tr = document.createElement('tr');
-        const th = document.createElement('th'); th.textContent = i; tr.appendChild(th);
-        const td = document.createElement('td'); td.appendChild(renderValue(item)); tr.appendChild(td);
-        tbody.appendChild(tr);
-      });
-      tbl.appendChild(tbody);
-      return tbl;
-    }
-
-    function renderObject(obj){
-      const tbl = document.createElement('table');
-      tbl.className = 'resp-table nested';
-      const tbody = document.createElement('tbody');
-      Object.keys(obj).forEach(key=>{
-        const tr = document.createElement('tr');
-        const th = document.createElement('th'); th.textContent = key; tr.appendChild(th);
-        const td = document.createElement('td'); td.appendChild(renderValue(obj[key])); tr.appendChild(td);
-        tbody.appendChild(tr);
-      });
-      tbl.appendChild(tbody);
-      return tbl;
-    }
-
-    function renderJobsTable(arr){
-      // Determine base headers (union of keys)
-      const baseHeaders = Array.from(arr.reduce((set, item) => {
-        if(item && typeof item === 'object') Object.keys(item).forEach(k=>set.add(k));
-        return set;
-      }, new Set()));
-
-      // Find marker tokens like **1, **2 across all string fields
-      const markerRe = /\*\*(\d+)/g;
-      const markers = new Set();
-      arr.forEach(item => {
-        if(!item || typeof item !== 'object') return;
-        Object.values(item).forEach(v => {
-          if(typeof v === 'string'){
-            let m; while((m = markerRe.exec(v)) !== null){ markers.add('**'+m[1]); }
-            markerRe.lastIndex = 0;
-          }
-        });
-      });
-      const markerCols = Array.from(markers).sort();
-
-      const headers = baseHeaders.concat(markerCols);
-
-      const table = document.createElement('table');
-      table.className = 'jobs-table';
-      const thead = document.createElement('thead');
-      const trh = document.createElement('tr');
-      headers.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; trh.appendChild(th); });
-      thead.appendChild(trh);
-      table.appendChild(thead);
-
-      const tbody = document.createElement('tbody');
-
-      // helper: extract text following marker occurrences in a text
-      function extractMarkerTexts(text){
-        const out = {};
-        if(typeof text !== 'string') return out;
-        const rx = /\*\*(\d+)\s*([^\*]*)/g; // capture marker and following text until next *
-        let m;
-        while((m = rx.exec(text)) !== null){
-          const key = '**'+m[1];
-          const txt = m[2].trim();
-          if(!out[key]) out[key] = [];
-          if(txt) out[key].push(txt);
-        }
-        return out;
+    async function sendRequirement() {
+      const requirement = requirementInput.value.trim();
+      
+      if (!requirement) {
+        alert('Please describe what you need');
+        return;
       }
 
-      arr.forEach((item, idx)=>{
-        const tr = document.createElement('tr');
+      addMessage(requirement, true);
+      requirementInput.value = '';
+      requirementInput.focus();
 
-        // build map of marker -> collected texts across all fields
-        const markerTexts = {};
-        if(item && typeof item === 'object'){
-          Object.values(item).forEach(v => {
-            const found = extractMarkerTexts(v);
-            Object.keys(found).forEach(k => {
-              if(!markerTexts[k]) markerTexts[k] = [];
-              markerTexts[k] = markerTexts[k].concat(found[k]);
-            });
-          });
-        }
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loading';
+      loadingDiv.className = 'loading';
+      loadingDiv.innerHTML = '<div class="spinner"></div>Finding perfect matches...';
+      recommendationsContainer.innerHTML = '';
+      recommendationsContainer.appendChild(loadingDiv);
 
-        headers.forEach(h=>{
-          const td = document.createElement('td');
-          if(baseHeaders.includes(h)){
-            let v = item ? item[h] : undefined;
-            if(v === undefined || v === null){ td.textContent = ''; }
-            else if(typeof v === 'object'){
-              const pre = document.createElement('pre');
-              pre.textContent = JSON.stringify(v, null, 2);
-              td.appendChild(pre);
-            } else {
-              const s = String(v);
-              if(s.length > 160){ const pre = document.createElement('pre'); pre.textContent = s; td.appendChild(pre); }
-              else td.textContent = s;
-            }
-          } else {
-            // marker column
-            const arrVals = markerTexts[h] || [];
-            if(arrVals.length === 0) td.textContent = '';
-            else {
-              // tokenize collected texts (split on non-word)
-              const tokens = arrVals.flatMap(t => t.split(/\W+/).filter(Boolean));
-              td.textContent = tokens.join(', ');
-            }
-          }
-          tr.appendChild(td);
-        });
-
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      return table;
-    }
-
-    function renderResponse(json){
-      clear(resp);
-      if(!json){ resp.textContent = '(empty)'; return; }
-      const root = document.createElement('div');
-
-      if(json.query !== undefined){
-        const qBox = document.createElement('div');
-        qBox.className = 'query-box';
-        const label = document.createElement('div'); label.textContent = 'Your Query'; label.className = 'label';
-        const pre = document.createElement('pre'); pre.textContent = json.query;
-        qBox.appendChild(label); qBox.appendChild(pre);
-        root.appendChild(qBox);
-      }
-
-      const label = document.createElement('div'); label.textContent = 'Result'; label.className = 'label';
-      root.appendChild(label);
-
-      const result = json.result === undefined ? json : json.result;
-
-      // If result is an array of objects, render as jobs table (one job per row)
-      if(Array.isArray(result) && result.length>0 && result.every(it => typeof it === 'object' && it !== null)){
-        root.appendChild(renderJobsTable(result));
-      } else {
-        // Fallback to recursive renderer
-        root.appendChild(renderValue(result));
-      }
-
-      resp.appendChild(root);
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const q = document.getElementById('query').value;
-      clear(resp);
-      resp.textContent = 'Loading...';
       try {
-        const r = await fetch('/api/groq', {
+        const response = await fetch('/api/recommend', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({query: q})
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ requirement })
         });
-        const j = await r.json();
-        renderResponse(j);
-      } catch (err) {
-        clear(resp);
-        resp.textContent = 'Error: ' + err.message;
+
+        const data = await response.json();
+
+        if (data.success) {
+          addMessage(`Found ${data.count} great options for you! ✨`);
+          displayRecommendations(data);
+        } else {
+          addMessage(`Hmm, couldn't find recommendations. ${data.error || 'Try rephrasing your request.'}`);
+          recommendationsContainer.innerHTML = '<div class="empty-state"><p>No matches found</p></div>';
+        }
+      } catch (error) {
+        addMessage('Connection error. Please try again.');
+        console.error('Error:', error);
       }
-    });
+    }
+
+    function displayRecommendations(data) {
+      recommendationsContainer.innerHTML = '';
+
+      if (data.reasoning) {
+        const reasoningBox = document.createElement('div');
+        reasoningBox.className = 'reasoning-box';
+        reasoningBox.innerHTML = `
+          <h3>Why these? 🤔</h3>
+          <p>${data.reasoning}</p>
+        `;
+        recommendationsContainer.appendChild(reasoningBox);
+      }
+
+      if (data.recommended_products && data.recommended_products.length > 0) {
+        const grid = document.createElement('div');
+        grid.className = 'products-grid';
+
+        data.recommended_products.forEach(product => {
+          const card = createProductCard(product);
+          grid.appendChild(card);
+        });
+
+        recommendationsContainer.appendChild(grid);
+      } else {
+        recommendationsContainer.innerHTML = '<div class="empty-state"><p>No products match your needs</p></div>';
+      }
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+
+      const stars = '⭐'.repeat(Math.floor(product.rating)) + 
+                    (product.rating % 1 >= 0.5 ? '✨' : '');
+
+      const categoryEmoji = {
+        'electronics': '💻',
+        'audio': '🎧',
+        'mobile': '📱',
+        'peripherals': '⌨️'
+      }[product.category] || '📦';
+
+      card.innerHTML = `
+        <div class="product-image">${categoryEmoji}</div>
+        <div class="product-content">
+          <div class="product-category">${product.category}</div>
+          <div class="product-name">${product.name}</div>
+          <div class="product-price">$${product.price}</div>
+          <p class="product-description">${product.description}</p>
+          <div class="product-rating">
+            <span class="stars">${stars}</span>
+            <span class="rating-value">${product.rating}/5</span>
+          </div>
+          <div class="product-specs">
+            ${product.specs.map(spec => `<div class="spec-item">${spec}</div>`).join('')}
+          </div>
+          <div class="product-actions">
+            <button class="btn btn-primary" onclick="viewDetails(${product.id})">View</button>
+            <button class="btn btn-secondary" onclick="addToCart(${product.id})">Add Cart</button>
+          </div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function viewDetails(productId) {
+      const allProducts = Array.from(document.querySelectorAll('.product-card')).map((card, index) => {
+        const name = card.querySelector('.product-name')?.textContent || '';
+        const price = card.querySelector('.product-price')?.textContent?.replace('$', '') || '';
+        const category = card.querySelector('.product-category')?.textContent || '';
+        const description = card.querySelector('.product-description')?.textContent || '';
+        const rating = card.querySelector('.rating-value')?.textContent?.split('/')[0] || '0';
+        const specs = Array.from(card.querySelectorAll('.spec-item')).map(s => s.textContent.trim());
+        const categoryEmoji = {
+          'electronics': '💻',
+          'audio': '🎧',
+          'mobile': '📱',
+          'peripherals': '⌨️'
+        }[category];
+        
+        return { id: productId, name, price, category, description, rating, specs, emoji: categoryEmoji };
+      });
+
+      const product = allProducts[0];
+      if (!product) return;
+
+      const stars = '⭐'.repeat(Math.floor(product.rating)) + 
+                    (product.rating % 1 >= 0.5 ? '✨' : '');
+
+      const modal = document.getElementById('detailModal');
+      const detailContent = document.getElementById('detailContent');
+      
+      detailContent.innerHTML = `
+        <div class="detail-header">
+          <div class="detail-emoji">${product.emoji || '📦'}</div>
+          <div class="detail-category">${product.category}</div>
+          <div class="detail-title">${product.name}</div>
+          <div class="detail-price">\$${product.price}</div>
+        </div>
+
+        <div class="detail-rating">
+          <span class="stars">${stars}</span>
+          <span>${product.rating}/5</span>
+        </div>
+
+        <div class="detail-section">
+          <h3>Description</h3>
+          <p class="detail-description">${product.description}</p>
+        </div>
+
+        <div class="detail-section">
+          <h3>Key Features</h3>
+          <div class="detail-specs">
+            ${product.specs.map(spec => `<div class="detail-spec-item">${spec}</div>`).join('')}
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
+          <button class="btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+    }
+
+    function closeDetailModal() {
+      const modal = document.getElementById('detailModal');
+      modal.classList.remove('active');
+    }
+
+    // Close modal when clicking outside of it
+    const detailModal = document.getElementById('detailModal');
+    if (detailModal) {
+      detailModal.addEventListener('click', (e) => {
+        if (e.target === detailModal) {
+          closeDetailModal();
+        }
+      });
+    }
+
+    function addToCart(productId) {
+      addMessage(`Added product #${productId} to cart! 🎉`);
+    }
   </script>
 </body>
-</html>
