@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lifez.AI - Buy Confidently with Smart AI Technology</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <title>Lifez.ai - Find the Best Deals for Buying</title>
   <style>
     * {
       margin: 0;
@@ -12,489 +11,714 @@
       box-sizing: border-box;
     }
 
-    :root {
-      --primary: #FF9900;
-      --primary-dark: #E67E00;
-      --accent: #146EB4;
-      --bg-light: #F5F5F5;
-      --bg-lighter: #FFFFFF;
-      --text-dark: #111111;
-      --text-light: #666666;
-      --border: #DDDDDD;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      font-family: 'Inter', sans-serif;
-      color: var(--text-dark);
-      background: var(--bg-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
+      min-height: 100vh;
     }
 
-    /* Header */
     header {
-      background: var(--bg-lighter);
-      border-bottom: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.95);
+      color: white;
+      padding: 1rem 0;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     nav {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0.75rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 2rem;
     }
 
     .logo {
       font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--primary);
-      text-decoration: none;
+      font-weight: bold;
+      background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
     }
 
     nav ul {
-      display: flex;
       list-style: none;
+      display: flex;
       gap: 2rem;
     }
 
     nav a {
-      color: var(--text-dark);
+      color: white;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
       transition: color 0.3s ease;
+      font-weight: 500;
     }
 
     nav a:hover {
-      color: var(--primary);
+      color: #10b981;
     }
 
-    /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #FF9900 0%, #146EB4 100%);
+      background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
       color: white;
-      padding: 5rem 2rem;
       text-align: center;
+      padding: 6rem 2rem;
+      animation: fadeIn 1s ease-in;
     }
 
     .hero h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 3rem;
-      font-weight: 800;
+      font-size: 3.5rem;
       margin-bottom: 1rem;
-      line-height: 1.2;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
       opacity: 0.95;
     }
 
-    /* Search Section */
-    .search-container {
-      max-width: 1400px;
+    .cta-button {
+      display: inline-block;
+      background: white;
+      color: #059669;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .container {
+      max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
 
-    .search-box {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .search-input {
-      flex: 1;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px 0 0 4px;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .search-input::placeholder {
-      color: var(--text-light);
-    }
-
-    .search-btn {
-      background: var(--primary);
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 0 4px 4px 0;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-    }
-
-    .search-btn:hover {
-      background: var(--primary-dark);
-    }
-
-    .search-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Loading & Status */
-    .status {
-      text-align: center;
-      font-size: 1rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-    }
-
-    .loading {
-      display: inline-block;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Results Grid */
-    .products-grid {
+    .features {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
     }
 
-    .product-card {
-      background: var(--bg-lighter);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
+      animation: slideUp 0.6s ease;
     }
 
-    .product-card:hover {
-      box-shadow: 0 4px 16px rgba(255, 153, 0, 0.2);
-      border-color: var(--primary);
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
 
-    .product-image {
-      width: 100%;
-      height: 200px;
-      background: var(--bg-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      overflow: hidden;
-    }
-
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .product-info {
-      padding: 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-name {
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 0.75rem;
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      font-size: 0.95rem;
-    }
-
-    .product-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-      font-size: 0.9rem;
-    }
-
-    .stars {
-      color: #FFC107;
-    }
-
-    .rating-count {
-      color: var(--text-light);
-      font-size: 0.85rem;
-    }
-
-    .product-price {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
-
-    .product-badge {
-      display: inline-block;
-      background: #29B12D;
-      color: white;
-      padding: 0.25rem 0.5rem;
-      border-radius: 3px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
-    .product-btn {
-      background: var(--accent);
-      color: white;
-      padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: background 0.3s ease;
-      margin-top: auto;
-    }
-
-    .product-btn:hover {
-      background: #0052A3;
-    }
-
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 3rem;
-      color: var(--text-light);
-    }
-
-    .empty-state-icon {
+    .feature-icon {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
 
-    .empty-state h2 {
-      color: var(--text-dark);
-      margin-bottom: 0.5rem;
+    .feature-card h3 {
+      color: #059669;
+      margin-bottom: 1rem;
       font-size: 1.5rem;
     }
 
-    /* Footer */
-    footer {
-      background: var(--text-dark);
-      color: white;
-      padding: 2rem;
-      margin-top: 4rem;
-      text-align: center;
+    .feature-card p {
+      color: #666;
+      line-height: 1.8;
     }
 
-    /* Responsive */
+    .products {
+      background: white;
+      padding: 4rem 2rem;
+      margin: 2rem 0;
+      border-radius: 12px;
+    }
+
+    .products h2 {
+      text-align: center;
+      color: #059669;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+    }
+
+    .product-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border-top: 4px solid #10b981;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .product-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-card h4 {
+      color: #333;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .product-card p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .section {
+      background: white;
+      padding: 3rem 2rem;
+      margin: 2rem 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      color: #059669;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section p {
+      color: #666;
+      font-size: 1.1rem;
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      background: rgba(15, 23, 42, 0.9);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-text {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .query-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 2rem 0;
+    }
+
+    .query-form h2 {
+      color: #059669;
+      margin-bottom: 1.5rem;
+    }
+
+    #form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #query {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 2px solid #10b981;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    #query:focus {
+      outline: none;
+      border-color: #059669;
+    }
+
+    #form button {
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+
+    #response {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #10b981;
+    }
+
+    .query-box {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid #e0e0e0;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #059669;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .query-box pre {
+      background: #f5f5f5;
+      padding: 0.75rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .resp-table, .jobs-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      margin-top: 1rem;
+    }
+
+    .resp-table th, .resp-table td,
+    .jobs-table th, .jobs-table td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    .resp-table th, .jobs-table th {
+      background: #10b981;
+      color: white;
+      font-weight: bold;
+    }
+
+    .resp-table tr:nth-child(even),
+    .jobs-table tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .resp-table pre, .jobs-table pre {
+      background: #f5f5f5;
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .resp-table.nested {
+      margin-left: 1rem;
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2rem;
       }
 
+      .hero p {
+        font-size: 1rem;
+      }
+
       nav ul {
         gap: 1rem;
-        font-size: 0.9rem;
       }
 
-      .search-box {
+      #form {
         flex-direction: column;
-      }
-
-      .search-input,
-      .search-btn {
-        border-radius: 4px;
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <nav>
-      <a href="#home" class="logo">✨ Lifez.AI</a>
+      <div class="logo">� Lifez.ai</div>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#deals">Deal Categories</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <h1>Buy Confidently with Smart AI Technology</h1>
-    <p>Let AI find the perfect product for you instantly</p>
+  <section class="hero">
+    <h1>Find the Best Deals for Buying</h1>
+    <p>Discover unbeatable prices and exclusive offers across thousands of products with AI-powered deal hunting</p>
+    <a href="#deals" class="cta-button">Find Deals Now</a>
   </section>
 
-  <!-- Search Section -->
-  <section id="search" class="search-container">
-    <div class="search-box">
-      <input 
-        type="text" 
-        id="searchInput" 
-        class="search-input" 
-        placeholder="Search for products (e.g., laptop, headphones, phone case...)"
-        autocomplete="off"
-      >
-      <button class="search-btn" onclick="searchProducts()">Search</button>
-    </div>
+  <div class="container">
+    <section class="stats">
+      <div class="stat-box">
+        <div class="stat-number">$1.2B+</div>
+        <div class="stat-text">Savings Generated</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">2.5M+</div>
+        <div class="stat-text">Active Deal Hunters</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-number">50K+</div>
+        <div class="stat-text">Daily Updated Deals</div>
+      </div>
+    </section>
 
-    <div id="status" class="status"></div>
-    <div id="results" class="products-grid"></div>
-  </section>
+    <section id="features" class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI-Powered Search</h3>
+        <p>Our intelligent algorithms scan millions of products to find the absolute best prices and hidden deals you won't find elsewhere.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Real-Time Updates</h3>
+        <p>Get instant notifications when prices drop. Never miss a deal with our live price tracking system.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Multiple Categories</h3>
+        <p>Shop across electronics, fashion, home & garden, sports, and more. One platform for all your deal hunting needs.</p>
+      </div>
+    </section>
 
-  <!-- Footer -->
+    <section id="deals" class="products">
+      <h2>Popular Deal Categories</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-icon">📱</div>
+          <h4>Electronics & Gadgets</h4>
+          <p>Save big on smartphones, laptops, tablets, and smart home devices from top brands.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">👕</div>
+          <h4>Fashion & Apparel</h4>
+          <p>Discover incredible discounts on clothing, shoes, and accessories from your favorite retailers.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">🏠</div>
+          <h4>Home & Garden</h4>
+          <p>Transform your space with amazing deals on furniture, decor, and outdoor equipment.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">📚</div>
+          <h4>Books & Media</h4>
+          <p>Find unbeatable prices on books, eBooks, movies, games, and digital content.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">⚽</div>
+          <h4>Sports & Outdoors</h4>
+          <p>Get deals on fitness equipment, sports gear, camping supplies, and outdoor adventures.</p>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">🍔</div>
+          <h4>Food & Groceries</h4>
+          <p>Save on pantry essentials, gourmet products, and specialty food items with exclusive deals.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Lifez.ai</h2>
+      <p>Lifez.ai is your personal deal-hunting assistant, powered by advanced artificial intelligence. We believe everyone deserves access to the best prices and shouldn't have to spend hours searching for deals.</p>
+      <p>Our mission is to save you money while shopping smarter. Using machine learning algorithms, we analyze prices across retailers in real-time, identify trending deals, and alert you to the products you want at the prices you need.</p>
+      <p>Whether you're looking for everyday essentials or that special gadget you've had your eye on, Lifez.ai makes it easy to find, compare, and purchase items at unbelievable prices.</p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Get In Touch</h2>
+      <p><strong>Email:</strong> support@lifez.ai</p>
+      <p><strong>Phone:</strong> +1(860)8346288</p>
+      <p style="margin-top: 1.5rem;">Join our community and follow us on social media for the latest deal alerts and product launches!</p>
+    </section>
+
+    <section class="query-form">
+      <h2>AI Deal Assistant</h2>
+      <p style="margin-bottom: 1.5rem; color: #666;">Ask our AI assistant to help you find deals, compare prices, or get shopping recommendations.</p>
+      <form id="form">
+        <input type="text" id="query" placeholder="What are you looking for? E.g., 'Best laptop deals under $1000'" required>
+        <button type="submit">Ask AI</button>
+      </form>
+      <div id="response"></div>
+    </section>
+  </div>
+
   <footer>
-    <p>&copy; 2026 Lifez.AI. All rights reserved. | Buy Confidently with Smart AI Technology</p>
+    <p>&copy; 2026 Lifez.ai - Find the Best Deals. All rights reserved. | Smart Shopping, Better Deals, Happy Life</p>
   </footer>
 
   <script>
-    // Sample product database (can be extended or replaced with API)
-    const productDatabase = [
-      // Laptops
-      { id: 1, name: "Dell XPS 13 Laptop", price: "$999.99", rating: 4.7, reviews: 2541, category: "laptop", image: "💻", prime: true, badge: "Best Seller" },
-      { id: 2, name: "MacBook Air M2", price: "$1,299.99", rating: 4.8, reviews: 3215, category: "laptop", image: "💻", prime: true, badge: "Premium" },
-      { id: 3, name: "HP Pavilion 15", price: "$649.99", rating: 4.5, reviews: 1823, category: "laptop", image: "💻", prime: true },
-      { id: 4, name: "ASUS VivoBook 14", price: "$549.99", rating: 4.6, reviews: 1542, category: "laptop", image: "💻", prime: true },
+    const form = document.getElementById('form');
+    const resp = document.getElementById('response');
 
-      // Headphones
-      { id: 5, name: "Sony WH-1000XM4 Headphones", price: "$348.99", rating: 4.7, reviews: 5123, category: "headphones", image: "🎧", prime: true, badge: "Best Seller" },
-      { id: 6, name: "Apple AirPods Pro Max", price: "$549.99", rating: 4.8, reviews: 2341, category: "headphones", image: "🎧", prime: true, badge: "Premium" },
-      { id: 7, name: "Bose QuietComfort 45", price: "$379.95", rating: 4.6, reviews: 3214, category: "headphones", image: "🎧", prime: true },
-      { id: 8, name: "Samsung Galaxy Buds Pro", price: "$199.99", rating: 4.5, reviews: 2812, category: "headphones", image: "🎧", prime: true },
+    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
 
-      // Smartphones
-      { id: 9, name: "iPhone 15 Pro", price: "$999.00", rating: 4.8, reviews: 4521, category: "phone", image: "📱", prime: true, badge: "Latest" },
-      { id: 10, name: "Samsung Galaxy S24", price: "$899.99", rating: 4.7, reviews: 3845, category: "phone", image: "📱", prime: true },
-      { id: 11, name: "Google Pixel 8", price: "$799.00", rating: 4.6, reviews: 2156, category: "phone", image: "📱", prime: true },
-      { id: 12, name: "OnePlus 12", price: "$729.99", rating: 4.5, reviews: 1923, category: "phone", image: "📱", prime: true },
+    function renderPrimitive(v){
+      const span = document.createElement('span');
+      span.textContent = v === undefined ? '' : String(v);
+      return span;
+    }
 
-      // Phone Accessories
-      { id: 13, name: "Premium Phone Case", price: "$29.99", rating: 4.4, reviews: 8234, category: "case", image: "📦", prime: true },
-      { id: 14, name: "Screen Protector Glass", price: "$9.99", rating: 4.3, reviews: 12543, category: "case", image: "🛡️", prime: true },
-      { id: 15, name: "Fast Charging Cable", price: "$14.99", rating: 4.5, reviews: 9821, category: "case", image: "🔌", prime: true },
-      { id: 16, name: "Wireless Charging Pad", price: "$24.99", rating: 4.6, reviews: 6234, category: "case", image: "🔌", prime: true },
+    function renderValue(v){
+      if(v === null) return renderPrimitive('null');
+      if(Array.isArray(v)) return renderArray(v);
+      if(typeof v === 'object') return renderObject(v);
+      return renderPrimitive(v);
+    }
 
-      // Tablets
-      { id: 17, name: "iPad Air", price: "$599.00", rating: 4.7, reviews: 2342, category: "tablet", image: "📱", prime: true },
-      { id: 18, name: "Samsung Galaxy Tab S9", price: "$549.99", rating: 4.6, reviews: 1834, category: "tablet", image: "📱", prime: true },
-      { id: 19, name: "Microsoft Surface Go", price: "$399.99", rating: 4.5, reviews: 1523, category: "tablet", image: "📱", prime: true },
+    function renderArray(arr){
+      const tbl = document.createElement('table');
+      tbl.className = 'resp-table nested';
+      const tbody = document.createElement('tbody');
+      arr.forEach((item, i)=>{
+        const tr = document.createElement('tr');
+        const th = document.createElement('th'); th.textContent = i; tr.appendChild(th);
+        const td = document.createElement('td'); td.appendChild(renderValue(item)); tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      return tbl;
+    }
 
-      // Smartwatches
-      { id: 20, name: "Apple Watch Series 9", price: "$399.00", rating: 4.7, reviews: 3421, category: "watch", image: "⌚", prime: true },
-      { id: 21, name: "Garmin Epix Gen 2", price: "$499.99", rating: 4.6, reviews: 1876, category: "watch", image: "⌚", prime: true },
-      { id: 22, name: "Samsung Galaxy Watch 6", price: "$299.99", rating: 4.5, reviews: 2543, category: "watch", image: "⌚", prime: true },
+    function renderObject(obj){
+      const tbl = document.createElement('table');
+      tbl.className = 'resp-table nested';
+      const tbody = document.createElement('tbody');
+      Object.keys(obj).forEach(key=>{
+        const tr = document.createElement('tr');
+        const th = document.createElement('th'); th.textContent = key; tr.appendChild(th);
+        const td = document.createElement('td'); td.appendChild(renderValue(obj[key])); tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      return tbl;
+    }
 
-      // Cameras
-      { id: 23, name: "Sony A6700 Mirrorless", price: "$1,398.00", rating: 4.8, reviews: 876, category: "camera", image: "📷", prime: true, badge: "Premium" },
-      { id: 24, name: "Canon EOS R50", price: "$799.00", rating: 4.6, reviews: 654, category: "camera", image: "📷", prime: true },
-      { id: 25, name: "GoPro HERO 12", price: "$399.99", rating: 4.7, reviews: 3456, category: "camera", image: "📷", prime: true },
+    function renderJobsTable(arr){
+      // Determine base headers (union of keys)
+      const baseHeaders = Array.from(arr.reduce((set, item) => {
+        if(item && typeof item === 'object') Object.keys(item).forEach(k=>set.add(k));
+        return set;
+      }, new Set()));
 
-      // Home Appliances
-      { id: 26, name: "Robot Vacuum Cleaner", price: "$299.99", rating: 4.5, reviews: 4321, category: "appliance", image: "🤖", prime: true },
-      { id: 27, name: "Smart WiFi Speaker", price: "$89.99", rating: 4.4, reviews: 5234, category: "appliance", image: "🔊", prime: true },
-      { id: 28, name: "Smart Thermostat", price: "$249.99", rating: 4.6, reviews: 2134, category: "appliance", image: "🌡️", prime: true },
-    ];
+      // Find marker tokens like **1, **2 across all string fields
+      const markerRe = /\*\*(\d+)/g;
+      const markers = new Set();
+      arr.forEach(item => {
+        if(!item || typeof item !== 'object') return;
+        Object.values(item).forEach(v => {
+          if(typeof v === 'string'){
+            let m; while((m = markerRe.exec(v)) !== null){ markers.add('**'+m[1]); }
+            markerRe.lastIndex = 0;
+          }
+        });
+      });
+      const markerCols = Array.from(markers).sort();
 
-    // Search functionality
-    function searchProducts() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const resultsDiv = document.getElementById('results');
-      const statusDiv = document.getElementById('status');
+      const headers = baseHeaders.concat(markerCols);
 
-      if (!query) {
-        resultsDiv.innerHTML = '';
-        statusDiv.innerHTML = '';
-        return;
+      const table = document.createElement('table');
+      table.className = 'jobs-table';
+      const thead = document.createElement('thead');
+      const trh = document.createElement('tr');
+      headers.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; trh.appendChild(th); });
+      thead.appendChild(trh);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+
+      // helper: extract text following marker occurrences in a text
+      function extractMarkerTexts(text){
+        const out = {};
+        if(typeof text !== 'string') return out;
+        const rx = /\*\*(\d+)\s*([^\*]*)/g; // capture marker and following text until next *
+        let m;
+        while((m = rx.exec(text)) !== null){
+          const key = '**'+m[1];
+          const txt = m[2].trim();
+          if(!out[key]) out[key] = [];
+          if(txt) out[key].push(txt);
+        }
+        return out;
       }
 
-      // Show loading state
-      statusDiv.innerHTML = '<span class="loading">⏳</span> Searching for "' + query + '"...';
-      resultsDiv.innerHTML = '';
+      arr.forEach((item, idx)=>{
+        const tr = document.createElement('tr');
 
-      // Simulate delay for better UX
-      setTimeout(() => {
-        const results = productDatabase.filter(product => 
-          product.name.toLowerCase().includes(query) ||
-          product.category.toLowerCase().includes(query)
-        );
-
-        if (results.length === 0) {
-          statusDiv.innerHTML = '';
-          resultsDiv.innerHTML = `
-            <div style="grid-column: 1/-1;">
-              <div class="empty-state">
-                <div class="empty-state-icon">🔍</div>
-                <h2>No Products Found</h2>
-                <p>Try searching for different keywords like "laptop", "phone", "headphones", etc.</p>
-              </div>
-            </div>
-          `;
-          return;
+        // build map of marker -> collected texts across all fields
+        const markerTexts = {};
+        if(item && typeof item === 'object'){
+          Object.values(item).forEach(v => {
+            const found = extractMarkerTexts(v);
+            Object.keys(found).forEach(k => {
+              if(!markerTexts[k]) markerTexts[k] = [];
+              markerTexts[k] = markerTexts[k].concat(found[k]);
+            });
+          });
         }
 
-        statusDiv.innerHTML = `Found <strong>${results.length}</strong> products matching "${query}"`;
-        displayResults(results);
-      }, 600);
+        headers.forEach(h=>{
+          const td = document.createElement('td');
+          if(baseHeaders.includes(h)){
+            let v = item ? item[h] : undefined;
+            if(v === undefined || v === null){ td.textContent = ''; }
+            else if(typeof v === 'object'){
+              const pre = document.createElement('pre');
+              pre.textContent = JSON.stringify(v, null, 2);
+              td.appendChild(pre);
+            } else {
+              const s = String(v);
+              if(s.length > 160){ const pre = document.createElement('pre'); pre.textContent = s; td.appendChild(pre); }
+              else td.textContent = s;
+            }
+          } else {
+            // marker column
+            const arrVals = markerTexts[h] || [];
+            if(arrVals.length === 0) td.textContent = '';
+            else {
+              // tokenize collected texts (split on non-word)
+              const tokens = arrVals.flatMap(t => t.split(/\W+/).filter(Boolean));
+              td.textContent = tokens.join(', ');
+            }
+          }
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      return table;
     }
 
-    function displayResults(products) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = products.map(product => `
-        <div class="product-card">
-          <div class="product-image">${product.image}</div>
-          <div class="product-info">
-            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-            <div class="product-name">${product.name}</div>
-            <div class="product-rating">
-              <span class="stars">★</span>
-              <span><strong>${product.rating}</strong></span>
-              <span class="rating-count">(${product.reviews.toLocaleString()} reviews)</span>
-            </div>
-            <div class="product-price">${product.price}</div>
-            ${product.prime ? '<div style="color: #FF9900; font-weight: 600; font-size: 0.85rem; margin-bottom: 0.5rem;">Prime Eligible</div>' : ''}
-            <button class="product-btn" onclick="viewProduct('${product.name}')">View on Amazon</button>
-          </div>
-        </div>
-      `).join('');
-    }
+    function renderResponse(json){
+      clear(resp);
+      if(!json){ resp.textContent = '(empty)'; return; }
+      const root = document.createElement('div');
 
-    function viewProduct(name) {
-      // In a real app, this would redirect to Amazon with the product search
-      alert(`Redirecting to Amazon to view: "${name}"\n\nIn production, this would open: https://www.amazon.com/s?k=${encodeURIComponent(name)}`);
-      // window.open(`https://www.amazon.com/s?k=${encodeURIComponent(name)}`, '_blank');
-    }
-
-    // Allow Enter key to search
-    document.getElementById('searchInput').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        searchProducts();
+      if(json.query !== undefined){
+        const qBox = document.createElement('div');
+        qBox.className = 'query-box';
+        const label = document.createElement('div'); label.textContent = 'Your Query'; label.className = 'label';
+        const pre = document.createElement('pre'); pre.textContent = json.query;
+        qBox.appendChild(label); qBox.appendChild(pre);
+        root.appendChild(qBox);
       }
-    });
 
-    // Focus on search input on load
-    window.addEventListener('load', function() {
-      document.getElementById('searchInput').focus();
+      const label = document.createElement('div'); label.textContent = 'Result'; label.className = 'label';
+      root.appendChild(label);
+
+      const result = json.result === undefined ? json : json.result;
+
+      // If result is an array of objects, render as jobs table (one job per row)
+      if(Array.isArray(result) && result.length>0 && result.every(it => typeof it === 'object' && it !== null)){
+        root.appendChild(renderJobsTable(result));
+      } else {
+        // Fallback to recursive renderer
+        root.appendChild(renderValue(result));
+      }
+
+      resp.appendChild(root);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const q = document.getElementById('query').value;
+      clear(resp);
+      resp.textContent = 'Loading...';
+      try {
+        const r = await fetch('/api/groq', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({query: q})
+        });
+        const j = await r.json();
+        renderResponse(j);
+      } catch (err) {
+        clear(resp);
+        resp.textContent = 'Error: ' + err.message;
+      }
     });
   </script>
 </body>
