@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GROQ UI</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:24px}
+    textarea{width:100%;font-family:monospace}
+    button{padding:8px 12px}
+    pre{white-space:pre-wrap;margin:0}
+    .container{max-width:1100px;margin:0 auto}
+    .query-box pre{background:#fff3cd;padding:8px;border-radius:4px;border:1px solid #ffeeba;overflow:auto}
+    .label{font-weight:600;margin-top:10px}
+    /* Jobs table styling */ 
+    .jobs-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+    .jobs-table thead th{background:#0f172a;color:#fff;padding:10px;text-align:left;position:sticky;top:0}
+    .jobs-table th,.jobs-table td{border:1px solid #e6e8eb;padding:10px;vertical-align:top}
+    .jobs-table tbody tr:nth-child(odd){background:#fbfcfe}
+    .jobs-table tbody tr:hover{background:#eef2ff}
+    .jobs-table td pre{background:transparent;padding:0;border:none;white-space:pre-wrap}
+    .small{max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .meta{color:#6b7280;font-size:13px}
+    /* Recursive table styles */
+    .resp-table{border-collapse:collapse;width:100%;margin:8px 0}
+    .resp-table th{background:#f3f4f6;text-align:left;padding:6px;border:1px solid #e6e8eb;width:25%}
+    .resp-table td{padding:6px;border:1px solid #e6e8eb}
+    .resp-table.nested{width:auto;margin:4px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GROQ Query UI</h1>
+    <form id="form">
+      <label for="query">Query</label>
+      <textarea id="query" rows="6" placeholder="Enter GROQ query or JSON input"></textarea>
+      <div style="margin-top:8px">
+        <button type="submit">Send</button>
+      </div>
+    </form>
+
+    <h2>Response</h2>
+    <div id="response">(no response yet)</div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const resp = document.getElementById('response');
+
+    function clear(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+
+    function renderPrimitive(v){
+      const span = document.createElement('span');
+      span.textContent = v === undefined ? '' : String(v);
+      return span;
+    }
+
+    function renderValue(v){
+      if(v === null) return renderPrimitive('null');
+      if(Array.isArray(v)) return renderArray(v);
+      if(typeof v === 'object') return renderObject(v);
+      return renderPrimitive(v);
+    }
+
+    function renderArray(arr){
+      const tbl = document.createElement('table');
+      tbl.className = 'resp-table nested';
+      const tbody = document.createElement('tbody');
+      arr.forEach((item, i)=>{
+        const tr = document.createElement('tr');
+        const th = document.createElement('th'); th.textContent = i; tr.appendChild(th);
+        const td = document.createElement('td'); td.appendChild(renderValue(item)); tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      return tbl;
+    }
+
+    function renderObject(obj){
+      const tbl = document.createElement('table');
+      tbl.className = 'resp-table nested';
+      const tbody = document.createElement('tbody');
+      Object.keys(obj).forEach(key=>{
+        const tr = document.createElement('tr');
+        const th = document.createElement('th'); th.textContent = key; tr.appendChild(th);
+        const td = document.createElement('td'); td.appendChild(renderValue(obj[key])); tr.appendChild(td);
+        tbody.appendChild(tr);
+      });
+      tbl.appendChild(tbody);
+      return tbl;
+    }
+
+    function renderJobsTable(arr){
+      // Determine base headers (union of keys)
+      const baseHeaders = Array.from(arr.reduce((set, item) => {
+        if(item && typeof item === 'object') Object.keys(item).forEach(k=>set.add(k));
+        return set;
+      }, new Set()));
+
+      // Find marker tokens like **1, **2 across all string fields
+      const markerRe = /\*\*(\d+)/g;
+      const markers = new Set();
+      arr.forEach(item => {
+        if(!item || typeof item !== 'object') return;
+        Object.values(item).forEach(v => {
+          if(typeof v === 'string'){
+            let m; while((m = markerRe.exec(v)) !== null){ markers.add('**'+m[1]); }
+            markerRe.lastIndex = 0;
+          }
+        });
+      });
+      const markerCols = Array.from(markers).sort();
+
+      const headers = baseHeaders.concat(markerCols);
+
+      const table = document.createElement('table');
+      table.className = 'jobs-table';
+      const thead = document.createElement('thead');
+      const trh = document.createElement('tr');
+      headers.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; trh.appendChild(th); });
+      thead.appendChild(trh);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+
+      // helper: extract text following marker occurrences in a text
+      function extractMarkerTexts(text){
+        const out = {};
+        if(typeof text !== 'string') return out;
+        const rx = /\*\*(\d+)\s*([^\*]*)/g; // capture marker and following text until next *
+        let m;
+        while((m = rx.exec(text)) !== null){
+          const key = '**'+m[1];
+          const txt = m[2].trim();
+          if(!out[key]) out[key] = [];
+          if(txt) out[key].push(txt);
+        }
+        return out;
+      }
+
+      arr.forEach((item, idx)=>{
+        const tr = document.createElement('tr');
+
+        // build map of marker -> collected texts across all fields
+        const markerTexts = {};
+        if(item && typeof item === 'object'){
+          Object.values(item).forEach(v => {
+            const found = extractMarkerTexts(v);
+            Object.keys(found).forEach(k => {
+              if(!markerTexts[k]) markerTexts[k] = [];
+              markerTexts[k] = markerTexts[k].concat(found[k]);
+            });
+          });
+        }
+
+        headers.forEach(h=>{
+          const td = document.createElement('td');
+          if(baseHeaders.includes(h)){
+            let v = item ? item[h] : undefined;
+            if(v === undefined || v === null){ td.textContent = ''; }
+            else if(typeof v === 'object'){
+              const pre = document.createElement('pre');
+              pre.textContent = JSON.stringify(v, null, 2);
+              td.appendChild(pre);
+            } else {
+              const s = String(v);
+              if(s.length > 160){ const pre = document.createElement('pre'); pre.textContent = s; td.appendChild(pre); }
+              else td.textContent = s;
+            }
+          } else {
+            // marker column
+            const arrVals = markerTexts[h] || [];
+            if(arrVals.length === 0) td.textContent = '';
+            else {
+              // tokenize collected texts (split on non-word)
+              const tokens = arrVals.flatMap(t => t.split(/\W+/).filter(Boolean));
+              td.textContent = tokens.join(', ');
+            }
+          }
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      return table;
+    }
+
+    function renderResponse(json){
+      clear(resp);
+      if(!json){ resp.textContent = '(empty)'; return; }
+      const root = document.createElement('div');
+
+      if(json.query !== undefined){
+        const qBox = document.createElement('div');
+        qBox.className = 'query-box';
+        const label = document.createElement('div'); label.textContent = 'Query'; label.className = 'label';
+        const pre = document.createElement('pre'); pre.textContent = json.query;
+        qBox.appendChild(label); qBox.appendChild(pre);
+        root.appendChild(qBox);
+      }
+
+      const label = document.createElement('div'); label.textContent = 'Result'; label.className = 'label';
+      root.appendChild(label);
+
+      const result = json.result === undefined ? json : json.result;
+
+      // If result is an array of objects, render as jobs table (one job per row)
+      if(Array.isArray(result) && result.length>0 && result.every(it => typeof it === 'object' && it !== null)){
+        root.appendChild(renderJobsTable(result));
+      } else {
+        // Fallback to recursive renderer
+        root.appendChild(renderValue(result));
+      }
+
+      resp.appendChild(root);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const q = document.getElementById('query').value;
+      clear(resp);
+      resp.textContent = 'Loading...';
+      try {
+        const r = await fetch('/api/groq', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({query: q})
+        });
+        const j = await r.json();
+        renderResponse(j);
+      } catch (err) {
+        clear(resp);
+        resp.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
