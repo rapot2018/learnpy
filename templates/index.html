@@ -719,26 +719,45 @@
       recommendationsContainer.appendChild(loadingDiv);
 
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+        
         const response = await fetch('/api/recommend', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ requirement })
+          body: JSON.stringify({ requirement }),
+          signal: controller.signal
         });
 
-        const data = await response.json();
+        clearTimeout(timeoutId);
 
-        if (data.success) {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('API Response:', data);
+
+        if (data.success && data.recommended_products && data.recommended_products.length > 0) {
           addMessage(`Found ${data.count} great options for you! ✨`);
           displayRecommendations(data);
+        } else if (data.error) {
+          addMessage(`Hmm, couldn't find recommendations. ${data.error}`);
+          recommendationsContainer.innerHTML = '<div class="empty-state"><p>Error: ' + data.error + '</p></div>';
         } else {
-          addMessage(`Hmm, couldn't find recommendations. ${data.error || 'Try rephrasing your request.'}`);
+          addMessage('No products matched your search. Try a different query.');
           recommendationsContainer.innerHTML = '<div class="empty-state"><p>No matches found</p></div>';
         }
       } catch (error) {
-        addMessage('Connection error. Please try again.');
-        console.error('Error:', error);
+        if (error.name === 'AbortError') {
+          addMessage('Request timed out. The server took too long to respond. Please try again.');
+        } else {
+          addMessage('Connection error. Please try again.');
+        }
+        console.error('Fetch Error:', error);
+        recommendationsContainer.innerHTML = `<div class="empty-state"><p>Error: ${error.message}</p></div>`;
       }
     }
 
@@ -781,7 +800,8 @@
         'electronics': '💻',
         'audio': '🎧',
         'mobile': '📱',
-        'peripherals': '⌨️'
+        'peripherals': '⌨️',
+        'wearables': '⌚'
       }[product.category] || '📦';
 
       card.innerHTML = `
@@ -820,7 +840,8 @@
           'electronics': '💻',
           'audio': '🎧',
           'mobile': '📱',
-          'peripherals': '⌨️'
+          'peripherals': '⌨️',
+          'wearables': '⌚'
         }[category];
         
         return { id: productId, name, price, category, description, rating, specs, emoji: categoryEmoji };

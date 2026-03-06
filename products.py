@@ -89,6 +89,33 @@ PRODUCTS = [
         "specs": ["Mechanical switches", "RGB lighting", "Wireless", "Programmable"],
         "rating": 4.6,
         "description": "Premium mechanical keyboard for gaming and work"
+    },
+    {
+        "id": 11,
+        "name": "Smartwatch - Apple Watch Series 9",
+        "category": "wearables",
+        "price": 399,
+        "specs": ["Retina display", "Heart rate monitor", "Blood oxygen tracking", "Fitness tracking", "Water resistant"],
+        "rating": 4.8,
+        "description": "Advanced smartwatch with health monitoring and fitness tracking"
+    },
+    {
+        "id": 12,
+        "name": "Smartwatch - Samsung Galaxy Watch 6",
+        "category": "wearables",
+        "price": 299,
+        "specs": ["AMOLED display", "Heart rate sensor", "Sleep tracking", "5G ready", "7-day battery"],
+        "rating": 4.6,
+        "description": "Feature-rich smartwatch with excellent battery life"
+    },
+    {
+        "id": 13,
+        "name": "Fitness Tracker - Fitbit Charge 6",
+        "category": "wearables",
+        "price": 159,
+        "specs": ["Sleep tracking", "Stress management", "GPS", "Water resistant", "Up to 7-day battery"],
+        "rating": 4.4,
+        "description": "Affordable fitness tracker for daily activity monitoring"
     }
 ]
 

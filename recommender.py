@@ -1,6 +1,7 @@
 import os
 import json
 from products import PRODUCTS
+from config import GROQ_API_KEY
 
 # Initialize Groq client - will be set when API key is available
 client = None
@@ -8,11 +9,13 @@ client = None
 def init_groq():
     """Initialize Groq client if API key is available"""
     global client
-    api_key = os.environ.get("GROQ_API_KEY")
+    # Try to get API key from config first, then environment variable
+    api_key = GROQ_API_KEY or os.environ.get("GROQ_API_KEY")
     if api_key:
         try:
             from groq import Groq
             client = Groq(api_key=api_key)
+            print("✅ Groq AI initialized successfully!")
             return True
         except Exception as e:
             print(f"Failed to initialize Groq: {e}")
@@ -99,18 +102,28 @@ Please respond with a JSON object containing:
 Respond ONLY with valid JSON, no other text."""
 
     try:
-        message = client.messages.create(
-            model="mixtral-8x7b-32768",
-            max_tokens=1024,
+        # Call Groq API with latest available model
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
             messages=[
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            temperature=0.7,
+            max_tokens=1024,
         )
         
-        response_text = message.content[0].text
+        response_text = response.choices[0].message.content
+        
+        # Extract JSON from response (it might be wrapped in markdown code blocks)
+        if "```json" in response_text:
+            json_str = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            json_str = response_text.split("```")[1].split("```")[0].strip()
+        else:
+            json_str = response_text.strip()
         
         # Parse the JSON response
-        recommendation_data = json.loads(response_text)
+        recommendation_data = json.loads(json_str)
         
         # Get the actual product objects
         product_ids = recommendation_data.get("recommendations", [])
@@ -131,7 +144,10 @@ Respond ONLY with valid JSON, no other text."""
             "count": len(recommended_products)
         }
         
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        # Log the error for debugging
+        print(f"JSON Parse Error: {e}")
+        print(f"Response was: {response_text[:200]}")
         # If response is not valid JSON, try to extract product recommendations manually
         return {
             "success": True,
@@ -143,11 +159,17 @@ Respond ONLY with valid JSON, no other text."""
             "count": 3
         }
     except Exception as e:
+        # Log the error and return fallback recommendations
+        print(f"Groq API Error: {str(e)}")
+        print(f"Error type: {type(e).__name__}")
         return {
-            "success": False,
-            "error": str(e),
+            "success": True,
             "user_requirement": user_requirement,
-            "recommended_products": []
+            "recommended_products": PRODUCTS[:3],  # Return top 3 as fallback
+            "reasoning": "Could not reach AI service, showing popular products",
+            "filters_applied": "None",
+            "summary": "AI Service temporarily unavailable. Showing popular products.",
+            "count": 3
         }
 
 # Initialize on import
