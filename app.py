@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -11,6 +12,14 @@ from recommender import get_recommendations
 from products import get_all_products, filter_products
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -49,6 +58,11 @@ def run_groq_query(query: str):
         return {"error": str(e)}
 
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -60,6 +74,15 @@ async def groq_api(request: Request):
     query = payload.get("query", "")
     result = run_groq_query(query)
     return JSONResponse(content={"query": query, "result": result})
+
+
+@app.get("/api/recommend")
+async def recommend_get():
+    """GET not supported; use POST with JSON body: {"requirement": "your search"}"""
+    return JSONResponse(
+        status_code=405,
+        content={"detail": "Method Not Allowed", "message": "Use POST with JSON body: {\"requirement\": \"your search\"}"},
+    )
 
 
 @app.post("/api/recommend")
@@ -113,8 +136,28 @@ async def filter_product_list(request: Request):
 
 
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+if os.path.isdir("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.get("/api")
+@app.get("/api/")
+async def api_info():
+    """List main API endpoints."""
+    return {
+        "message": "Lifez.AI API",
+        "endpoints": {
+            "GET /": "Landing page (HTML)",
+            "GET /health": "Health check",
+            "POST /api/recommend": "Product recommendations (body: {\"requirement\": \"...\"})",
+            "GET /api/products": "List all products",
+            "POST /api/products/filter": "Filter products",
+        },
+    }
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    host = "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1"
+    reload = not os.environ.get("PORT")  # disable reload on Render
+    uvicorn.run("app:app", host=host, port=port, reload=reload)
