@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
 import subprocess
 import sys
 import json
@@ -12,6 +13,22 @@ from recommender import get_recommendations
 from products import get_all_products, filter_products
 
 app = FastAPI()
+
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+    """Return 404/405 etc with requested path for debugging (e.g. Render path issues)."""
+    if exc.status_code == 404:
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": exc.detail,
+                "path": request.url.path,
+                "method": request.method,
+                "hint": "On Render, ensure Start Command is: python app.py",
+            },
+        )
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
 app.add_middleware(
     CORSMiddleware,
@@ -77,6 +94,7 @@ async def groq_api(request: Request):
 
 
 @app.get("/api/recommend")
+@app.get("/api/recommend/")
 async def recommend_get():
     """GET not supported; use POST with JSON body: {"requirement": "your search"}"""
     return JSONResponse(
@@ -85,28 +103,26 @@ async def recommend_get():
     )
 
 
-@app.post("/api/recommend")
-async def get_product_recommendations(request: Request):
-    """
-    Get product recommendations based on user requirement.
-    """
+async def _recommend_handler(request: Request):
+    """Shared logic for recommend endpoint."""
     try:
         payload = await request.json()
         requirement = payload.get("requirement", "")
-        
         if not requirement:
-            return JSONResponse(
-                status_code=400,
-                content={"error": "Requirement is required"}
-            )
-        
+            return JSONResponse(status_code=400, content={"error": "Requirement is required"})
         result = get_recommendations(requirement)
-        return JSONResponse(content=result)
+        return JSONResponse(result)
     except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"error": str(e)}
-        )
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+
+@app.post("/api/recommend")
+@app.post("/api/recommend/")
+@app.post("/recommend")
+@app.post("/recommend/")
+async def get_product_recommendations(request: Request):
+    """Product recommendations. Handles both /api/recommend and /recommend (for Render path stripping)."""
+    return await _recommend_handler(request)
 
 
 @app.get("/api/products")
