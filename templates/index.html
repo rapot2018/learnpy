@@ -22,7 +22,8 @@
     header {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.9) inset, 0 2px 8px rgba(96, 165, 250, 0.06);
       padding: 1.5rem 0;
       position: sticky;
       top: 0;
@@ -36,6 +37,29 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 2rem;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+      padding: 6px;
+      box-shadow: 0 4px 12px rgba(96, 165, 250, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .logo-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .logo {
@@ -197,10 +221,16 @@
 
     .feature-card {
       background: #ffffff;
-      border-radius: 14px;
-      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 16px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
       padding: 1.5rem 1.6rem;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(96, 165, 250, 0.06);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(96, 165, 250, 0.25);
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(96, 165, 250, 0.12);
     }
 
     .feature-title {
@@ -229,14 +259,17 @@
     }
 
     .step-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.95) 100%);
+      box-shadow: 0 2px 6px rgba(96, 165, 250, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.85rem;
+      font-weight: 600;
       color: #64748b;
     }
 
@@ -284,18 +317,19 @@
     .chat-panel {
       display: flex;
       flex-direction: column;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
-      border: 1px solid rgba(226, 232, 240, 0.5);
-      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      border-radius: 20px;
       overflow: hidden;
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(96, 165, 250, 0.08);
     }
 
     .panel-header {
       padding: 1.5rem;
       background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
       border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5) inset;
     }
 
     .panel-header h2 {
@@ -363,18 +397,19 @@
       flex: 1;
       padding: 0.85rem 1.2rem;
       background: #ffffff;
-      border: 1px solid rgba(226, 232, 240, 0.7);
-      border-radius: 10px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 14px;
       color: #1e293b;
       font-size: 0.95rem;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .input-area input:focus {
       outline: none;
       background: #ffffff;
-      border-color: rgba(96, 165, 250, 0.7);
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+      border-color: rgba(96, 165, 250, 0.5);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.12), 0 1px 2px rgba(0, 0, 0, 0.04);
     }
 
     .input-area input::placeholder {
@@ -423,21 +458,22 @@
     }
 
     .product-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
-      border: 1px solid rgba(226, 232, 240, 0.5);
-      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.9) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      border-radius: 18px;
       overflow: hidden;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       display: flex;
       flex-direction: column;
       height: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(96, 165, 250, 0.06);
     }
 
     .product-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(96, 165, 250, 0.5);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(96, 165, 250, 0.1);
+      border-color: rgba(96, 165, 250, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(96, 165, 250, 0.15), 0 8px 16px rgba(96, 165, 250, 0.08);
     }
 
     .product-image {
@@ -598,13 +634,13 @@
     }
 
     .reasoning-box {
-      background: rgba(96, 165, 250, 0.08);
-      padding: 1.2rem;
-      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.06) 0%, rgba(167, 139, 250, 0.06) 100%);
+      padding: 1.2rem 1.4rem;
+      border-radius: 16px;
       margin-bottom: 1.5rem;
-      border-left: 4px solid #60a5fa;
       border: 1px solid rgba(96, 165, 250, 0.2);
       border-left: 4px solid #60a5fa;
+      box-shadow: 0 2px 8px rgba(96, 165, 250, 0.06), inset 0 1px 0 rgba(255,255,255,0.6);
     }
 
     .reasoning-box h3 {
@@ -656,13 +692,14 @@
 
     .modal-content {
       background: white;
-      border-radius: 16px;
+      border-radius: 20px;
       padding: 2rem;
       max-width: 600px;
       width: 90%;
       max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(96, 165, 250, 0.08);
       position: relative;
     }
 
@@ -871,7 +908,16 @@
   <header>
     <nav>
       <div>
-        <div class="logo">⚡ Lifez.AI</div>
+        <div class="logo-wrap">
+          <span class="logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="white" opacity="0.95"/>
+              <path d="M19 14L19.8 17L23 17.8L19.8 18.6L19 22L18.2 18.6L15 17.8L18.2 17L19 14Z" fill="white" opacity="0.8"/>
+              <path d="M5 4L5.5 5.5L7 6L5.5 6.5L5 8L4.5 6.5L3 6L4.5 5.5L5 4Z" fill="white" opacity="0.7"/>
+            </svg>
+          </span>
+          <span class="logo">Lifez.AI</span>
+        </div>
         <div class="tagline">Smart Product Recommendations</div>
       </div>
       <div class="nav-links">
