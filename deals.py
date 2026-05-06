@@ -41,13 +41,6 @@ DEAL_SOURCES = [
         "description": "Top Apple & Mac deals daily",
     },
     {
-        "name": "The Verge Deals",
-        "url": "https://www.theverge.com/rss/deals/index.xml",
-        "icon": "⚡",
-        "color": "#e11d48",
-        "description": "Editor-picked deals from The Verge",
-    },
-    {
         "name": "CNET Deals",
         "url": "https://www.cnet.com/rss/deals/",
         "icon": "💡",
@@ -55,18 +48,11 @@ DEAL_SOURCES = [
         "description": "Expert-curated deals from CNET",
     },
     {
-        "name": "Ben's Bargains",
-        "url": "https://bensbargains.net/feed/",
+        "name": "DealNews",
+        "url": "https://www.dealnews.com/rss/",
         "icon": "💰",
         "color": "#7c3aed",
         "description": "Hand-picked bargains across all categories",
-    },
-    {
-        "name": "TechRadar Deals",
-        "url": "https://www.techradar.com/feeds/tag/deals",
-        "icon": "📡",
-        "color": "#0891b2",
-        "description": "Latest tech deals from TechRadar",
     },
     {
         "name": "Reddit Deals",
@@ -187,54 +173,61 @@ def get_top_deals(category: str = "all", season: str = "all", limit: int = 50) -
     }
 
 
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/rss+xml, application/xml, text/xml, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
+
 def _extract_link(item: ET.Element) -> str:
-    """Extract link from both RSS (<link>url</link>) and Atom (<link href="url"/>) formats."""
-    # RSS format: text content
+    """Handle both RSS <link>url</link> and Atom <link href='url'/>."""
     link_el = item.find("link")
     if link_el is not None:
-        if link_el.text and link_el.text.strip():
+        if link_el.text and link_el.text.strip().startswith("http"):
             return link_el.text.strip()
-        # Atom format: href attribute
         href = link_el.get("href", "").strip()
         if href:
             return href
-
-    # Atom namespace fallback
-    atom_ns = "http://www.w3.org/2005/Atom"
-    for link_el in item.findall(f"{{{atom_ns}}}link"):
-        href = link_el.get("href", "").strip()
+    ns = "http://www.w3.org/2005/Atom"
+    for el in item.findall(f"{{{ns}}}link"):
+        href = el.get("href", "").strip()
         if href:
             return href
-
-    # guid as last resort (Slickdeals uses this)
-    guid_el = item.find("guid")
-    if guid_el is not None and guid_el.text and guid_el.text.startswith("http"):
-        return guid_el.text.strip()
-
+    guid = item.find("guid")
+    if guid is not None and (guid.text or "").startswith("http"):
+        return guid.text.strip()
     return ""
 
 
 async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
     deals = []
     try:
-        headers = {"User-Agent": "Mozilla/5.0 (compatible; LifezAI/1.0; +https://lifez.ai)"}
-        resp = await client.get(source["url"], headers=headers, timeout=15, follow_redirects=True)
+        resp = await client.get(source["url"], headers=HEADERS, timeout=20, follow_redirects=True)
         resp.raise_for_status()
 
-        root = ET.fromstring(resp.text)
-        # Support both RSS <item> and Atom <entry>
-        atom_ns = "http://www.w3.org/2005/Atom"
-        items = root.findall(".//item") or root.findall(f".//{{{atom_ns}}}entry")
+        # Strip any BOM / leading whitespace before parsing
+        text = resp.text.strip().lstrip("﻿")
+        root = ET.fromstring(text)
+
+        ns = "http://www.w3.org/2005/Atom"
+        items = root.findall(".//item") or root.findall(f".//{{{ns}}}entry")
 
         for item in items[:25]:
-            title_el = item.find("title") or item.find(f"{{{atom_ns}}}title")
-            desc_el  = item.find("description") or item.find(f"{{{atom_ns}}}summary") or item.find(f"{{{atom_ns}}}content")
-            pub_el   = item.find("pubDate") or item.find(f"{{{atom_ns}}}published") or item.find(f"{{{atom_ns}}}updated")
+            title_el = item.find("title") or item.find(f"{{{ns}}}title")
+            desc_el  = (item.find("description") or item.find(f"{{{ns}}}summary")
+                        or item.find(f"{{{ns}}}content"))
+            pub_el   = (item.find("pubDate") or item.find(f"{{{ns}}}published")
+                        or item.find(f"{{{ns}}}updated"))
 
             title       = strip_html(title_el.text if title_el is not None else "")
             link        = _extract_link(item)
             description = strip_html(desc_el.text if desc_el is not None else "")[:250]
-            pub_date    = (pub_el.text or "").strip()
+            pub_date    = (pub_el.text or "").strip() if pub_el is not None else ""
 
             if not title or not link:
                 continue
@@ -254,6 +247,7 @@ async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
                 "is_user_submitted": False,
                 "votes": 0,
             })
+        print(f"  ✓  {source['name']}: {len(deals)} deals")
     except Exception as e:
         print(f"  ⚠️  {source['name']}: {e}")
     return deals
@@ -264,14 +258,10 @@ async def refresh_deals() -> int:
     all_new_deals = []
 
     async with httpx.AsyncClient() as client:
-        results = await asyncio.gather(
-            *[fetch_rss_source(src, client) for src in DEAL_SOURCES],
-            return_exceptions=True,
-        )
-
-    for result in results:
-        if isinstance(result, list):
-            all_new_deals.extend(result)
+        for src in DEAL_SOURCES:
+            deals = await fetch_rss_source(src, client)
+            all_new_deals.extend(deals)
+            await asyncio.sleep(0.8)   # avoid triggering rate-limits
 
     data = load_deals()
     data["deals"] = all_new_deals
