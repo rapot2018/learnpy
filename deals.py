@@ -187,6 +187,33 @@ def get_top_deals(category: str = "all", season: str = "all", limit: int = 50) -
     }
 
 
+def _extract_link(item: ET.Element) -> str:
+    """Extract link from both RSS (<link>url</link>) and Atom (<link href="url"/>) formats."""
+    # RSS format: text content
+    link_el = item.find("link")
+    if link_el is not None:
+        if link_el.text and link_el.text.strip():
+            return link_el.text.strip()
+        # Atom format: href attribute
+        href = link_el.get("href", "").strip()
+        if href:
+            return href
+
+    # Atom namespace fallback
+    atom_ns = "http://www.w3.org/2005/Atom"
+    for link_el in item.findall(f"{{{atom_ns}}}link"):
+        href = link_el.get("href", "").strip()
+        if href:
+            return href
+
+    # guid as last resort (Slickdeals uses this)
+    guid_el = item.find("guid")
+    if guid_el is not None and guid_el.text and guid_el.text.startswith("http"):
+        return guid_el.text.strip()
+
+    return ""
+
+
 async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
     deals = []
     try:
@@ -195,18 +222,19 @@ async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
         resp.raise_for_status()
 
         root = ET.fromstring(resp.text)
-        items = root.findall(".//item")
+        # Support both RSS <item> and Atom <entry>
+        atom_ns = "http://www.w3.org/2005/Atom"
+        items = root.findall(".//item") or root.findall(f".//{{{atom_ns}}}entry")
 
         for item in items[:25]:
-            title_el = item.find("title")
-            link_el = item.find("link")
-            desc_el = item.find("description")
-            pub_el = item.find("pubDate")
+            title_el = item.find("title") or item.find(f"{{{atom_ns}}}title")
+            desc_el  = item.find("description") or item.find(f"{{{atom_ns}}}summary") or item.find(f"{{{atom_ns}}}content")
+            pub_el   = item.find("pubDate") or item.find(f"{{{atom_ns}}}published") or item.find(f"{{{atom_ns}}}updated")
 
-            title = strip_html(title_el.text if title_el is not None else "")
-            link = (link_el.text or "").strip()
+            title       = strip_html(title_el.text if title_el is not None else "")
+            link        = _extract_link(item)
             description = strip_html(desc_el.text if desc_el is not None else "")[:250]
-            pub_date = (pub_el.text or "").strip()
+            pub_date    = (pub_el.text or "").strip()
 
             if not title or not link:
                 continue
