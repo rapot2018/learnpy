@@ -11,62 +11,64 @@ import httpx
 
 DEALS_FILE = "deals.json"
 
+GN = "https://news.google.com/rss/search?hl=en-US&gl=US&ceid=US:en&q="
+
 DEAL_SOURCES = [
     {
-        "name": "Slickdeals",
-        "url": "https://slickdeals.net/newsearch.php?mode=frontpage&searcharea=deals&searchin=first&rss=1",
+        "name": "Hot Deals",
+        "url": GN + "best+deals+today+sale",
         "icon": "🔥",
         "color": "#ff6b35",
-        "description": "Community-voted frontpage deals",
+        "description": "Hottest deals across the web right now",
     },
     {
-        "name": "Slickdeals Popular",
-        "url": "https://slickdeals.net/newsearch.php?mode=popdeals&searcharea=deals&searchin=first&rss=1",
-        "icon": "⭐",
-        "color": "#f59e0b",
-        "description": "Most popular deals on Slickdeals",
-    },
-    {
-        "name": "9to5Toys",
-        "url": "https://9to5toys.com/feed/",
-        "icon": "🎮",
-        "color": "#16a34a",
-        "description": "Best deals on tech, toys & gadgets",
-    },
-    {
-        "name": "9to5Mac Deals",
-        "url": "https://9to5mac.com/category/deals/feed/",
-        "icon": "🍎",
+        "name": "Tech Deals",
+        "url": GN + "tech+deals+discount+sale",
+        "icon": "💻",
         "color": "#6366f1",
-        "description": "Top Apple & Mac deals daily",
+        "description": "Best discounts on gadgets & electronics",
     },
     {
-        "name": "CNET Deals",
-        "url": "https://www.cnet.com/rss/deals/",
-        "icon": "💡",
-        "color": "#0284c7",
-        "description": "Expert-curated deals from CNET",
+        "name": "Amazon Deals",
+        "url": GN + "amazon+deals+sale+discount",
+        "icon": "📦",
+        "color": "#f59e0b",
+        "description": "Top Amazon sales & lightning deals",
     },
     {
-        "name": "DealNews",
-        "url": "https://www.dealnews.com/rss/",
-        "icon": "💰",
+        "name": "Fashion Deals",
+        "url": GN + "fashion+clothing+deals+sale+coupon",
+        "icon": "👗",
+        "color": "#ec4899",
+        "description": "Best fashion & clothing discounts",
+    },
+    {
+        "name": "Travel Deals",
+        "url": GN + "travel+flight+hotel+deals+discount",
+        "icon": "✈️",
+        "color": "#0891b2",
+        "description": "Flight, hotel and vacation deals",
+    },
+    {
+        "name": "Home Deals",
+        "url": GN + "home+furniture+appliance+deals+sale",
+        "icon": "🏠",
+        "color": "#16a34a",
+        "description": "Home, furniture & appliance discounts",
+    },
+    {
+        "name": "Spring Deals",
+        "url": GN + "spring+2026+deals+sale+discount",
+        "icon": "🌸",
+        "color": "#84cc16",
+        "description": "Best seasonal spring deals",
+    },
+    {
+        "name": "Coupon Deals",
+        "url": GN + "coupon+promo+code+discount+deal",
+        "icon": "🎟️",
         "color": "#7c3aed",
-        "description": "Hand-picked bargains across all categories",
-    },
-    {
-        "name": "Reddit Deals",
-        "url": "https://www.reddit.com/r/deals/.rss",
-        "icon": "👾",
-        "color": "#ff4500",
-        "description": "Hot deals from Reddit's deal hunters",
-    },
-    {
-        "name": "Reddit Frugal",
-        "url": "https://www.reddit.com/r/frugal/.rss",
-        "icon": "💸",
-        "color": "#a855f7",
-        "description": "Smart spending from the frugal community",
+        "description": "Latest coupons and promo codes",
     },
 ]
 
@@ -218,11 +220,13 @@ async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
         items = root.findall(".//item") or root.findall(f".//{{{ns}}}entry")
 
         for item in items[:25]:
-            title_el = item.find("title") or item.find(f"{{{ns}}}title")
-            desc_el  = (item.find("description") or item.find(f"{{{ns}}}summary")
-                        or item.find(f"{{{ns}}}content"))
-            pub_el   = (item.find("pubDate") or item.find(f"{{{ns}}}published")
-                        or item.find(f"{{{ns}}}updated"))
+            def _find(el, tag, ns_tag):
+                e = el.find(tag)
+                return e if e is not None else el.find(ns_tag)
+
+            title_el = _find(item, "title",       f"{{{ns}}}title")
+            desc_el  = _find(item, "description", f"{{{ns}}}summary") or item.find(f"{{{ns}}}content")
+            pub_el   = _find(item, "pubDate",     f"{{{ns}}}published") or item.find(f"{{{ns}}}updated")
 
             title       = strip_html(title_el.text if title_el is not None else "")
             link        = _extract_link(item)
