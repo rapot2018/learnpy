@@ -412,7 +412,7 @@
   <div class="hero-stats">
     <div class="hero-stat"><span class="live-dot"></span><span id="statCount">— deals live</span></div>
     <div class="hero-stat">⚡ Refreshed hourly</div>
-    <div class="hero-stat">🕵️ 3 sources tracked</div>
+    <div class="hero-stat">🕵️ 10 sources tracked</div>
   </div>
 </section>
 
@@ -434,7 +434,7 @@
 <!-- Deals -->
 <section class="deals-section" id="deals">
   <div class="deals-header">
-    <h2 class="deals-title">🔥 Top 10 Deals Right Now</h2>
+    <h2 class="deals-title">🔥 Top 50 Deals Right Now</h2>
     <div class="updated-badge" id="updatedBadge">
       <span class="live-dot"></span>
       <span id="updatedText">Loading…</span>
@@ -508,15 +508,34 @@
 
 <script>
   const SOURCES = [
-    { name:"Slickdeals",    icon:"🔥", color:"#ff6b35", description:"Community-powered deals voted by millions",      freq:"Every hour" },
-    { name:"Reddit Deals",  icon:"👾", color:"#ff4500", description:"Hot deals from Reddit's deal hunters",           freq:"Every hour" },
-    { name:"Reddit Frugal", icon:"💸", color:"#a855f7", description:"Smart spending from the frugal community",       freq:"Every hour" },
+    { name:"Slickdeals",         icon:"🔥", color:"#ff6b35", description:"Community-voted frontpage deals",          freq:"Every hour" },
+    { name:"Slickdeals Popular", icon:"⭐", color:"#f59e0b", description:"Most popular deals on Slickdeals",         freq:"Every hour" },
+    { name:"9to5Toys",           icon:"🎮", color:"#16a34a", description:"Best deals on tech, toys & gadgets",       freq:"Every hour" },
+    { name:"9to5Mac Deals",      icon:"🍎", color:"#6366f1", description:"Top Apple & Mac deals daily",              freq:"Every hour" },
+    { name:"The Verge Deals",    icon:"⚡", color:"#e11d48", description:"Editor-picked deals from The Verge",       freq:"Every hour" },
+    { name:"CNET Deals",         icon:"💡", color:"#0284c7", description:"Expert-curated deals from CNET",           freq:"Every hour" },
+    { name:"Ben's Bargains",     icon:"💰", color:"#7c3aed", description:"Hand-picked bargains across all categories",freq:"Every hour" },
+    { name:"TechRadar Deals",    icon:"📡", color:"#0891b2", description:"Latest tech deals from TechRadar",         freq:"Every hour" },
+    { name:"Reddit Deals",       icon:"👾", color:"#ff4500", description:"Hot deals from Reddit's deal hunters",     freq:"Every hour" },
+    { name:"Reddit Frugal",      icon:"💸", color:"#a855f7", description:"Smart spending from the frugal community", freq:"Every hour" },
   ];
 
   const CAT_ICONS    = { tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏠", health:"💪", beauty:"✨", other:"🏷️" };
   const SEASON_ICONS = { spring:"🌸", summer:"☀️", fall:"🍂", winter:"❄️" };
-  const SRC_COLOR    = { "Slickdeals":"#ff6b35", "Reddit Deals":"#ff4500", "Reddit Frugal":"#a855f7", "Community":"#06b6d4" };
-  const SRC_COLOR2   = { "Slickdeals":"#f97316", "Reddit Deals":"#fb923c", "Reddit Frugal":"#ec4899", "Community":"#a855f7" };
+  const SRC_COLOR  = {
+    "Slickdeals":"#ff6b35", "Slickdeals Popular":"#f59e0b",
+    "9to5Toys":"#16a34a", "9to5Mac Deals":"#6366f1",
+    "The Verge Deals":"#e11d48", "CNET Deals":"#0284c7",
+    "Ben's Bargains":"#7c3aed", "TechRadar Deals":"#0891b2",
+    "Reddit Deals":"#ff4500", "Reddit Frugal":"#a855f7", "Community":"#06b6d4",
+  };
+  const SRC_COLOR2 = {
+    "Slickdeals":"#f97316", "Slickdeals Popular":"#d97706",
+    "9to5Toys":"#15803d", "9to5Mac Deals":"#4f46e5",
+    "The Verge Deals":"#be123c", "CNET Deals":"#0369a1",
+    "Ben's Bargains":"#6d28d9", "TechRadar Deals":"#0e7490",
+    "Reddit Deals":"#fb923c", "Reddit Frugal":"#ec4899", "Community":"#a855f7",
+  };
 
   let currentFilter = "all";
   let voted = new Set(JSON.parse(localStorage.getItem("lifez_voted") || "[]"));
@@ -569,7 +588,7 @@
 
   // ── Fetch ──
   async function loadDeals(filter = "all") {
-    const params = new URLSearchParams({ limit: 10 });
+    const params = new URLSearchParams({ limit: 50 });
     const seasons = ["spring","summer","fall","winter"];
     if (filter !== "all") {
       if (seasons.includes(filter)) params.set("season", filter);

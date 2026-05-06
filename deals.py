@@ -17,7 +17,56 @@ DEAL_SOURCES = [
         "url": "https://slickdeals.net/newsearch.php?mode=frontpage&searcharea=deals&searchin=first&rss=1",
         "icon": "🔥",
         "color": "#ff6b35",
-        "description": "Community-powered deals voted by millions",
+        "description": "Community-voted frontpage deals",
+    },
+    {
+        "name": "Slickdeals Popular",
+        "url": "https://slickdeals.net/newsearch.php?mode=popdeals&searcharea=deals&searchin=first&rss=1",
+        "icon": "⭐",
+        "color": "#f59e0b",
+        "description": "Most popular deals on Slickdeals",
+    },
+    {
+        "name": "9to5Toys",
+        "url": "https://9to5toys.com/feed/",
+        "icon": "🎮",
+        "color": "#16a34a",
+        "description": "Best deals on tech, toys & gadgets",
+    },
+    {
+        "name": "9to5Mac Deals",
+        "url": "https://9to5mac.com/category/deals/feed/",
+        "icon": "🍎",
+        "color": "#6366f1",
+        "description": "Top Apple & Mac deals daily",
+    },
+    {
+        "name": "The Verge Deals",
+        "url": "https://www.theverge.com/rss/deals/index.xml",
+        "icon": "⚡",
+        "color": "#e11d48",
+        "description": "Editor-picked deals from The Verge",
+    },
+    {
+        "name": "CNET Deals",
+        "url": "https://www.cnet.com/rss/deals/",
+        "icon": "💡",
+        "color": "#0284c7",
+        "description": "Expert-curated deals from CNET",
+    },
+    {
+        "name": "Ben's Bargains",
+        "url": "https://bensbargains.net/feed/",
+        "icon": "💰",
+        "color": "#7c3aed",
+        "description": "Hand-picked bargains across all categories",
+    },
+    {
+        "name": "TechRadar Deals",
+        "url": "https://www.techradar.com/feeds/tag/deals",
+        "icon": "📡",
+        "color": "#0891b2",
+        "description": "Latest tech deals from TechRadar",
     },
     {
         "name": "Reddit Deals",
@@ -109,7 +158,7 @@ def save_deals(data: dict):
         json.dump(data, f, indent=2, default=str)
 
 
-def get_top_deals(category: str = "all", season: str = "all", limit: int = 10) -> dict:
+def get_top_deals(category: str = "all", season: str = "all", limit: int = 50) -> dict:
     data = load_deals()
     deals = data.get("deals", []) + data.get("user_deals", [])
 
@@ -118,11 +167,21 @@ def get_top_deals(category: str = "all", season: str = "all", limit: int = 10) -
     if season and season != "all":
         deals = [d for d in deals if d.get("season") == season]
 
-    deals.sort(key=lambda d: (d.get("votes", 0), d.get("fetched_at", 0)), reverse=True)
+    # Deduplicate by link
+    seen = set()
+    unique = []
+    for d in deals:
+        key = d.get("link", "")
+        if key not in seen:
+            seen.add(key)
+            unique.append(d)
+
+    # Sort: votes first, then most recent
+    unique.sort(key=lambda d: (d.get("votes", 0), d.get("fetched_at", 0)), reverse=True)
 
     return {
-        "deals": deals[:limit],
-        "total": len(deals),
+        "deals": unique[:limit],
+        "total": len(unique),
         "last_updated": data.get("last_updated"),
         "current_season": get_current_season(),
     }
@@ -138,7 +197,7 @@ async def fetch_rss_source(source: dict, client: httpx.AsyncClient) -> list:
         root = ET.fromstring(resp.text)
         items = root.findall(".//item")
 
-        for item in items[:15]:
+        for item in items[:25]:
             title_el = item.find("title")
             link_el = item.find("link")
             desc_el = item.find("description")
