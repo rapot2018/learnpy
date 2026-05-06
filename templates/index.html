@@ -92,24 +92,6 @@
     }
     .btn-drop:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(124,58,237,0.25); }
 
-    /* ── Ticker ── */
-    .ticker {
-      background: linear-gradient(90deg, rgba(124,58,237,0.06), rgba(219,39,119,0.06));
-      border-bottom: 1px solid var(--border);
-      padding: 0.55rem 0; overflow: hidden; white-space: nowrap;
-    }
-    .ticker-track { display: inline-block; animation: scroll-left 120s linear infinite; }
-    .ticker-track:hover { animation-play-state: paused; }
-    .ticker-item {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0 2rem; font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
-    }
-    .ticker-item em { color: var(--purple); font-style: normal; }
-    .ticker-sep { color: var(--border-hover); padding: 0 0.5rem; }
-    @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
 
     /* ── Hero ── */
     .hero {
@@ -387,19 +369,12 @@
       <span>💰</span><span><span class="logo-grad">lifez</span>.ai</span>
     </a>
     <div class="nav-right">
-      <button class="nav-link" onclick="scrollTo('deals')">Deals</button>
-      <button class="nav-link" onclick="scrollTo('sources')">Sources</button>
+      <button class="nav-link" onclick="scrollToId('deals')">Deals</button>
+      <button class="nav-link" onclick="scrollToId('sources')">Sources</button>
       <button class="btn-drop" onclick="openModal()">✦ Drop a Deal</button>
     </div>
   </nav>
 </header>
-
-<!-- Ticker -->
-<div class="ticker">
-  <div class="ticker-track" id="tickerTrack">
-    <span class="ticker-item">⏳ Loading latest deals…</span>
-  </div>
-</div>
 
 <!-- Hero -->
 <section class="hero">
@@ -554,7 +529,7 @@
   }
 
   // ── Helpers ──
-  function scrollTo(id) { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); }
+  function scrollToId(id) { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); }
 
   function timeAgo(ts) {
     if (!ts) return "";
@@ -577,15 +552,6 @@
     return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
 
-  // ── Ticker ──
-  function buildTicker(deals) {
-    if (!deals.length) return;
-    const items = deals.map(d =>
-      `<span class="ticker-item"><em>${d.source_icon||"🔥"}</em> ${esc(d.title)}</span><span class="ticker-sep">·</span>`
-    ).join("");
-    document.getElementById("tickerTrack").innerHTML = items + items; // doubled for seamless loop
-  }
-
   // ── Fetch ──
   async function loadDeals(filter = "all") {
     const params = new URLSearchParams({ limit: 50 });
@@ -601,7 +567,6 @@
       renderDeals(data.deals || []);
       document.getElementById("updatedText").textContent = `Updated ${fmtUpdated(data.last_updated)}`;
       document.getElementById("statCount").textContent = `${data.total || 0}+ deals live`;
-      buildTicker(data.deals || []);
     } catch {
       renderError();
     }
