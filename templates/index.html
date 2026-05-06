@@ -358,6 +358,18 @@
     @media (max-width: 480px) {
       .hero-title { font-size: 2rem; }
     }
+
+    .btn-suggest { background: none; border: none; cursor: pointer; font: inherit; }
+    .suggest-banner {
+      background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(219,39,119,0.06));
+      border-bottom: 1px solid var(--border);
+      text-align: center; padding: 0.6rem 1rem;
+      font-size: 0.82rem; color: var(--text-muted);
+    }
+    .suggest-banner a, .suggest-banner button {
+      color: var(--purple); font-weight: 700; cursor: pointer;
+      background: none; border: none; font: inherit; text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -371,10 +383,16 @@
     <div class="nav-right">
       <button class="nav-link" onclick="scrollToId('deals')">Deals</button>
       <button class="nav-link" onclick="scrollToId('sources')">Sources</button>
+      <button class="nav-link" onclick="openSuggestModal()">💡 Suggest</button>
       <button class="btn-drop" onclick="openModal()">✦ Drop a Deal</button>
     </div>
   </nav>
 </header>
+
+<!-- Suggestion nudge -->
+<div class="suggest-banner">
+  💡 Got a deal idea or feedback? <button onclick="openSuggestModal()">Drop us a suggestion</button> — we read every one.
+</div>
 
 <!-- Hero -->
 <section class="hero">
@@ -477,6 +495,37 @@
       <div class="big-em">🎉</div>
       <h3>Deal dropped!</h3>
       <p>Your deal is now live on lifez.ai. The community will love it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Suggestion Modal -->
+<div class="modal-overlay" id="suggestModal" onclick="onSuggestOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeSuggestModal()">✕</button>
+    <div id="suggestFormView">
+      <h2 class="modal-title">Drop a Suggestion 💡</h2>
+      <p class="modal-sub">Tell us what deals, sources, or features you'd love to see on lifez.ai.</p>
+      <form id="suggestForm" onsubmit="submitSuggestion(event)">
+        <div class="form-group">
+          <label class="form-label">Your Name (optional)</label>
+          <input class="form-input" type="text" id="suggestName" placeholder="e.g. Alex" maxlength="80">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Email (optional)</label>
+          <input class="form-input" type="email" id="suggestEmail" placeholder="so we can reply">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Suggestion *</label>
+          <textarea class="form-textarea" id="suggestMessage" placeholder="e.g. Add Amazon deal alerts, or show travel deals more prominently…" required style="min-height:110px"></textarea>
+        </div>
+        <button type="submit" class="btn-submit-form">✉️ Send Suggestion</button>
+      </form>
+    </div>
+    <div id="suggestSuccessView" style="display:none" class="success-view">
+      <div class="big-em">🙏</div>
+      <h3>Thanks for the suggestion!</h3>
+      <p>We'll read it and get back to you if you left an email.</p>
     </div>
   </div>
 </div>
@@ -693,6 +742,43 @@
         setTimeout(() => { closeModal(); loadDeals(currentFilter); }, 2500);
       }
     } catch { alert("Something went wrong — try again!"); }
+  }
+
+  // ── Suggest Modal ──
+  function openSuggestModal() {
+    document.getElementById("suggestModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeSuggestModal() {
+    document.getElementById("suggestModal").classList.remove("open");
+    document.body.style.overflow = "";
+    document.getElementById("suggestFormView").style.display = "";
+    document.getElementById("suggestSuccessView").style.display = "none";
+    document.getElementById("suggestForm").reset();
+  }
+  function onSuggestOverlayClick(e) { if (e.target === e.currentTarget) closeSuggestModal(); }
+
+  async function submitSuggestion(e) {
+    e.preventDefault();
+    const payload = {
+      name:    document.getElementById("suggestName").value.trim(),
+      email:   document.getElementById("suggestEmail").value.trim(),
+      message: document.getElementById("suggestMessage").value.trim(),
+    };
+    try {
+      const res  = await fetch("/api/suggest", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById("suggestFormView").style.display = "none";
+        document.getElementById("suggestSuccessView").style.display = "";
+        setTimeout(closeSuggestModal, 3000);
+      } else {
+        alert("Something went wrong — please try again.");
+      }
+    } catch { alert("Something went wrong — please try again."); }
   }
 
   // ── Auto-refresh every 30 min ──

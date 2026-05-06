@@ -2,10 +2,13 @@ import asyncio
 import importlib
 import json
 import os
+import smtplib
 import subprocess
 import sys
 import time
 from contextlib import asynccontextmanager
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -126,6 +129,54 @@ async def manual_refresh():
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+# ── Suggestions ───────────────────────────────────────────────────────────────
+
+def _send_suggestion_email(name: str, email: str, message: str):
+    smtp_user = os.environ.get("SMTP_USER", "")
+    smtp_pass = os.environ.get("SMTP_PASS", "")
+    to_addr   = "rapot2018@gmail.com"
+
+    if not smtp_user or not smtp_pass:
+        print(f"[suggestion] Email not configured — suggestion from {name or 'anon'}: {message[:80]}")
+        return
+
+    msg = MIMEMultipart("alternative")
+    msg["From"]    = smtp_user
+    msg["To"]      = to_addr
+    msg["Subject"] = f"💡 New lifez.ai suggestion from {name or 'Anonymous'}"
+
+    body = (
+        f"New suggestion on lifez.ai\n\n"
+        f"From:    {name or 'Anonymous'}\n"
+        f"Email:   {email or 'Not provided'}\n\n"
+        f"Message:\n{message}\n"
+    )
+    msg.attach(MIMEText(body, "plain"))
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(smtp_user, smtp_pass)
+        server.sendmail(smtp_user, to_addr, msg.as_string())
+
+
+@app.post("/api/suggest")
+async def suggest(request: Request):
+    payload = await request.json()
+    message = payload.get("message", "").strip()
+    if not message:
+        return JSONResponse(status_code=400, content={"error": "Message is required"})
+
+    name  = payload.get("name", "").strip()
+    email = payload.get("email", "").strip()
+
+    try:
+        await asyncio.to_thread(_send_suggestion_email, name, email, message)
+    except Exception as e:
+        print(f"[suggestion] Email send failed: {e}")
+
+    return JSONResponse({"success": True})
 
 
 @app.get("/", response_class=HTMLResponse)
