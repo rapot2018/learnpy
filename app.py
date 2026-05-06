@@ -1,23 +1,50 @@
+import asyncio
+import importlib
+import json
+import os
+import subprocess
+import sys
+import time
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
-import subprocess
-import sys
-import json
-import importlib
-import os
-from recommender import get_recommendations
-from products import get_all_products, filter_products
 
-app = FastAPI()
+from deals import (
+    DEAL_SOURCES,
+    detect_category,
+    detect_season,
+    get_current_season,
+    get_top_deals,
+    hourly_refresh_loop,
+    load_deals,
+    refresh_deals,
+    save_deals,
+)
+from products import filter_products, get_all_products
+from recommender import get_recommendations
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(hourly_refresh_loop())
+    yield
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
-    """Return 404/405 etc with requested path for debugging (e.g. Render path issues)."""
     if exc.status_code == 404:
         return JSONResponse(
             status_code=404,
@@ -30,6 +57,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
         )
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,39 +69,63 @@ app.add_middleware(
 templates = Jinja2Templates(directory="templates")
 
 
-def run_groq_query(query: str):
-    # Try to call groqtest as a module with a helper function if available
-    try:
-        spec = importlib.import_module("groqtest")
-        # prefer common helper names
-        for name in ("get_response", "run", "main"):
-            fn = getattr(spec, name, None)
-            if callable(fn):
-                try:
-                    return fn(query)
-                except TypeError:
-                    # try without args
-                    return fn()
-    except Exception:
-        pass
+# ── Deal endpoints ─────────────────────────────────────────────────────────────
 
-    # Fallback: run the script and capture stdout
-    try:
-        env = os.environ.copy()
-        env["GROQ_QUERY"] = query
-        proc = subprocess.run([sys.executable, "groqtest.py"], capture_output=True, text=True, env=env, cwd=os.getcwd())
-        if proc.returncode == 0:
-            # try parse JSON, else return raw
-            out = proc.stdout.strip()
-            try:
-                return json.loads(out)
-            except Exception:
-                return out
-        else:
-            return {"error": proc.stderr.strip()}
-    except Exception as e:
-        return {"error": str(e)}
+@app.get("/api/deals")
+async def get_deals(category: str = "all", season: str = "all", limit: int = 10):
+    result = get_top_deals(category=category, season=season, limit=limit)
+    return JSONResponse(content=result)
 
+
+@app.post("/api/deals/submit")
+async def submit_deal(request: Request):
+    payload = await request.json()
+    title = payload.get("title", "").strip()
+    link = payload.get("link", "").strip()
+
+    if not title or not link:
+        return JSONResponse(status_code=400, content={"error": "Title and link are required"})
+
+    deal = {
+        "id": abs(hash(link + title)) % (10 ** 9),
+        "title": title,
+        "link": link,
+        "description": payload.get("description", "")[:250],
+        "category": payload.get("category") or detect_category(title, ""),
+        "season": detect_season(title, "") or get_current_season(),
+        "source": "Community",
+        "source_icon": "👤",
+        "source_color": "#06b6d4",
+        "fetched_at": int(time.time()),
+        "is_user_submitted": True,
+        "votes": 0,
+    }
+
+    data = load_deals()
+    data.setdefault("user_deals", []).insert(0, deal)
+    save_deals(data)
+    return JSONResponse({"success": True, "deal": deal})
+
+
+@app.post("/api/deals/vote/{deal_id}")
+async def vote_deal(deal_id: int):
+    data = load_deals()
+    for list_key in ["deals", "user_deals"]:
+        for deal in data.get(list_key, []):
+            if deal["id"] == deal_id:
+                deal["votes"] = deal.get("votes", 0) + 1
+                save_deals(data)
+                return JSONResponse({"success": True, "votes": deal["votes"]})
+    return JSONResponse(status_code=404, content={"error": "Deal not found"})
+
+
+@app.post("/api/deals/refresh")
+async def manual_refresh():
+    count = await refresh_deals()
+    return JSONResponse({"success": True, "count": count})
+
+
+# ── Existing endpoints ─────────────────────────────────────────────────────────
 
 @app.get("/health")
 async def health():
@@ -83,6 +135,37 @@ async def health():
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+def run_groq_query(query: str):
+    try:
+        spec = importlib.import_module("groqtest")
+        for name in ("get_response", "run", "main"):
+            fn = getattr(spec, name, None)
+            if callable(fn):
+                try:
+                    return fn(query)
+                except TypeError:
+                    return fn()
+    except Exception:
+        pass
+
+    try:
+        env = os.environ.copy()
+        env["GROQ_QUERY"] = query
+        proc = subprocess.run(
+            [sys.executable, "groqtest.py"],
+            capture_output=True, text=True, env=env, cwd=os.getcwd(),
+        )
+        if proc.returncode == 0:
+            out = proc.stdout.strip()
+            try:
+                return json.loads(out)
+            except Exception:
+                return out
+        return {"error": proc.stderr.strip()}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 @app.post("/api/groq")
@@ -96,15 +179,13 @@ async def groq_api(request: Request):
 @app.get("/api/recommend")
 @app.get("/api/recommend/")
 async def recommend_get():
-    """GET not supported; use POST with JSON body: {"requirement": "your search"}"""
     return JSONResponse(
         status_code=405,
-        content={"detail": "Method Not Allowed", "message": "Use POST with JSON body: {\"requirement\": \"your search\"}"},
+        content={"detail": "Method Not Allowed", "message": 'Use POST with JSON body: {"requirement": "your search"}'},
     )
 
 
 async def _recommend_handler(request: Request):
-    """Shared logic for recommend endpoint."""
     try:
         payload = await request.json()
         requirement = payload.get("requirement", "")
@@ -121,35 +202,23 @@ async def _recommend_handler(request: Request):
 @app.post("/recommend")
 @app.post("/recommend/")
 async def get_product_recommendations(request: Request):
-    """Product recommendations. Handles both /api/recommend and /recommend (for Render path stripping)."""
     return await _recommend_handler(request)
 
 
 @app.get("/api/products")
 async def get_products():
-    """
-    Get all available products.
-    """
     return JSONResponse(content={"products": get_all_products()})
 
 
 @app.post("/api/products/filter")
 async def filter_product_list(request: Request):
-    """
-    Filter products based on criteria.
-    """
     try:
         payload = await request.json()
         filters = payload.get("filters", {})
-        
         results = filter_products(filters)
         return JSONResponse(content={"products": results, "count": len(results)})
     except Exception as e:
-        return JSONResponse(
-            status_code=500,
-            content={"error": str(e)}
-        )
-
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 
 if os.path.isdir("static"):
@@ -159,21 +228,25 @@ if os.path.isdir("static"):
 @app.get("/api")
 @app.get("/api/")
 async def api_info():
-    """List main API endpoints."""
     return {
         "message": "Lifez.AI API",
         "endpoints": {
             "GET /": "Landing page (HTML)",
             "GET /health": "Health check",
-            "POST /api/recommend": "Product recommendations (body: {\"requirement\": \"...\"})",
+            "GET /api/deals": "Top 10 deals (params: category, season)",
+            "POST /api/deals/submit": "Submit a deal",
+            "POST /api/deals/vote/{id}": "Vote for a deal",
+            "POST /api/deals/refresh": "Force refresh deals",
+            "POST /api/recommend": 'Product recommendations (body: {"requirement": "..."})',
             "GET /api/products": "List all products",
             "POST /api/products/filter": "Filter products",
         },
     }
 
+
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
     host = "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1"
-    reload = not os.environ.get("PORT")  # disable reload on Render
+    reload = not os.environ.get("PORT")
     uvicorn.run("app:app", host=host, port=port, reload=reload)

@@ -3,1296 +3,710 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lifez.AI - Smart Product Recommendations</title>
+  <title>lifez.ai — Best Deals Right Now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #09090b;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.16);
+      --purple: #a855f7;
+      --purple-dim: rgba(168,85,247,0.12);
+      --pink: #ec4899;
+      --pink-dim: rgba(236,72,153,0.12);
+      --cyan: #06b6d4;
+      --cyan-dim: rgba(6,182,212,0.12);
+      --lime: #84cc16;
+      --lime-dim: rgba(132,204,22,0.12);
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --red-dim: rgba(239,68,68,0.12);
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --text-dim: #a1a1aa;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(168,85,247,0.4); border-radius: 3px; }
+
+    /* ── Header ── */
     header {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,9,11,0.85);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.7);
-      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.9) inset, 0 2px 8px rgba(96, 165, 250, 0.06);
-      padding: 1.5rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
     }
 
     nav {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-    }
-
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-      padding: 6px;
-      box-shadow: 0 4px 12px rgba(96, 165, 250, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-    }
-
-    .logo-icon svg {
-      width: 100%;
-      height: 100%;
-      display: block;
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 1.5rem; height: 62px;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
 
     .logo {
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em;
+      text-decoration: none; color: var(--text);
     }
 
-    .tagline {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      font-weight: 400;
-      letter-spacing: 0.5px;
+    .logo-grad {
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-    }
-
-    main {
-      padding: 3.5rem 2rem 1rem;
-    }
-
-    .hero {
-      max-width: 900px;
-      margin: 0 auto 2.5rem;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #94a3b8;
-      font-weight: 600;
-      margin-bottom: 0.9rem;
-    }
-
-    .hero-title {
-      font-size: clamp(2.4rem, 4vw, 3rem);
-      letter-spacing: -0.04em;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 1rem;
-    }
-
-    .hero-subtitle {
-      max-width: 640px;
-      margin: 0 auto 1.8rem;
-      font-size: 1rem;
-      color: #64748b;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-primary,
-    .hero-secondary {
-      padding: 0.9rem 1.7rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .hero-primary {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      color: white;
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
-    }
-
-    .hero-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(59, 130, 246, 0.3);
-    }
-
-    .hero-secondary {
-      background: white;
-      color: #0f172a;
-      border-color: rgba(148, 163, 184, 0.5);
-    }
-
-    .hero-secondary:hover {
-      background: #f8fafc;
-      border-color: rgba(148, 163, 184, 0.8);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      font-size: 0.9rem;
+    .nav-right {
+      display: flex; align-items: center; gap: 0.25rem;
     }
 
     .nav-link {
-      background: none;
-      border: none;
-      color: #64748b;
-      cursor: pointer;
-      padding: 0;
-      font: inherit;
-      transition: color 0.15s ease;
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      padding: 0.45rem 0.85rem; font: inherit; font-size: 0.88rem; font-weight: 500;
+      border-radius: 8px; transition: all 0.15s; text-decoration: none; display: inline-block;
+    }
+    .nav-link:hover { color: var(--text); background: var(--bg-card); }
+
+    .btn-drop {
+      display: flex; align-items: center; gap: 0.35rem;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: #fff; border: none; cursor: pointer;
+      padding: 0.45rem 1.1rem; font: inherit; font-size: 0.88rem; font-weight: 700;
+      border-radius: 10px; transition: all 0.2s;
+    }
+    .btn-drop:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(168,85,247,0.3); }
+
+    /* ── Ticker ── */
+    .ticker {
+      background: linear-gradient(90deg, rgba(168,85,247,0.1), rgba(236,72,153,0.1));
+      border-bottom: 1px solid var(--border);
+      padding: 0.55rem 0; overflow: hidden; white-space: nowrap;
+    }
+    .ticker-track { display: inline-block; animation: scroll-left 45s linear infinite; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0 2rem; font-size: 0.8rem; font-weight: 500; color: var(--text-dim);
+    }
+    .ticker-item em { color: var(--purple); font-style: normal; }
+    .ticker-sep { color: var(--border-hover); padding: 0 0.5rem; }
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
-    .nav-link:hover {
-      color: #0f172a;
+    /* ── Hero ── */
+    .hero {
+      max-width: 1200px; margin: 0 auto;
+      padding: 4rem 1.5rem 2.5rem; text-align: center;
     }
 
-    .section {
-      padding: 3.5rem 2rem 0;
+    .season-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.9rem; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 1.2rem; border: 1px solid;
+    }
+    .season-badge.spring { background: rgba(132,204,22,0.1); border-color: rgba(132,204,22,0.3); color: var(--lime); }
+    .season-badge.summer { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: var(--amber); }
+    .season-badge.fall   { background: rgba(239,68,68,0.1);  border-color: rgba(239,68,68,0.3);  color: var(--red); }
+    .season-badge.winter { background: rgba(6,182,212,0.1);  border-color: rgba(6,182,212,0.3);  color: var(--cyan); }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 1rem;
+    }
+    .grad-text {
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f59e0b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
-    .section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+    .hero-sub {
+      font-size: 1rem; color: var(--text-muted);
+      max-width: 500px; margin: 0 auto 2rem;
     }
 
-    .section-eyebrow {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #94a3b8;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
+    .hero-stats {
+      display: flex; justify-content: center; gap: 0.65rem; flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.9rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-dim);
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--lime);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+    /* ── Filters ── */
+    .filters-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 1.5rem;
+    }
+    .filters { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .pill {
+      padding: 0.38rem 0.9rem; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text-muted); font: inherit;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    }
+    .pill:hover { border-color: var(--border-hover); color: var(--text); }
+    .pill.active {
+      background: linear-gradient(135deg, rgba(168,85,247,0.18), rgba(236,72,153,0.18));
+      border-color: rgba(168,85,247,0.45); color: var(--text);
     }
 
-    .section-heading {
-      font-size: 1.8rem;
-      letter-spacing: -0.03em;
-      color: #0f172a;
-      margin-bottom: 0.75rem;
-      font-weight: 600;
+    /* ── Deals Section ── */
+    .deals-section { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    .deals-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .deals-title { font-size: 1.2rem; font-weight: 700; }
+
+    .updated-badge {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.8rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 999px; font-size: 0.75rem; color: var(--text-muted);
     }
 
-    .section-description {
-      max-width: 640px;
-      color: #64748b;
-      font-size: 0.98rem;
-      margin-bottom: 2rem;
-    }
-
-    .features-grid {
+    /* ── Grid ── */
+    .deals-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      background: #ffffff;
-      border-radius: 16px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      padding: 1.5rem 1.6rem;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(96, 165, 250, 0.06);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .feature-card:hover {
-      border-color: rgba(96, 165, 250, 0.25);
-      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(96, 165, 250, 0.12);
-    }
-
-    .feature-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.35rem;
-      color: #0f172a;
-    }
-
-    .feature-text {
-      font-size: 0.9rem;
-      color: #64748b;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .step {
-      display: flex;
-      gap: 0.9rem;
-      align-items: flex-start;
-    }
-
-    .step-number {
-      width: 32px;
-      height: 32px;
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.95) 100%);
-      box-shadow: 0 2px 6px rgba(96, 165, 250, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #64748b;
-    }
-
-    .step-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #0f172a;
-      margin-bottom: 0.1rem;
-    }
-
-    .step-text {
-      font-size: 0.9rem;
-      color: #64748b;
-    }
-
-    .metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .metric {
-      min-width: 140px;
-    }
-
-    .metric-value {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .metric-label {
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: flex-start;
-    }
-
-    .chat-panel {
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
-      border: 1px solid rgba(226, 232, 240, 0.6);
-      border-radius: 20px;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(96, 165, 250, 0.08);
-    }
-
-    .panel-header {
-      padding: 1.5rem;
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, rgba(167, 139, 250, 0.08) 100%);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5) inset;
-    }
-
-    .panel-header h2 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #1e293b;
-    }
-
-    .chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 1rem;
-      background: #ffffff;
     }
 
-    .message {
-      padding: 0.95rem 1.2rem;
-      border-radius: 12px;
-      max-width: 85%;
-      word-wrap: break-word;
-      animation: fadeIn 0.3s ease;
-      font-size: 0.95rem;
-      line-height: 1.5;
+    /* ── Deal Card ── */
+    .deal-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.2rem;
+      display: flex; flex-direction: column; gap: 0.7rem;
+      position: relative; overflow: hidden; transition: all 0.2s;
+    }
+    .deal-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--ca, #a855f7), var(--ca2, #ec4899));
+    }
+    .deal-card:hover { background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px); }
+
+    .card-top { display: flex; align-items: center; justify-content: space-between; }
+    .card-source {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .src-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .card-time { font-size: 0.72rem; color: var(--text-muted); }
+
+    .hot-badge {
+      position: absolute; top: 0.9rem; right: 0.9rem;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff; font-size: 0.6rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 0.18rem 0.5rem; border-radius: 5px;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .card-title { font-size: 0.95rem; font-weight: 700; line-height: 1.35; color: var(--text); }
+    .card-desc  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag {
+      padding: 0.18rem 0.55rem; border-radius: 5px;
+      font-size: 0.68rem; font-weight: 600;
+    }
+    .tag-cat    { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(168,85,247,0.18); }
+    .tag-season { background: var(--lime-dim);   color: var(--lime);   border: 1px solid rgba(132,204,22,0.18); }
+    .tag-user   { background: var(--cyan-dim);   color: var(--cyan);   border: 1px solid rgba(6,182,212,0.18); }
+
+    .card-actions { display: flex; align-items: center; gap: 0.55rem; margin-top: auto; }
+
+    .btn-grab {
+      flex: 1; padding: 0.58rem 1rem;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: #fff; border: none; border-radius: 10px;
+      font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+      text-decoration: none; text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+      transition: all 0.2s;
+    }
+    .btn-grab:hover { opacity: 0.88; box-shadow: 0 6px 16px rgba(168,85,247,0.28); }
+
+    .btn-vote {
+      display: flex; align-items: center; gap: 0.3rem;
+      padding: 0.58rem 0.85rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text-muted); font: inherit;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-vote:hover, .btn-vote.voted {
+      background: var(--red-dim); border-color: rgba(239,68,68,0.3); color: var(--red);
     }
 
-    .message.user {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      color: white;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    /* ── State boxes ── */
+    .state-box {
+      grid-column: 1/-1; text-align: center;
+      padding: 4rem 2rem; color: var(--text-muted);
     }
-
-    .message.assistant {
-      background: #f1f5f9;
-      color: #475569;
-      align-self: flex-start;
-      border: 1px solid rgba(226, 232, 240, 0.5);
-      border-bottom-left-radius: 4px;
-    }
-
-    .input-area {
-      padding: 1.5rem;
-      background: #f8fafc;
-      border-top: 1px solid rgba(226, 232, 240, 0.5);
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 0.85rem 1.2rem;
-      background: #ffffff;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      border-radius: 14px;
-      color: #1e293b;
-      font-size: 0.95rem;
-      transition: all 0.25s ease;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .input-area input:focus {
-      outline: none;
-      background: #ffffff;
-      border-color: rgba(96, 165, 250, 0.5);
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.12), 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .input-area input::placeholder {
-      color: #94a3b8;
-    }
-
-    .input-area button {
-      padding: 0.85rem 1.8rem;
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
-    }
-
-    .input-area button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-    }
-
-    .input-area button:active {
-      transform: translateY(0);
-    }
-
-    .products-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      overflow-y: auto;
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 0.5rem;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .product-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.9) 100%);
-      border: 1px solid rgba(226, 232, 240, 0.7);
-      border-radius: 18px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(96, 165, 250, 0.06);
-    }
-
-    .product-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(96, 165, 250, 0.35);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(96, 165, 250, 0.15), 0 8px 16px rgba(96, 165, 250, 0.08);
-    }
-
-    .product-image {
-      height: 180px;
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-    }
-
-    .product-content {
-      padding: 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-category {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #60a5fa;
-      margin-bottom: 0.5rem;
-    }
-
-    .product-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 0.5rem;
-    }
-
-    .product-price {
-      font-size: 1.6rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.75rem;
-    }
-
-    .product-description {
-      color: #64748b;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-    }
-
-    .product-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .stars {
-      color: #fbbf24;
-      font-size: 1rem;
-    }
-
-    .rating-value {
-      color: #475569;
-    }
-
-    .product-specs {
-      background: rgba(96, 165, 250, 0.05);
-      padding: 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      flex: 1;
-    }
-
-    .spec-item {
-      font-size: 0.85rem;
-      color: #475569;
-      margin: 0.35rem 0;
-    }
-
-    .spec-item:before {
-      content: "✓ ";
-      color: #60a5fa;
-      font-weight: bold;
-    }
-
-    .product-actions {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: rgba(148, 163, 184, 0.1);
-      color: #60a5fa;
-      border: 1px solid rgba(96, 165, 250, 0.3);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(96, 165, 250, 0.1);
-      border-color: rgba(96, 165, 250, 0.5);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 2rem;
-      color: #64748b;
-    }
-
-    .empty-state p {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 2rem;
-      color: #475569;
-    }
-
+    .state-box h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--text-dim); }
+    .state-box p  { font-size: 0.88rem; }
     .spinner {
-      border: 3px solid rgba(96, 165, 250, 0.1);
-      border-top: 3px solid #60a5fa;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
+      width: 34px; height: 34px; border: 3px solid var(--border);
+      border-top-color: var(--purple); border-radius: 50%;
+      animation: spin 0.75s linear infinite; margin: 0 auto 1rem;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    /* ── Sources Section ── */
+    .sources-section {
+      max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem;
+      border-top: 1px solid var(--border);
     }
-
-    .reasoning-box {
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.06) 0%, rgba(167, 139, 250, 0.06) 100%);
-      padding: 1.2rem 1.4rem;
-      border-radius: 16px;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(96, 165, 250, 0.2);
-      border-left: 4px solid #60a5fa;
-      box-shadow: 0 2px 8px rgba(96, 165, 250, 0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem;
     }
-
-    .reasoning-box h3 {
-      color: #2563eb;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 600;
+    .sources-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;
     }
-
-    .reasoning-box p {
-      color: #475569;
-      font-size: 0.9rem;
-      line-height: 1.6;
+    .source-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.2rem; transition: all 0.2s;
     }
+    .source-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .source-card-top { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.45rem; }
+    .source-icon-lg { font-size: 1.3rem; }
+    .source-name-lg { font-size: 0.95rem; font-weight: 700; }
+    .source-desc-sm { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .source-freq { margin-top: 0.7rem; font-size: 0.7rem; color: var(--text-muted); }
 
-    ::-webkit-scrollbar {
-      width: 8px;
+    /* ── Submit Modal ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72); backdrop-filter: blur(10px);
+      z-index: 200; align-items: center; justify-content: center; padding: 1rem;
     }
+    .modal-overlay.open { display: flex; }
 
-    ::-webkit-scrollbar-track {
-      background: rgba(226, 232, 240, 0.3);
+    .modal-box {
+      background: #111113; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; padding: 2rem; width: 100%; max-width: 500px;
+      max-height: 90vh; overflow-y: auto; position: relative;
     }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(96, 165, 250, 0.4);
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(96, 165, 250, 0.6);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: white;
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 600px;
-      width: 90%;
-      max-height: 85vh;
-      overflow-y: auto;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(96, 165, 250, 0.08);
-      position: relative;
-    }
-
     .modal-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      color: #1e293b;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
+      position: absolute; top: 1.1rem; right: 1.1rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: all 0.15s;
     }
+    .modal-close:hover { color: var(--text); }
+    .modal-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .modal-sub   { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1.4rem; }
 
-    .modal-close:hover {
-      background: #f1f5f9;
-      border-radius: 8px;
+    .form-group { margin-bottom: 1rem; }
+    .form-label {
+      display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-dim);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;
     }
-
-    .detail-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid #e2e8f0;
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font: inherit; font-size: 0.88rem;
+      padding: 0.65rem 0.9rem; transition: all 0.15s; outline: none;
     }
-
-    .detail-emoji {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: rgba(168,85,247,0.5); box-shadow: 0 0 0 3px rgba(168,85,247,0.1);
     }
+    .form-select option { background: #111113; }
+    .form-textarea { resize: vertical; min-height: 75px; }
 
-    .detail-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 0.5rem;
+    .btn-submit-form {
+      width: 100%; padding: 0.82rem;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      color: #fff; border: none; border-radius: 12px; font: inherit;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 0.4rem; transition: all 0.2s;
     }
+    .btn-submit-form:hover { opacity: 0.88; box-shadow: 0 8px 24px rgba(168,85,247,0.28); }
 
-    .detail-category {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #60a5fa;
-      margin-bottom: 1rem;
-    }
+    .success-view { text-align: center; padding: 1.5rem 0; }
+    .success-view .big-em { font-size: 2.8rem; margin-bottom: 0.75rem; }
+    .success-view h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .success-view p  { font-size: 0.85rem; color: var(--text-muted); }
 
-    .detail-price {
-      font-size: 2.2rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .detail-section {
-      margin-bottom: 1.5rem;
-    }
-
-    .detail-section h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #1e293b;
-      margin-bottom: 0.75rem;
-    }
-
-    .detail-description {
-      color: #475569;
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .detail-specs {
-      background: #f8fafc;
-      padding: 1.2rem;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .detail-spec-item {
-      padding: 0.5rem 0;
-      color: #475569;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .detail-spec-item:before {
-      content: "✓";
-      color: #60a5fa;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .detail-rating {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-    }
-
-    .detail-rating .stars {
-      color: #fbbf24;
-    }
-
-    .detail-actions {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .detail-actions button {
-      flex: 1;
-      padding: 0.95rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .detail-actions .btn-primary {
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-      color: white;
-    }
-
-    .detail-actions .btn-primary:hover {
-      box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .detail-actions .btn-secondary {
-      background: #f1f5f9;
-      color: #60a5fa;
-      border: 1px solid #e2e8f0;
-    }
-
-    .detail-actions .btn-secondary:hover {
-      background: #e2e8f0;
-    }
-
+    /* ── Footer ── */
     footer {
-      border-top: 1px solid rgba(226, 232, 240, 0.7);
-      margin-top: 4rem;
-      padding: 1.5rem 0 2rem;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      background: #f9fafb;
+      border-top: 1px solid var(--border); padding: 1.5rem;
+      text-align: center; font-size: 0.78rem; color: var(--text-muted);
     }
+    footer a { color: var(--purple); text-decoration: none; }
 
-    @media (max-width: 1024px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-        height: auto;
-      }
-
-      .chat-panel {
-        height: 500px;
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      }
-    }
-
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      nav {
-        padding: 0 1rem;
-      }
-
-      main {
-        padding: 2.5rem 1.25rem 0.5rem;
-      }
-
-      .section {
-        padding: 2.5rem 1.25rem 0;
-      }
-
-      .container {
-        padding: 1.5rem 1rem;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
+      .nav-link { display: none; }
+      .hero { padding: 2.5rem 1rem 1.5rem; }
+      .deals-grid { grid-template-columns: 1fr; }
+      .sources-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div>
-        <div class="logo-wrap">
-          <span class="logo-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L13.5 8.5L20 10L13.5 11.5L12 18L10.5 11.5L4 10L10.5 8.5L12 2Z" fill="white" opacity="0.95"/>
-              <path d="M19 14L19.8 17L23 17.8L19.8 18.6L19 22L18.2 18.6L15 17.8L18.2 17L19 14Z" fill="white" opacity="0.8"/>
-              <path d="M5 4L5.5 5.5L7 6L5.5 6.5L5 8L4.5 6.5L3 6L4.5 5.5L5 4Z" fill="white" opacity="0.7"/>
-            </svg>
-          </span>
-          <span class="logo">Lifez.AI</span>
-        </div>
-        <div class="tagline">Smart Product Recommendations</div>
-      </div>
-      <div class="nav-links">
-        <button class="nav-link" onclick="scrollToSection('features')">Features</button>
-        <button class="nav-link" onclick="scrollToSection('how-it-works')">How it works</button>
-        <button class="nav-link" onclick="scrollToApp()">Demo</button>
-      </div>
-    </nav>
-  </header>
 
-  <main>
-    <section class="hero">
-      <p class="hero-eyebrow">Welcome to Lifez.ai</p>
-      <h1 class="hero-title">Let AI find the right products for your life.</h1>
-      <p class="hero-subtitle">
-        Type what you need in natural language and Lifez.ai instantly curates smart product recommendations—no filters,
-        no endless scrolling.
-      </p>
-      <div class="hero-actions">
-        <button class="hero-primary" onclick="scrollToApp()">Start exploring</button>
-        <button class="hero-secondary" onclick="scrollToApp()">See it in action</button>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="section-inner">
-        <p class="section-eyebrow">Why Lifez.ai</p>
-        <h2 class="section-heading">From vague idea to the right product in seconds.</h2>
-        <p class="section-description">
-          Lifez.ai understands plain language like “a quiet laptop for travel” and translates it into concrete products
-          that match your needs, budget, and preferences.
-        </p>
-        <div class="features-grid">
-          <div class="feature-card">
-            <h3 class="feature-title">Natural language search</h3>
-            <p class="feature-text">Describe what you need in your own words—no more endless filters and dropdowns.</p>
-          </div>
-          <div class="feature-card">
-            <h3 class="feature-title">Curated recommendations</h3>
-            <p class="feature-text">We score and rank products based on suitability, not just popularity.</p>
-          </div>
-          <div class="feature-card">
-            <h3 class="feature-title">Transparent reasoning</h3>
-            <p class="feature-text">See why each product was chosen so you can decide with confidence.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="how-it-works">
-      <div class="section-inner">
-        <p class="section-eyebrow">How it works</p>
-        <h2 class="section-heading">A simple, conversational flow.</h2>
-        <div class="steps-grid">
-          <div class="step">
-            <div class="step-number">1</div>
-            <div>
-              <h3 class="step-title">Tell us your need</h3>
-              <p class="step-text">Type a short description such as “wireless headphones for working in a noisy office”.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <div>
-              <h3 class="step-title">We search the space</h3>
-              <p class="step-text">Our AI matches your requirements with products and specifications in real time.</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <div>
-              <h3 class="step-title">You compare and choose</h3>
-              <p class="step-text">Review a small, focused set of options with clear pros, cons, and key specs.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <section class="section" id="demo">
-    <div class="section-inner">
-      <p class="section-eyebrow">Live demo</p>
-      <h2 class="section-heading">Try the Lifez.ai product finder.</h2>
-      <p class="section-description">
-        Ask for anything—from laptops to headphones—and see how Lifez.ai narrows it down for you.
-      </p>
+<!-- Header -->
+<header>
+  <nav>
+    <a href="/" class="logo">
+      <span>💰</span><span><span class="logo-grad">lifez</span>.ai</span>
+    </a>
+    <div class="nav-right">
+      <button class="nav-link" onclick="scrollTo('deals')">Deals</button>
+      <button class="nav-link" onclick="scrollTo('sources')">Sources</button>
+      <button class="btn-drop" onclick="openModal()">✦ Drop a Deal</button>
     </div>
+  </nav>
+</header>
 
-    <div class="container" id="app">
-    <div class="main-grid">
-      <div class="chat-panel">
-        <div class="panel-header">
-          <h2>💬 What Are You Looking For?</h2>
-        </div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="input-area">
-          <input 
-            type="text" 
-            id="requirementInput" 
-            placeholder="Describe what you need..." 
-            onkeypress="handleKeyPress(event)"
-          >
-          <button onclick="sendRequirement()">Send</button>
-        </div>
-      </div>
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">⏳ Loading latest deals…</span>
+  </div>
+</div>
 
-      <div class="products-panel">
-        <h1 class="section-title">📦 Recommendations</h1>
-        <div id="recommendationsContainer" class="empty-state">
-          <p>Tell us what you need and we'll find the perfect products for you 🎯</p>
-        </div>
-      </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="season-badge spring" id="seasonBadge">🌸 Spring 2026</div>
+  <h1 class="hero-title">
+    Best deals, no cap.<br>
+    <span class="grad-text">Updated every hour.</span>
+  </h1>
+  <p class="hero-sub">We scan the biggest deal communities so you don't have to. Zero fluff, straight to the savings.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="live-dot"></span><span id="statCount">— deals live</span></div>
+    <div class="hero-stat">⚡ Refreshed hourly</div>
+    <div class="hero-stat">🕵️ 3 sources tracked</div>
+  </div>
+</section>
+
+<!-- Filters -->
+<div class="filters-wrap">
+  <div class="filters" id="filters">
+    <button class="pill active" data-filter="all">All</button>
+    <button class="pill" data-filter="tech">💻 Tech</button>
+    <button class="pill" data-filter="fashion">👗 Fashion</button>
+    <button class="pill" data-filter="travel">✈️ Travel</button>
+    <button class="pill" data-filter="food">🍔 Food</button>
+    <button class="pill" data-filter="home">🏠 Home</button>
+    <button class="pill" data-filter="health">💪 Health</button>
+    <button class="pill" data-filter="beauty">✨ Beauty</button>
+    <button class="pill" data-filter="spring">🌸 Spring</button>
+  </div>
+</div>
+
+<!-- Deals -->
+<section class="deals-section" id="deals">
+  <div class="deals-header">
+    <h2 class="deals-title">🔥 Top 10 Deals Right Now</h2>
+    <div class="updated-badge" id="updatedBadge">
+      <span class="live-dot"></span>
+      <span id="updatedText">Loading…</span>
     </div>
   </div>
-
-  </section>
-
-  <!-- Product Details Modal -->
-  <div id="detailModal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeDetailModal()">&times;</button>
-      <div id="detailContent">
-        <!-- Details will be loaded here -->
-      </div>
+  <div class="deals-grid" id="dealsGrid">
+    <div class="state-box">
+      <div class="spinner"></div>
+      <h3>Fetching the hottest deals…</h3>
+      <p>Scanning Slickdeals, Reddit &amp; more</p>
     </div>
   </div>
+</section>
 
-  <footer>
-    <div class="container">
-      <span>© 2026 Lifez.ai. All rights reserved.</span>
+<!-- Sources -->
+<section class="sources-section" id="sources">
+  <p class="section-eyebrow">Deal Sources We Track</p>
+  <div class="sources-grid" id="sourcesGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 lifez.ai — Built for deal hunters 💸 &nbsp;·&nbsp; Updated hourly &nbsp;·&nbsp; <a href="#" onclick="openModal();return false;">Submit a deal</a></p>
+</footer>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="submitModal" onclick="onOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div id="formView">
+      <h2 class="modal-title">Drop a Deal 🔥</h2>
+      <p class="modal-sub">Found a banger deal? Share it with the community.</p>
+      <form id="dealForm" onsubmit="submitDeal(event)">
+        <div class="form-group">
+          <label class="form-label">Deal Title *</label>
+          <input class="form-input" type="text" id="dealTitle" placeholder="e.g. Nike Air Max – 40% OFF" required maxlength="150">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deal URL *</label>
+          <input class="form-input" type="url" id="dealUrl" placeholder="https://…" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="dealCategory">
+            <option value="other">Other</option>
+            <option value="tech">💻 Tech</option>
+            <option value="fashion">👗 Fashion</option>
+            <option value="travel">✈️ Travel</option>
+            <option value="food">🍔 Food</option>
+            <option value="home">🏠 Home</option>
+            <option value="health">💪 Health</option>
+            <option value="beauty">✨ Beauty</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description (optional)</label>
+          <textarea class="form-textarea" id="dealDesc" placeholder="What makes this deal bussin?"></textarea>
+        </div>
+        <button type="submit" class="btn-submit-form">🚀 Submit Deal</button>
+      </form>
     </div>
-  </footer>
 
-  <script>
-    const chatMessages = document.getElementById('chatMessages');
-    const recommendationsContainer = document.getElementById('recommendationsContainer');
-    const requirementInput = document.getElementById('requirementInput');
+    <div id="successView" style="display:none" class="success-view">
+      <div class="big-em">🎉</div>
+      <h3>Deal dropped!</h3>
+      <p>Your deal is now live on lifez.ai. The community will love it.</p>
+    </div>
+  </div>
+</div>
 
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+<script>
+  const SOURCES = [
+    { name:"Slickdeals",    icon:"🔥", color:"#ff6b35", description:"Community-powered deals voted by millions",      freq:"Every hour" },
+    { name:"Reddit Deals",  icon:"👾", color:"#ff4500", description:"Hot deals from Reddit's deal hunters",           freq:"Every hour" },
+    { name:"Reddit Frugal", icon:"💸", color:"#a855f7", description:"Smart spending from the frugal community",       freq:"Every hour" },
+  ];
+
+  const CAT_ICONS    = { tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏠", health:"💪", beauty:"✨", other:"🏷️" };
+  const SEASON_ICONS = { spring:"🌸", summer:"☀️", fall:"🍂", winter:"❄️" };
+  const SRC_COLOR    = { "Slickdeals":"#ff6b35", "Reddit Deals":"#ff4500", "Reddit Frugal":"#a855f7", "Community":"#06b6d4" };
+  const SRC_COLOR2   = { "Slickdeals":"#f97316", "Reddit Deals":"#fb923c", "Reddit Frugal":"#ec4899", "Community":"#a855f7" };
+
+  let currentFilter = "all";
+  let voted = new Set(JSON.parse(localStorage.getItem("lifez_voted") || "[]"));
+
+  // ── Season ──
+  function season() {
+    const m = new Date().getMonth() + 1;
+    return m<=2||m===12 ? "winter" : m<=5 ? "spring" : m<=8 ? "summer" : "fall";
+  }
+  function initSeasonBadge() {
+    const s = season(), y = new Date().getFullYear();
+    const names = { spring:"Spring", summer:"Summer", fall:"Fall", winter:"Winter" };
+    const el = document.getElementById("seasonBadge");
+    el.className = `season-badge ${s}`;
+    el.textContent = `${SEASON_ICONS[s]} ${names[s]} ${y}`;
+  }
+
+  // ── Helpers ──
+  function scrollTo(id) { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); }
+
+  function timeAgo(ts) {
+    if (!ts) return "";
+    const d = Math.floor(Date.now()/1000) - ts;
+    if (d < 60) return "just now";
+    if (d < 3600) return `${Math.floor(d/60)}m ago`;
+    if (d < 86400) return `${Math.floor(d/3600)}h ago`;
+    return `${Math.floor(d/86400)}d ago`;
+  }
+
+  function fmtUpdated(iso) {
+    if (!iso) return "never";
+    const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (diff < 1) return "just now";
+    if (diff < 60) return `${diff} min ago`;
+    return `${Math.floor(diff/60)}h ago`;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  // ── Ticker ──
+  function buildTicker(deals) {
+    if (!deals.length) return;
+    const items = deals.map(d =>
+      `<span class="ticker-item"><em>${d.source_icon||"🔥"}</em> ${esc(d.title)}</span><span class="ticker-sep">·</span>`
+    ).join("");
+    document.getElementById("tickerTrack").innerHTML = items + items; // doubled for seamless loop
+  }
+
+  // ── Fetch ──
+  async function loadDeals(filter = "all") {
+    const params = new URLSearchParams({ limit: 10 });
+    const seasons = ["spring","summer","fall","winter"];
+    if (filter !== "all") {
+      if (seasons.includes(filter)) params.set("season", filter);
+      else params.set("category", filter);
     }
 
-    function scrollToApp() {
-      const appSection = document.getElementById('app');
-      if (appSection) {
-        appSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    try {
+      const res = await fetch(`/api/deals?${params}`);
+      const data = await res.json();
+      renderDeals(data.deals || []);
+      document.getElementById("updatedText").textContent = `Updated ${fmtUpdated(data.last_updated)}`;
+      document.getElementById("statCount").textContent = `${data.total || 0}+ deals live`;
+      buildTicker(data.deals || []);
+    } catch {
+      renderError();
     }
+  }
 
-    function addMessage(text, isUser = false) {
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${isUser ? 'user' : 'assistant'}`;
-      messageDiv.textContent = text;
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
+  // ── Render deals ──
+  function renderDeals(deals) {
+    const grid = document.getElementById("dealsGrid");
+    if (!deals.length) {
+      grid.innerHTML = `<div class="state-box"><div style="font-size:2.5rem;margin-bottom:0.75rem">🔍</div><h3>No deals found</h3><p>Try a different filter or check back soon</p></div>`;
+      return;
     }
+    grid.innerHTML = deals.map((d, i) => dealCard(d, i)).join("");
+  }
 
-    function handleKeyPress(event) {
-      if (event.key === 'Enter') {
-        sendRequirement();
-      }
-    }
+  function renderError() {
+    document.getElementById("dealsGrid").innerHTML =
+      `<div class="state-box"><div style="font-size:2.5rem;margin-bottom:0.75rem">⚠️</div><h3>Couldn't load deals</h3><p>Server may be warming up — refresh in a moment.</p></div>`;
+  }
 
-    async function sendRequirement() {
-      const requirement = requirementInput.value.trim();
-      
-      if (!requirement) {
-        alert('Please describe what you need');
-        return;
-      }
+  function dealCard(d, i) {
+    const c1 = SRC_COLOR[d.source]  || "#a855f7";
+    const c2 = SRC_COLOR2[d.source] || "#ec4899";
+    const hot = i < 3;
+    const isVoted = voted.has(String(d.id));
 
-      addMessage(requirement, true);
-      requirementInput.value = '';
-      requirementInput.focus();
+    const catTag    = d.category && d.category !== "other"
+      ? `<span class="tag tag-cat">${CAT_ICONS[d.category]||""} ${d.category}</span>` : "";
+    const seasonTag = d.season
+      ? `<span class="tag tag-season">${SEASON_ICONS[d.season]||""} ${d.season}</span>` : "";
+    const userTag   = d.is_user_submitted
+      ? `<span class="tag tag-user">👤 community</span>` : "";
 
-      const loadingDiv = document.createElement('div');
-      loadingDiv.id = 'loading';
-      loadingDiv.className = 'loading';
-      loadingDiv.innerHTML = '<div class="spinner"></div>Finding perfect matches...';
-      recommendationsContainer.innerHTML = '';
-      recommendationsContainer.appendChild(loadingDiv);
-
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-        
-        const response = await fetch('/api/recommend', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ requirement }),
-          signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log('API Response:', data);
-
-        if (data.success && data.recommended_products && data.recommended_products.length > 0) {
-          addMessage(`Found ${data.count} great options for you! ✨`);
-          displayRecommendations(data);
-        } else if (data.error) {
-          addMessage(`Hmm, couldn't find recommendations. ${data.error}`);
-          recommendationsContainer.innerHTML = '<div class="empty-state"><p>Error: ' + data.error + '</p></div>';
-        } else {
-          addMessage('No products matched your search. Try a different query.');
-          recommendationsContainer.innerHTML = '<div class="empty-state"><p>No matches found</p></div>';
-        }
-      } catch (error) {
-        if (error.name === 'AbortError') {
-          addMessage('Request timed out. The server took too long to respond. Please try again.');
-        } else {
-          addMessage('Connection error. Please try again.');
-        }
-        console.error('Fetch Error:', error);
-        recommendationsContainer.innerHTML = `<div class="empty-state"><p>Error: ${error.message}</p></div>`;
-      }
-    }
-
-    function displayRecommendations(data) {
-      recommendationsContainer.innerHTML = '';
-
-      if (data.reasoning) {
-        const reasoningBox = document.createElement('div');
-        reasoningBox.className = 'reasoning-box';
-        reasoningBox.innerHTML = `
-          <h3>Why these? 🤔</h3>
-          <p>${data.reasoning}</p>
-        `;
-        recommendationsContainer.appendChild(reasoningBox);
-      }
-
-      if (data.recommended_products && data.recommended_products.length > 0) {
-        const grid = document.createElement('div');
-        grid.className = 'products-grid';
-
-        data.recommended_products.forEach(product => {
-          const card = createProductCard(product);
-          grid.appendChild(card);
-        });
-
-        recommendationsContainer.appendChild(grid);
-      } else {
-        recommendationsContainer.innerHTML = '<div class="empty-state"><p>No products match your needs</p></div>';
-      }
-    }
-
-    function createProductCard(product) {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-
-      const stars = '⭐'.repeat(Math.floor(product.rating)) + 
-                    (product.rating % 1 >= 0.5 ? '✨' : '');
-
-      const categoryEmoji = {
-        'electronics': '💻',
-        'audio': '🎧',
-        'mobile': '📱',
-        'peripherals': '⌨️',
-        'wearables': '⌚'
-      }[product.category] || '📦';
-
-      card.innerHTML = `
-        <div class="product-image">${categoryEmoji}</div>
-        <div class="product-content">
-          <div class="product-category">${product.category}</div>
-          <div class="product-name">${product.name}</div>
-          <div class="product-price">$${product.price}</div>
-          <p class="product-description">${product.description}</p>
-          <div class="product-rating">
-            <span class="stars">${stars}</span>
-            <span class="rating-value">${product.rating}/5</span>
+    return `
+      <div class="deal-card" style="--ca:${c1};--ca2:${c2}">
+        ${hot ? '<span class="hot-badge">🔥 Hot</span>' : ""}
+        <div class="card-top">
+          <div class="card-source" style="color:${c1}">
+            <span class="src-dot" style="background:${c1}"></span>
+            ${esc(d.source_icon||"")} ${esc(d.source)}
           </div>
-          <div class="product-specs">
-            ${product.specs.map(spec => `<div class="spec-item">${spec}</div>`).join('')}
-          </div>
-          <div class="product-actions">
-            <button class="btn btn-primary" onclick="viewDetails(${product.id})">View</button>
-            <button class="btn btn-secondary" onclick="addToCart(${product.id})">Add Cart</button>
-          </div>
+          <span class="card-time">${timeAgo(d.fetched_at)}</span>
         </div>
-      `;
+        <div class="card-title">${esc(d.title)}</div>
+        ${d.description ? `<div class="card-desc">${esc(d.description)}</div>` : ""}
+        <div class="card-tags">${catTag}${seasonTag}${userTag}</div>
+        <div class="card-actions">
+          <a class="btn-grab" href="${esc(d.link)}" target="_blank" rel="noopener noreferrer">Grab Deal →</a>
+          <button class="btn-vote${isVoted?" voted":""}" onclick="vote(${d.id},this)">🔥 ${d.votes||0}</button>
+        </div>
+      </div>`;
+  }
 
-      return card;
-    }
+  // ── Vote ──
+  async function vote(id, btn) {
+    if (voted.has(String(id))) return;
+    try {
+      const res  = await fetch(`/api/deals/vote/${id}`, { method:"POST" });
+      const data = await res.json();
+      if (data.votes !== undefined) {
+        btn.innerHTML = `🔥 ${data.votes}`;
+        btn.classList.add("voted");
+        voted.add(String(id));
+        localStorage.setItem("lifez_voted", JSON.stringify([...voted]));
+      }
+    } catch {}
+  }
 
-    function viewDetails(productId) {
-      const allProducts = Array.from(document.querySelectorAll('.product-card')).map((card, index) => {
-        const name = card.querySelector('.product-name')?.textContent || '';
-        const price = card.querySelector('.product-price')?.textContent?.replace('$', '') || '';
-        const category = card.querySelector('.product-category')?.textContent || '';
-        const description = card.querySelector('.product-description')?.textContent || '';
-        const rating = card.querySelector('.rating-value')?.textContent?.split('/')[0] || '0';
-        const specs = Array.from(card.querySelectorAll('.spec-item')).map(s => s.textContent.trim());
-        const categoryEmoji = {
-          'electronics': '💻',
-          'audio': '🎧',
-          'mobile': '📱',
-          'peripherals': '⌨️',
-          'wearables': '⌚'
-        }[category];
-        
-        return { id: productId, name, price, category, description, rating, specs, emoji: categoryEmoji };
+  // ── Filters ──
+  document.getElementById("filters").addEventListener("click", e => {
+    const pill = e.target.closest(".pill");
+    if (!pill) return;
+    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    currentFilter = pill.dataset.filter;
+    loadDeals(currentFilter);
+  });
+
+  // ── Sources ──
+  function renderSources() {
+    document.getElementById("sourcesGrid").innerHTML = SOURCES.map(s => `
+      <div class="source-card">
+        <div class="source-card-top">
+          <span class="source-icon-lg">${s.icon}</span>
+          <span class="source-name-lg" style="color:${s.color}">${s.name}</span>
+        </div>
+        <p class="source-desc-sm">${s.description}</p>
+        <div class="source-freq">⏱ ${s.freq}</div>
+      </div>`).join("");
+  }
+
+  // ── Modal ──
+  function openModal() {
+    document.getElementById("submitModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    document.getElementById("submitModal").classList.remove("open");
+    document.body.style.overflow = "";
+    document.getElementById("formView").style.display = "";
+    document.getElementById("successView").style.display = "none";
+    document.getElementById("dealForm").reset();
+  }
+  function onOverlayClick(e) { if (e.target === e.currentTarget) closeModal(); }
+
+  // ── Submit ──
+  async function submitDeal(e) {
+    e.preventDefault();
+    const payload = {
+      title:       document.getElementById("dealTitle").value.trim(),
+      link:        document.getElementById("dealUrl").value.trim(),
+      category:    document.getElementById("dealCategory").value,
+      description: document.getElementById("dealDesc").value.trim(),
+    };
+    try {
+      const res  = await fetch("/api/deals/submit", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify(payload),
       });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById("formView").style.display = "none";
+        document.getElementById("successView").style.display = "";
+        setTimeout(() => { closeModal(); loadDeals(currentFilter); }, 2500);
+      }
+    } catch { alert("Something went wrong — try again!"); }
+  }
 
-      const product = allProducts[0];
-      if (!product) return;
+  // ── Auto-refresh every 30 min ──
+  setInterval(() => loadDeals(currentFilter), 30 * 60 * 1000);
 
-      const stars = '⭐'.repeat(Math.floor(product.rating)) + 
-                    (product.rating % 1 >= 0.5 ? '✨' : '');
-
-      const modal = document.getElementById('detailModal');
-      const detailContent = document.getElementById('detailContent');
-      
-      detailContent.innerHTML = `
-        <div class="detail-header">
-          <div class="detail-emoji">${product.emoji || '📦'}</div>
-          <div class="detail-category">${product.category}</div>
-          <div class="detail-title">${product.name}</div>
-          <div class="detail-price">\$${product.price}</div>
-        </div>
-
-        <div class="detail-rating">
-          <span class="stars">${stars}</span>
-          <span>${product.rating}/5</span>
-        </div>
-
-        <div class="detail-section">
-          <h3>Description</h3>
-          <p class="detail-description">${product.description}</p>
-        </div>
-
-        <div class="detail-section">
-          <h3>Key Features</h3>
-          <div class="detail-specs">
-            ${product.specs.map(spec => `<div class="detail-spec-item">${spec}</div>`).join('')}
-          </div>
-        </div>
-
-        <div class="detail-actions">
-          <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
-          <button class="btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
-        </div>
-      `;
-      
-      modal.classList.add('active');
-    }
-
-    function closeDetailModal() {
-      const modal = document.getElementById('detailModal');
-      modal.classList.remove('active');
-    }
-
-    // Close modal when clicking outside of it
-    const detailModal = document.getElementById('detailModal');
-    if (detailModal) {
-      detailModal.addEventListener('click', (e) => {
-        if (e.target === detailModal) {
-          closeDetailModal();
-        }
-      });
-    }
-
-    function addToCart(productId) {
-      addMessage(`Added product #${productId} to cart! 🎉`);
-    }
-  </script>
+  // ── Init ──
+  initSeasonBadge();
+  renderSources();
+  loadDeals();
+</script>
 </body>
+</html>
