@@ -57,12 +57,20 @@
       display: flex; align-items: center; gap: 1rem;
     }
 
+    .logo-wrap {
+      display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+    }
     .logo {
       display: flex; align-items: center; gap: 0.4rem;
       font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em;
-      text-decoration: none; color: var(--text); white-space: nowrap; flex-shrink: 0;
+      text-decoration: none; color: var(--text); white-space: nowrap;
     }
     .logo-accent { color: var(--blue-mid); }
+    .logo-tagline {
+      font-size: 0.72rem; font-weight: 500; color: var(--text-dim);
+      border-left: 1px solid var(--border); padding-left: 0.75rem;
+      white-space: nowrap; letter-spacing: 0.01em;
+    }
 
     .search-wrap {
       flex: 1; max-width: 520px; position: relative;
@@ -380,6 +388,7 @@
       .header-inner { gap: 0.6rem; }
       .search-wrap { max-width: none; }
       .btn-ghost { display: none; }
+      .logo-tagline { display: none; }
       .sidebar { grid-template-columns: 1fr; }
       .featured-card { flex-direction: column; }
     }
@@ -390,7 +399,10 @@
 <!-- Header -->
 <header>
   <div class="header-inner">
-    <a href="/" class="logo">💰 <span><span class="logo-accent">Lifez</span>.AI</span></a>
+    <div class="logo-wrap">
+      <a href="/" class="logo">💰 <span><span class="logo-accent">Lifez</span>.AI</span></a>
+      <span class="logo-tagline">Life's Too Short for Full Price</span>
+    </div>
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input class="search-input" type="text" id="searchInput" placeholder="Search deals…" oninput="onSearch(this.value)">
