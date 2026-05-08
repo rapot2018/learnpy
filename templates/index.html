@@ -9,366 +9,383 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f1f3f5;
       --bg-card: #ffffff;
-      --bg-card-hover: #f1f5f9;
       --border: #e2e8f0;
       --border-hover: #cbd5e1;
-      --purple: #7c3aed;
-      --purple-dim: rgba(124,58,237,0.08);
-      --pink: #db2777;
-      --pink-dim: rgba(219,39,119,0.08);
-      --cyan: #0891b2;
-      --cyan-dim: rgba(8,145,178,0.08);
-      --lime: #65a30d;
-      --lime-dim: rgba(101,163,13,0.08);
-      --amber: #d97706;
       --red: #dc2626;
-      --red-dim: rgba(220,38,38,0.08);
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --text-dim: #94a3b8;
+      --red-light: #fef2f2;
+      --purple: #7c3aed;
+      --purple-light: #f5f3ff;
+      --pink: #db2777;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --amber: #d97706;
+      --cyan: #0891b2;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --text-dim: #9ca3af;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
       font-family: 'Space Grotesk', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      line-height: 1.5;
       min-height: 100vh;
     }
 
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f3f5; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
     /* ── Header ── */
     header {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(248,250,252,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: #fff;
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow-sm);
+      position: sticky; top: 0; z-index: 100;
     }
 
-    nav {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 1.5rem; height: 62px;
-      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    .header-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 1.25rem; height: 60px;
+      display: flex; align-items: center; gap: 1rem;
     }
 
     .logo {
       display: flex; align-items: center; gap: 0.4rem;
-      font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em;
-      text-decoration: none; color: var(--text);
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em;
+      text-decoration: none; color: var(--text); white-space: nowrap; flex-shrink: 0;
     }
-
-    .logo-grad {
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-
-    .nav-right {
-      display: flex; align-items: center; gap: 0.25rem;
-    }
-
-    .nav-link {
-      background: none; border: none; color: var(--text-muted); cursor: pointer;
-      padding: 0.45rem 0.85rem; font: inherit; font-size: 0.88rem; font-weight: 500;
-      border-radius: 8px; transition: all 0.15s; text-decoration: none; display: inline-block;
-    }
-    .nav-link:hover { color: var(--text); background: var(--bg-card); }
-
-    .btn-drop {
-      display: flex; align-items: center; gap: 0.35rem;
+    .logo-accent {
       background: linear-gradient(135deg, #7c3aed, #db2777);
-      color: #fff; border: none; cursor: pointer;
-      padding: 0.45rem 1.1rem; font: inherit; font-size: 0.88rem; font-weight: 700;
-      border-radius: 10px; transition: all 0.2s;
-    }
-    .btn-drop:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(124,58,237,0.25); }
-
-
-    /* ── Hero ── */
-    .hero {
-      max-width: 1200px; margin: 0 auto;
-      padding: 4rem 1.5rem 2.5rem; text-align: center;
-    }
-
-    .season-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.3rem 0.9rem; border-radius: 999px;
-      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
-      margin-bottom: 1.2rem; border: 1px solid;
-    }
-    .season-badge.spring { background: rgba(101,163,13,0.08); border-color: rgba(101,163,13,0.3); color: #4d7c0f; }
-    .season-badge.summer { background: rgba(217,119,6,0.08);  border-color: rgba(217,119,6,0.3);  color: #b45309; }
-    .season-badge.fall   { background: rgba(220,38,38,0.08);  border-color: rgba(220,38,38,0.3);  color: #b91c1c; }
-    .season-badge.winter { background: rgba(8,145,178,0.08);  border-color: rgba(8,145,178,0.3);  color: #0e7490; }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800;
-      line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 1rem; color: #0f172a;
-    }
-    .grad-text {
-      background: linear-gradient(135deg, #7c3aed 0%, #db2777 50%, #d97706 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
 
-    .hero-sub {
-      font-size: 1rem; color: var(--text-muted);
-      max-width: 500px; margin: 0 auto 2rem;
+    .search-wrap {
+      flex: 1; max-width: 520px; position: relative;
+    }
+    .search-icon {
+      position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%);
+      color: var(--text-dim); pointer-events: none; font-size: 0.9rem;
+    }
+    .search-input {
+      width: 100%; padding: 0.52rem 1rem 0.52rem 2.4rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); font: inherit; font-size: 0.88rem; color: var(--text);
+      outline: none; transition: all 0.15s;
+    }
+    .search-input::placeholder { color: var(--text-dim); }
+    .search-input:focus {
+      border-color: var(--purple); background: #fff;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
     }
 
-    .hero-stats {
-      display: flex; justify-content: center; gap: 0.65rem; flex-wrap: wrap;
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+
+    .btn-ghost {
+      background: none; border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.45rem 0.9rem; font: inherit; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap;
     }
-    .hero-stat {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.35rem 0.9rem; background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 999px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: #fff; border: none; border-radius: 8px;
+      padding: 0.45rem 1rem; font: inherit; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-primary:hover { opacity: 0.88; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+
+    /* ── Category Nav ── */
+    .cat-nav {
+      background: #fff; border-bottom: 1px solid var(--border);
+      position: sticky; top: 60px; z-index: 90;
+    }
+    .cat-nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 1.25rem;
+      display: flex; gap: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cat-nav-inner::-webkit-scrollbar { display: none; }
+
+    .cat-tab {
+      background: none; border: none; border-bottom: 3px solid transparent;
+      padding: 0.7rem 1rem; font: inherit; font-size: 0.82rem; font-weight: 600;
+      color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .cat-tab:hover { color: var(--text); }
+    .cat-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+
+    /* ── Main layout ── */
+    .page {
+      max-width: 1280px; margin: 0 auto; padding: 1.25rem;
+      display: grid; grid-template-columns: 1fr 280px; gap: 1.25rem;
+      align-items: start;
+    }
+
+    /* ── Deals column ── */
+    .deals-col {}
+
+    .deals-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .deals-bar-title {
+      font-size: 1.05rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .updated-chip {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: var(--green-light); border: 1px solid #bbf7d0;
+      border-radius: 999px; padding: 0.22rem 0.7rem;
+      font-size: 0.72rem; font-weight: 600; color: var(--green);
     }
     .live-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: #65a30d;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--green);
       animation: blink 2s ease-in-out infinite;
     }
-    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
-    /* ── Filters ── */
-    .filters-wrap {
-      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 1.5rem;
+    /* ── Featured card ── */
+    .featured-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem;
+      display: flex; gap: 1.25rem; margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm); transition: all 0.2s;
+      position: relative; overflow: hidden;
     }
-    .filters { display: flex; gap: 0.45rem; flex-wrap: wrap; }
-    .pill {
-      padding: 0.38rem 0.9rem; border-radius: 999px; border: 1px solid var(--border);
-      background: var(--bg-card); color: var(--text-muted); font: inherit;
-      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    .featured-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(180deg, #7c3aed, #db2777);
     }
-    .pill:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg-card-hover); }
-    .pill.active {
-      background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(219,39,119,0.1));
-      border-color: rgba(124,58,237,0.4); color: #5b21b6;
-    }
+    .featured-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
 
-    /* ── Deals Section ── */
-    .deals-section { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
-
-    .deals-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;
-    }
-    .deals-title { font-size: 1.2rem; font-weight: 700; }
-
-    .updated-badge {
-      display: flex; align-items: center; gap: 0.4rem;
-      padding: 0.3rem 0.8rem; background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 999px; font-size: 0.75rem; color: var(--text-muted);
+    .featured-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: linear-gradient(135deg, #dc2626, #ea580c);
+      color: #fff; font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 0.22rem 0.6rem; border-radius: 5px;
     }
 
-    /* ── Grid ── */
-    .deals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1rem;
-    }
+    .featured-body { flex: 1; padding-left: 0.5rem; }
+    .featured-meta { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .featured-title { font-size: 1.1rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem; color: var(--text); }
+    .featured-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 0.85rem; }
+    .featured-footer { display: flex; align-items: center; gap: 0.6rem; }
 
-    /* ── Deal Card ── */
+    /* ── Deal grid ── */
+    .deals-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
     .deal-card {
       background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.2rem;
-      display: flex; flex-direction: column; gap: 0.7rem;
-      position: relative; overflow: hidden; transition: all 0.2s;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border-radius: 12px; padding: 1rem 1rem 1rem 1.2rem;
+      display: flex; gap: 1rem; box-shadow: var(--shadow-sm);
+      transition: all 0.2s; position: relative; overflow: hidden;
     }
     .deal-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--ca, #7c3aed), var(--ca2, #db2777));
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--ca, #e2e8f0);
     }
-    .deal-card:hover {
-      background: var(--bg-card-hover); border-color: var(--border-hover);
-      transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    }
+    .deal-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-1px); }
 
-    .card-top { display: flex; align-items: center; justify-content: space-between; }
-    .card-source {
-      display: flex; align-items: center; gap: 0.35rem;
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .src-dot { width: 7px; height: 7px; border-radius: 50%; }
-    .card-time { font-size: 0.72rem; color: var(--text-dim); }
+    .deal-body { flex: 1; min-width: 0; }
+    .deal-meta  { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+    .deal-title { font-size: 0.93rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.3rem; color: var(--text); }
+    .deal-desc  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.6rem;
+                  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .deal-footer { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 
-    .hot-badge {
-      position: absolute; top: 0.9rem; right: 0.9rem;
-      background: linear-gradient(135deg, #dc2626, #ea580c);
-      color: #fff; font-size: 0.6rem; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      padding: 0.18rem 0.5rem; border-radius: 5px;
-    }
-
-    .card-title { font-size: 0.95rem; font-weight: 700; line-height: 1.35; color: #0f172a; }
-    .card-desc  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
-
-    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .tag {
+    /* ── Chips / badges ── */
+    .source-chip {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
       padding: 0.18rem 0.55rem; border-radius: 5px;
-      font-size: 0.68rem; font-weight: 600;
+      border: 1px solid; background: rgba(0,0,0,0.04);
     }
-    .tag-cat    { background: rgba(124,58,237,0.08); color: #5b21b6; border: 1px solid rgba(124,58,237,0.2); }
-    .tag-season { background: rgba(101,163,13,0.08); color: #3f6212; border: 1px solid rgba(101,163,13,0.2); }
-    .tag-user   { background: rgba(8,145,178,0.08);  color: #0e7490; border: 1px solid rgba(8,145,178,0.2); }
+    .source-dot { width: 6px; height: 6px; border-radius: 50%; }
 
-    .card-actions { display: flex; align-items: center; gap: 0.55rem; margin-top: auto; }
+    .cat-chip {
+      display: inline-flex; align-items: center; gap: 0.2rem;
+      font-size: 0.68rem; font-weight: 600;
+      padding: 0.18rem 0.5rem; border-radius: 5px;
+      background: var(--purple-light); color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.15);
+    }
+    .time-chip { font-size: 0.72rem; color: var(--text-dim); }
+
+    .hot-chip {
+      display: inline-flex; align-items: center; gap: 0.2rem;
+      font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
+      padding: 0.18rem 0.5rem; border-radius: 5px;
+      background: var(--red-light); color: var(--red);
+      border: 1px solid rgba(220,38,38,0.2);
+    }
 
     .btn-grab {
-      flex: 1; padding: 0.58rem 1rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.42rem 0.9rem;
       background: linear-gradient(135deg, #7c3aed, #db2777);
-      color: #fff; border: none; border-radius: 10px;
-      font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
-      text-decoration: none; text-align: center;
-      display: flex; align-items: center; justify-content: center; gap: 0.3rem;
-      transition: all 0.2s;
+      color: #fff; border: none; border-radius: 7px;
+      font: inherit; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; text-decoration: none; transition: all 0.18s;
     }
-    .btn-grab:hover { opacity: 0.88; box-shadow: 0 6px 16px rgba(124,58,237,0.25); }
+    .btn-grab:hover { opacity: 0.88; box-shadow: 0 4px 10px rgba(124,58,237,0.28); }
 
     .btn-vote {
-      display: flex; align-items: center; gap: 0.3rem;
-      padding: 0.58rem 0.85rem; background: #fff; border: 1px solid var(--border);
-      border-radius: 10px; color: var(--text-muted); font: inherit;
-      font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      padding: 0.38rem 0.7rem; background: #fff;
+      border: 1px solid var(--border); border-radius: 7px;
+      font: inherit; font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; transition: all 0.18s;
     }
     .btn-vote:hover, .btn-vote.voted {
-      background: rgba(220,38,38,0.06); border-color: rgba(220,38,38,0.3); color: #b91c1c;
+      background: var(--red-light); border-color: rgba(220,38,38,0.3); color: var(--red);
     }
 
-    /* ── State boxes ── */
-    .state-box {
-      grid-column: 1/-1; text-align: center;
-      padding: 4rem 2rem; color: var(--text-muted);
+    /* ── Sidebar ── */
+    .sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+    .sidebar-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.1rem; box-shadow: var(--shadow-sm);
     }
-    .state-box h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: #475569; }
-    .state-box p  { font-size: 0.88rem; }
+    .sidebar-title {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.85rem;
+    }
+
+    /* Sources list */
+    .source-row {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.5rem 0; border-bottom: 1px solid var(--border);
+    }
+    .source-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .src-icon { font-size: 1.1rem; }
+    .src-info {}
+    .src-name { font-size: 0.82rem; font-weight: 700; }
+    .src-desc { font-size: 0.7rem; color: var(--text-dim); }
+
+    /* Stats */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .stat-box {
+      background: var(--bg); border-radius: 8px; padding: 0.7rem;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.2rem; font-weight: 800; color: var(--purple); }
+    .stat-lbl { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+    /* Submit deal sidebar */
+    .submit-box { text-align: center; }
+    .submit-box p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.85rem; line-height: 1.5; }
+    .btn-submit-full {
+      display: block; width: 100%; padding: 0.6rem;
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: #fff; border: none; border-radius: 8px; font: inherit;
+      font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+      margin-bottom: 0.5rem;
+    }
+    .btn-submit-full:hover { opacity: 0.88; }
+    .btn-suggest-full {
+      display: block; width: 100%; padding: 0.55rem;
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-suggest-full:hover { border-color: var(--border-hover); color: var(--text); }
+
+    /* ── Empty / Loading ── */
+    .empty-state {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 3rem 2rem; text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .empty-state h3 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--text-muted); }
+    .empty-state p  { font-size: 0.85rem; color: var(--text-dim); }
     .spinner {
-      width: 34px; height: 34px; border: 3px solid var(--border);
+      width: 32px; height: 32px; border: 3px solid var(--border);
       border-top-color: var(--purple); border-radius: 50%;
-      animation: spin 0.75s linear infinite; margin: 0 auto 1rem;
+      animation: spin 0.7s linear infinite; margin: 0 auto 1rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Sources Section ── */
-    .sources-section {
-      max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem;
-      border-top: 1px solid var(--border);
-    }
-    .section-eyebrow {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem;
-    }
-    .sources-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;
-    }
-    .source-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.2rem; transition: all 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .source-card:hover { border-color: var(--border-hover); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    .source-card-top { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.45rem; }
-    .source-icon-lg { font-size: 1.3rem; }
-    .source-name-lg { font-size: 0.95rem; font-weight: 700; }
-    .source-desc-sm { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
-    .source-freq { margin-top: 0.7rem; font-size: 0.7rem; color: var(--text-dim); }
-
-    /* ── Submit Modal ── */
+    /* ── Modal (shared) ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(15,23,42,0.5); backdrop-filter: blur(8px);
+      background: rgba(17,24,39,0.5); backdrop-filter: blur(6px);
       z-index: 200; align-items: center; justify-content: center; padding: 1rem;
     }
     .modal-overlay.open { display: flex; }
-
     .modal-box {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 20px; padding: 2rem; width: 100%; max-width: 500px;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem; width: 100%; max-width: 480px;
       max-height: 90vh; overflow-y: auto; position: relative;
       box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
     .modal-close {
-      position: absolute; top: 1.1rem; right: 1.1rem;
-      background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--text-muted); font-size: 0.9rem; transition: all 0.15s;
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-muted); font-size: 0.85rem; transition: all 0.15s;
     }
-    .modal-close:hover { color: var(--text); background: var(--bg-card-hover); }
-    .modal-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.2rem; color: #0f172a; }
-    .modal-sub   { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 1.4rem; }
-
-    .form-group { margin-bottom: 1rem; }
-    .form-label {
-      display: block; font-size: 0.75rem; font-weight: 700; color: #64748b;
-      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;
+    .modal-close:hover { background: #e5e7eb; color: var(--text); }
+    .modal-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .modal-sub   { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .form-group  { margin-bottom: 0.9rem; }
+    .form-label  {
+      display: block; font-size: 0.72rem; font-weight: 700; color: #6b7280;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem;
     }
     .form-input, .form-select, .form-textarea {
-      width: 100%; background: #f8fafc; border: 1px solid var(--border);
-      border-radius: 10px; color: var(--text); font: inherit; font-size: 0.88rem;
-      padding: 0.65rem 0.9rem; transition: all 0.15s; outline: none;
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font: inherit; font-size: 0.88rem;
+      padding: 0.6rem 0.85rem; outline: none; transition: all 0.15s;
     }
     .form-input::placeholder, .form-textarea::placeholder { color: var(--text-dim); }
     .form-input:focus, .form-select:focus, .form-textarea:focus {
-      border-color: rgba(124,58,237,0.5); box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
-      background: #fff;
+      border-color: var(--purple); background: #fff;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
     }
-    .form-select option { background: #ffffff; }
-    .form-textarea { resize: vertical; min-height: 75px; }
-
+    .form-textarea { resize: vertical; min-height: 80px; }
     .btn-submit-form {
-      width: 100%; padding: 0.82rem;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
-      color: #fff; border: none; border-radius: 12px; font: inherit;
-      font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 0.4rem; transition: all 0.2s;
+      width: 100%; padding: 0.72rem;
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      color: #fff; border: none; border-radius: 9px; font: inherit;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
     }
-    .btn-submit-form:hover { opacity: 0.88; box-shadow: 0 8px 24px rgba(168,85,247,0.28); }
-
-    .success-view { text-align: center; padding: 1.5rem 0; }
-    .success-view .big-em { font-size: 2.8rem; margin-bottom: 0.75rem; }
-    .success-view h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .success-view p  { font-size: 0.85rem; color: var(--text-muted); }
+    .btn-submit-form:hover { opacity: 0.88; box-shadow: 0 6px 18px rgba(124,58,237,0.25); }
+    .success-view { text-align: center; padding: 1rem 0; }
+    .success-view .big-em { font-size: 2.5rem; margin-bottom: 0.6rem; }
+    .success-view h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .success-view p  { font-size: 0.82rem; color: var(--text-muted); }
 
     /* ── Footer ── */
     footer {
-      border-top: 1px solid var(--border); padding: 1.5rem;
-      text-align: center; font-size: 0.78rem; color: var(--text-muted);
-      background: #ffffff;
+      background: #fff; border-top: 1px solid var(--border);
+      text-align: center; padding: 1.25rem; margin-top: 2rem;
+      font-size: 0.78rem; color: var(--text-muted);
     }
     footer a { color: var(--purple); text-decoration: none; }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .nav-link { display: none; }
-      .hero { padding: 2.5rem 1rem 1.5rem; }
-      .deals-grid { grid-template-columns: 1fr; }
-      .sources-grid { grid-template-columns: 1fr; }
+    @media (max-width: 1024px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { display: grid; grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 480px) {
-      .hero-title { font-size: 2rem; }
-    }
-
-    .btn-suggest { background: none; border: none; cursor: pointer; font: inherit; }
-    .suggest-banner {
-      background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(219,39,119,0.06));
-      border-bottom: 1px solid var(--border);
-      text-align: center; padding: 0.6rem 1rem;
-      font-size: 0.82rem; color: var(--text-muted);
-    }
-    .suggest-banner a, .suggest-banner button {
-      color: var(--purple); font-weight: 700; cursor: pointer;
-      background: none; border: none; font: inherit; text-decoration: underline;
+    @media (max-width: 640px) {
+      .header-inner { gap: 0.6rem; }
+      .search-wrap { max-width: none; }
+      .btn-ghost { display: none; }
+      .sidebar { grid-template-columns: 1fr; }
+      .featured-card { flex-direction: column; }
     }
   </style>
 </head>
@@ -376,95 +393,115 @@
 
 <!-- Header -->
 <header>
-  <nav>
-    <a href="/" class="logo">
-      <span>💰</span><span><span class="logo-grad">lifez</span>.ai</span>
-    </a>
-    <div class="nav-right">
-      <button class="nav-link" onclick="scrollToId('deals')">Deals</button>
-      <button class="nav-link" onclick="scrollToId('sources')">Sources</button>
-      <button class="nav-link" onclick="openSuggestModal()">💡 Suggest</button>
-      <button class="btn-drop" onclick="openModal()">✦ Drop a Deal</button>
+  <div class="header-inner">
+    <a href="/" class="logo">💰 <span><span class="logo-accent">lifez</span>.ai</span></a>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" id="searchInput" placeholder="Search deals…" oninput="onSearch(this.value)">
     </div>
-  </nav>
+    <div class="header-actions">
+      <button class="btn-ghost" onclick="openSuggestModal()">💡 Suggest</button>
+      <button class="btn-primary" onclick="openModal()">+ Post a Deal</button>
+    </div>
+  </div>
 </header>
 
-<!-- Suggestion nudge -->
-<div class="suggest-banner">
-  💡 Got a deal idea or feedback? <button onclick="openSuggestModal()">Drop us a suggestion</button> — we read every one.
-</div>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="season-badge spring" id="seasonBadge">🌸 Spring 2026</div>
-  <h1 class="hero-title">
-    Best deals, no cap.<br>
-    <span class="grad-text">Updated every hour.</span>
-  </h1>
-  <p class="hero-sub">We scan the biggest deal communities so you don't have to. Zero fluff, straight to the savings.</p>
-  <div class="hero-stats">
-    <div class="hero-stat"><span class="live-dot"></span><span id="statCount">— deals live</span></div>
-    <div class="hero-stat">⚡ Refreshed hourly</div>
-    <div class="hero-stat">🕵️ 10 sources tracked</div>
+<!-- Category tabs -->
+<nav class="cat-nav">
+  <div class="cat-nav-inner" id="catNav">
+    <button class="cat-tab active" data-filter="all">🏠 All Deals</button>
+    <button class="cat-tab" data-filter="tech">💻 Tech</button>
+    <button class="cat-tab" data-filter="fashion">👗 Fashion</button>
+    <button class="cat-tab" data-filter="travel">✈️ Travel</button>
+    <button class="cat-tab" data-filter="food">🍔 Food</button>
+    <button class="cat-tab" data-filter="home">🏡 Home</button>
+    <button class="cat-tab" data-filter="health">💪 Health</button>
+    <button class="cat-tab" data-filter="beauty">✨ Beauty</button>
+    <button class="cat-tab" data-filter="spring">🌸 Spring</button>
   </div>
-</section>
+</nav>
 
-<!-- Filters -->
-<div class="filters-wrap">
-  <div class="filters" id="filters">
-    <button class="pill active" data-filter="all">All</button>
-    <button class="pill" data-filter="tech">💻 Tech</button>
-    <button class="pill" data-filter="fashion">👗 Fashion</button>
-    <button class="pill" data-filter="travel">✈️ Travel</button>
-    <button class="pill" data-filter="food">🍔 Food</button>
-    <button class="pill" data-filter="home">🏠 Home</button>
-    <button class="pill" data-filter="health">💪 Health</button>
-    <button class="pill" data-filter="beauty">✨ Beauty</button>
-    <button class="pill" data-filter="spring">🌸 Spring</button>
-  </div>
-</div>
+<!-- Page -->
+<div class="page">
 
-<!-- Deals -->
-<section class="deals-section" id="deals">
-  <div class="deals-header">
-    <h2 class="deals-title">🔥 Top 50 Deals Right Now</h2>
-    <div class="updated-badge" id="updatedBadge">
-      <span class="live-dot"></span>
-      <span id="updatedText">Loading…</span>
+  <!-- Deals column -->
+  <div class="deals-col">
+    <div class="deals-bar">
+      <span class="deals-bar-title">🔥 Today's Best Deals</span>
+      <div class="updated-chip" id="updatedChip">
+        <span class="live-dot"></span><span id="updatedText">Loading…</span>
+      </div>
+    </div>
+    <div id="dealsContainer">
+      <div class="empty-state">
+        <div class="spinner"></div>
+        <h3>Fetching the best deals…</h3>
+        <p>Scanning Google News, Slickdeals &amp; more</p>
+      </div>
     </div>
   </div>
-  <div class="deals-grid" id="dealsGrid">
-    <div class="state-box">
-      <div class="spinner"></div>
-      <h3>Fetching the hottest deals…</h3>
-      <p>Scanning Slickdeals, Reddit &amp; more</p>
-    </div>
-  </div>
-</section>
 
-<!-- Sources -->
-<section class="sources-section" id="sources">
-  <p class="section-eyebrow">Deal Sources We Track</p>
-  <div class="sources-grid" id="sourcesGrid"></div>
-</section>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <!-- Stats -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">📊 Live Stats</div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-val" id="statTotal">—</div>
+          <div class="stat-lbl">Deals Live</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">8</div>
+          <div class="stat-lbl">Sources</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">1h</div>
+          <div class="stat-lbl">Refresh Rate</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val">Free</div>
+          <div class="stat-lbl">Always</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="sidebar-card submit-box">
+      <div class="sidebar-title">✦ Share a Deal</div>
+      <p>Found a deal the community would love? Post it here — it shows up instantly.</p>
+      <button class="btn-submit-full" onclick="openModal()">+ Post a Deal</button>
+      <button class="btn-suggest-full" onclick="openSuggestModal()">💡 Suggest a Feature</button>
+    </div>
+
+    <!-- Sources -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">📡 Deal Sources</div>
+      <div id="sourcesList"></div>
+    </div>
+
+  </aside>
+</div>
 
 <!-- Footer -->
 <footer>
-  <p>© 2026 lifez.ai — Built for deal hunters 💸 &nbsp;·&nbsp; Updated hourly &nbsp;·&nbsp; <a href="#" onclick="openModal();return false;">Submit a deal</a></p>
+  © 2026 lifez.ai — Real deals, no fluff &nbsp;·&nbsp;
+  <a href="#" onclick="openModal();return false;">Post a deal</a> &nbsp;·&nbsp;
+  <a href="#" onclick="openSuggestModal();return false;">Suggest</a>
 </footer>
 
-<!-- Submit Modal -->
-<div class="modal-overlay" id="submitModal" onclick="onOverlayClick(event)">
+<!-- Post Deal Modal -->
+<div class="modal-overlay" id="dealModal" onclick="onOverlayClick(event,'dealModal')">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-
-    <div id="formView">
-      <h2 class="modal-title">Drop a Deal 🔥</h2>
-      <p class="modal-sub">Found a banger deal? Share it with the community.</p>
+    <button class="modal-close" onclick="closeModal('dealModal')">✕</button>
+    <div id="dealFormView">
+      <h2 class="modal-title">Post a Deal 🔥</h2>
+      <p class="modal-sub">Share a deal with the lifez.ai community — it goes live instantly.</p>
       <form id="dealForm" onsubmit="submitDeal(event)">
         <div class="form-group">
           <label class="form-label">Deal Title *</label>
-          <input class="form-input" type="text" id="dealTitle" placeholder="e.g. Nike Air Max – 40% OFF" required maxlength="150">
+          <input class="form-input" type="text" id="dealTitle" placeholder="e.g. AirPods Pro – 30% off at Amazon" required maxlength="150">
         </div>
         <div class="form-group">
           <label class="form-label">Deal URL *</label>
@@ -478,34 +515,33 @@
             <option value="fashion">👗 Fashion</option>
             <option value="travel">✈️ Travel</option>
             <option value="food">🍔 Food</option>
-            <option value="home">🏠 Home</option>
+            <option value="home">🏡 Home</option>
             <option value="health">💪 Health</option>
             <option value="beauty">✨ Beauty</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Description (optional)</label>
-          <textarea class="form-textarea" id="dealDesc" placeholder="What makes this deal bussin?"></textarea>
+          <textarea class="form-textarea" id="dealDesc" placeholder="What makes this deal special?"></textarea>
         </div>
-        <button type="submit" class="btn-submit-form">🚀 Submit Deal</button>
+        <button type="submit" class="btn-submit-form">🚀 Post Deal</button>
       </form>
     </div>
-
-    <div id="successView" style="display:none" class="success-view">
+    <div id="dealSuccessView" style="display:none" class="success-view">
       <div class="big-em">🎉</div>
-      <h3>Deal dropped!</h3>
-      <p>Your deal is now live on lifez.ai. The community will love it.</p>
+      <h3>Deal posted!</h3>
+      <p>It's live on lifez.ai right now.</p>
     </div>
   </div>
 </div>
 
-<!-- Suggestion Modal -->
-<div class="modal-overlay" id="suggestModal" onclick="onSuggestOverlayClick(event)">
+<!-- Suggest Modal -->
+<div class="modal-overlay" id="suggestModal" onclick="onOverlayClick(event,'suggestModal')">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeSuggestModal()">✕</button>
+    <button class="modal-close" onclick="closeModal('suggestModal')">✕</button>
     <div id="suggestFormView">
       <h2 class="modal-title">Drop a Suggestion 💡</h2>
-      <p class="modal-sub">Tell us what deals, sources, or features you'd love to see on lifez.ai.</p>
+      <p class="modal-sub">Tell us what deals, sources, or features you'd love to see.</p>
       <form id="suggestForm" onsubmit="submitSuggestion(event)">
         <div class="form-group">
           <label class="form-label">Your Name (optional)</label>
@@ -517,68 +553,41 @@
         </div>
         <div class="form-group">
           <label class="form-label">Your Suggestion *</label>
-          <textarea class="form-textarea" id="suggestMessage" placeholder="e.g. Add Amazon deal alerts, or show travel deals more prominently…" required style="min-height:110px"></textarea>
+          <textarea class="form-textarea" id="suggestMessage" placeholder="e.g. Add Amazon deal alerts…" required style="min-height:100px"></textarea>
         </div>
         <button type="submit" class="btn-submit-form">✉️ Send Suggestion</button>
       </form>
     </div>
     <div id="suggestSuccessView" style="display:none" class="success-view">
       <div class="big-em">🙏</div>
-      <h3>Thanks for the suggestion!</h3>
+      <h3>Thanks!</h3>
       <p>We'll read it and get back to you if you left an email.</p>
     </div>
   </div>
 </div>
 
 <script>
+  // ── Config ──────────────────────────────────────────────────────────────────
   const SOURCES = [
-    { name:"Slickdeals",         icon:"🔥", color:"#ff6b35", description:"Community-voted frontpage deals",          freq:"Every hour" },
-    { name:"Slickdeals Popular", icon:"⭐", color:"#f59e0b", description:"Most popular deals on Slickdeals",         freq:"Every hour" },
-    { name:"9to5Toys",           icon:"🎮", color:"#16a34a", description:"Best deals on tech, toys & gadgets",       freq:"Every hour" },
-    { name:"9to5Mac Deals",      icon:"🍎", color:"#6366f1", description:"Top Apple & Mac deals daily",              freq:"Every hour" },
-    { name:"The Verge Deals",    icon:"⚡", color:"#e11d48", description:"Editor-picked deals from The Verge",       freq:"Every hour" },
-    { name:"CNET Deals",         icon:"💡", color:"#0284c7", description:"Expert-curated deals from CNET",           freq:"Every hour" },
-    { name:"DealNews",           icon:"💰", color:"#7c3aed", description:"Hand-picked bargains across all categories",freq:"Every hour" },
-    { name:"Reddit Deals",       icon:"👾", color:"#ff4500", description:"Hot deals from Reddit's deal hunters",     freq:"Every hour" },
-    { name:"Reddit Frugal",      icon:"💸", color:"#a855f7", description:"Smart spending from the frugal community", freq:"Every hour" },
+    { name:"Hot Deals",    icon:"🔥", color:"#ff6b35", desc:"Hottest deals right now" },
+    { name:"Tech Deals",   icon:"💻", color:"#6366f1", desc:"Gadgets & electronics" },
+    { name:"Amazon Deals", icon:"📦", color:"#f59e0b", desc:"Amazon sales & offers" },
+    { name:"Fashion Deals",icon:"👗", color:"#ec4899", desc:"Clothing & accessories" },
+    { name:"Travel Deals", icon:"✈️", color:"#0891b2", desc:"Flights, hotels & trips" },
+    { name:"Home Deals",   icon:"🏠", color:"#16a34a", desc:"Furniture & appliances" },
+    { name:"Spring Deals", icon:"🌸", color:"#84cc16", desc:"Seasonal spring picks" },
+    { name:"Coupon Deals", icon:"🎟️", color:"#7c3aed", desc:"Promo codes & coupons" },
+    { name:"Community",    icon:"👤", color:"#06b6d4", desc:"User-submitted deals" },
   ];
 
-  const CAT_ICONS    = { tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏠", health:"💪", beauty:"✨", other:"🏷️" };
-  const SEASON_ICONS = { spring:"🌸", summer:"☀️", fall:"🍂", winter:"❄️" };
-  const SRC_COLOR  = {
-    "Slickdeals":"#ff6b35", "Slickdeals Popular":"#f59e0b",
-    "9to5Toys":"#16a34a", "9to5Mac Deals":"#6366f1",
-    "The Verge Deals":"#e11d48", "CNET Deals":"#0284c7",
-    "DealNews":"#7c3aed",
-    "Reddit Deals":"#ff4500", "Reddit Frugal":"#a855f7", "Community":"#06b6d4",
-  };
-  const SRC_COLOR2 = {
-    "Slickdeals":"#f97316", "Slickdeals Popular":"#d97706",
-    "9to5Toys":"#15803d", "9to5Mac Deals":"#4f46e5",
-    "The Verge Deals":"#be123c", "CNET Deals":"#0369a1",
-    "DealNews":"#6d28d9",
-    "Reddit Deals":"#fb923c", "Reddit Frugal":"#ec4899", "Community":"#a855f7",
-  };
+  const CAT_ICONS = { tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏡", health:"💪", beauty:"✨", other:"🏷️" };
+  const SRC_COLOR = {};
+  SOURCES.forEach(s => { SRC_COLOR[s.name] = s.color; });
 
-  let currentFilter = "all";
+  let allDeals = [], currentFilter = "all", searchQuery = "";
   let voted = new Set(JSON.parse(localStorage.getItem("lifez_voted") || "[]"));
 
-  // ── Season ──
-  function season() {
-    const m = new Date().getMonth() + 1;
-    return m<=2||m===12 ? "winter" : m<=5 ? "spring" : m<=8 ? "summer" : "fall";
-  }
-  function initSeasonBadge() {
-    const s = season(), y = new Date().getFullYear();
-    const names = { spring:"Spring", summer:"Summer", fall:"Fall", winter:"Winter" };
-    const el = document.getElementById("seasonBadge");
-    el.className = `season-badge ${s}`;
-    el.textContent = `${SEASON_ICONS[s]} ${names[s]} ${y}`;
-  }
-
-  // ── Helpers ──
-  function scrollToId(id) { document.getElementById(id)?.scrollIntoView({ behavior:"smooth" }); }
-
+  // ── Helpers ──────────────────────────────────────────────────────────────────
   function timeAgo(ts) {
     if (!ts) return "";
     const d = Math.floor(Date.now()/1000) - ts;
@@ -587,88 +596,120 @@
     if (d < 86400) return `${Math.floor(d/3600)}h ago`;
     return `${Math.floor(d/86400)}d ago`;
   }
-
   function fmtUpdated(iso) {
     if (!iso) return "never";
-    const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    const diff = Math.floor((Date.now() - new Date(iso))/60000);
     if (diff < 1) return "just now";
     if (diff < 60) return `${diff} min ago`;
     return `${Math.floor(diff/60)}h ago`;
   }
-
   function esc(s) {
     return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
 
-  // ── Fetch ──
-  async function loadDeals(filter = "all") {
+  // ── Fetch ────────────────────────────────────────────────────────────────────
+  async function loadDeals(filter="all") {
     const params = new URLSearchParams({ limit: 50 });
     const seasons = ["spring","summer","fall","winter"];
     if (filter !== "all") {
       if (seasons.includes(filter)) params.set("season", filter);
       else params.set("category", filter);
     }
-
     try {
-      const res = await fetch(`/api/deals?${params}`);
+      const res  = await fetch(`/api/deals?${params}`);
       const data = await res.json();
-      renderDeals(data.deals || []);
+      allDeals = data.deals || [];
       document.getElementById("updatedText").textContent = `Updated ${fmtUpdated(data.last_updated)}`;
-      document.getElementById("statCount").textContent = `${data.total || 0}+ deals live`;
-    } catch {
-      renderError();
-    }
+      document.getElementById("statTotal").textContent = data.total || 0;
+      render(allDeals);
+    } catch { renderError(); }
   }
 
-  // ── Render deals ──
-  function renderDeals(deals) {
-    const grid = document.getElementById("dealsGrid");
+  // ── Search ───────────────────────────────────────────────────────────────────
+  function onSearch(q) {
+    searchQuery = q.toLowerCase().trim();
+    if (!searchQuery) { render(allDeals); return; }
+    const filtered = allDeals.filter(d =>
+      d.title.toLowerCase().includes(searchQuery) ||
+      (d.description||"").toLowerCase().includes(searchQuery) ||
+      d.source.toLowerCase().includes(searchQuery)
+    );
+    render(filtered);
+  }
+
+  // ── Render ───────────────────────────────────────────────────────────────────
+  function render(deals) {
+    const container = document.getElementById("dealsContainer");
     if (!deals.length) {
-      grid.innerHTML = `<div class="state-box"><div style="font-size:2.5rem;margin-bottom:0.75rem">🔍</div><h3>No deals found</h3><p>Try a different filter or check back soon</p></div>`;
+      container.innerHTML = `<div class="empty-state"><div style="font-size:2rem;margin-bottom:0.6rem">🔍</div><h3>No deals found</h3><p>Try a different filter or search term</p></div>`;
       return;
     }
-    grid.innerHTML = deals.map((d, i) => dealCard(d, i)).join("");
+    const [first, ...rest] = deals;
+    container.innerHTML = featuredCard(first) + `<div class="deals-list">${rest.map((d,i) => dealCard(d,i+1)).join("")}</div>`;
   }
 
   function renderError() {
-    document.getElementById("dealsGrid").innerHTML =
-      `<div class="state-box"><div style="font-size:2.5rem;margin-bottom:0.75rem">⚠️</div><h3>Couldn't load deals</h3><p>Server may be warming up — refresh in a moment.</p></div>`;
+    document.getElementById("dealsContainer").innerHTML =
+      `<div class="empty-state"><div style="font-size:2rem;margin-bottom:0.6rem">⚠️</div><h3>Couldn't load deals</h3><p>Server warming up — refresh in a moment</p></div>`;
   }
 
-  function dealCard(d, i) {
-    const c1 = SRC_COLOR[d.source]  || "#a855f7";
-    const c2 = SRC_COLOR2[d.source] || "#ec4899";
-    const hot = i < 3;
+  function srcBadge(source) {
+    const c = SRC_COLOR[source] || "#6b7280";
+    return `<span class="source-chip" style="color:${c};border-color:${c}33;">
+              <span class="source-dot" style="background:${c}"></span>${esc(source)}
+            </span>`;
+  }
+
+  function catBadge(cat) {
+    if (!cat || cat === "other") return "";
+    return `<span class="cat-chip">${CAT_ICONS[cat]||""} ${cat}</span>`;
+  }
+
+  function featuredCard(d) {
     const isVoted = voted.has(String(d.id));
-
-    const catTag    = d.category && d.category !== "other"
-      ? `<span class="tag tag-cat">${CAT_ICONS[d.category]||""} ${d.category}</span>` : "";
-    const seasonTag = d.season
-      ? `<span class="tag tag-season">${SEASON_ICONS[d.season]||""} ${d.season}</span>` : "";
-    const userTag   = d.is_user_submitted
-      ? `<span class="tag tag-user">👤 community</span>` : "";
-
     return `
-      <div class="deal-card" style="--ca:${c1};--ca2:${c2}">
-        ${hot ? '<span class="hot-badge">🔥 Hot</span>' : ""}
-        <div class="card-top">
-          <div class="card-source" style="color:${c1}">
-            <span class="src-dot" style="background:${c1}"></span>
-            ${esc(d.source_icon||"")} ${esc(d.source)}
+      <div class="featured-card">
+        <span class="featured-badge">⭐ Top Deal</span>
+        <div class="featured-body">
+          <div class="featured-meta">
+            ${srcBadge(d.source)}
+            ${catBadge(d.category)}
+            <span class="time-chip">${timeAgo(d.fetched_at)}</span>
           </div>
-          <span class="card-time">${timeAgo(d.fetched_at)}</span>
-        </div>
-        <div class="card-title">${esc(d.title)}</div>
-        ${d.description ? `<div class="card-desc">${esc(d.description)}</div>` : ""}
-        <div class="card-tags">${catTag}${seasonTag}${userTag}</div>
-        <div class="card-actions">
-          <a class="btn-grab" href="${esc(d.link)}" target="_blank" rel="noopener noreferrer">Grab Deal →</a>
-          <button class="btn-vote${isVoted?" voted":""}" onclick="vote(${d.id},this)">🔥 ${d.votes||0}</button>
+          <div class="featured-title">${esc(d.title)}</div>
+          ${d.description ? `<div class="featured-desc">${esc(d.description)}</div>` : ""}
+          <div class="featured-footer">
+            <a class="btn-grab" href="${esc(d.link)}" target="_blank" rel="noopener noreferrer">Grab Deal →</a>
+            <button class="btn-vote${isVoted?" voted":""}" onclick="vote(${d.id},this)">🔥 ${d.votes||0}</button>
+          </div>
         </div>
       </div>`;
   }
 
-  // ── Vote ──
+  function dealCard(d, i) {
+    const c = SRC_COLOR[d.source] || "#e2e8f0";
+    const isVoted = voted.has(String(d.id));
+    const hotBadge = i < 4 ? `<span class="hot-chip">🔥 Hot</span>` : "";
+    return `
+      <div class="deal-card" style="--ca:${c}">
+        <div class="deal-body">
+          <div class="deal-meta">
+            ${srcBadge(d.source)}
+            ${catBadge(d.category)}
+            ${hotBadge}
+            <span class="time-chip">${timeAgo(d.fetched_at)}</span>
+          </div>
+          <div class="deal-title">${esc(d.title)}</div>
+          ${d.description ? `<div class="deal-desc">${esc(d.description)}</div>` : ""}
+          <div class="deal-footer">
+            <a class="btn-grab" href="${esc(d.link)}" target="_blank" rel="noopener noreferrer">Grab Deal →</a>
+            <button class="btn-vote${isVoted?" voted":""}" onclick="vote(${d.id},this)">🔥 ${d.votes||0}</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ── Vote ─────────────────────────────────────────────────────────────────────
   async function vote(id, btn) {
     if (voted.has(String(id))) return;
     try {
@@ -683,44 +724,50 @@
     } catch {}
   }
 
-  // ── Filters ──
-  document.getElementById("filters").addEventListener("click", e => {
-    const pill = e.target.closest(".pill");
-    if (!pill) return;
-    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
-    pill.classList.add("active");
-    currentFilter = pill.dataset.filter;
+  // ── Category tabs ─────────────────────────────────────────────────────────────
+  document.getElementById("catNav").addEventListener("click", e => {
+    const tab = e.target.closest(".cat-tab");
+    if (!tab) return;
+    document.querySelectorAll(".cat-tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    currentFilter = tab.dataset.filter;
+    searchQuery = "";
+    document.getElementById("searchInput").value = "";
     loadDeals(currentFilter);
   });
 
-  // ── Sources ──
+  // ── Sidebar sources ──────────────────────────────────────────────────────────
   function renderSources() {
-    document.getElementById("sourcesGrid").innerHTML = SOURCES.map(s => `
-      <div class="source-card">
-        <div class="source-card-top">
-          <span class="source-icon-lg">${s.icon}</span>
-          <span class="source-name-lg" style="color:${s.color}">${s.name}</span>
+    document.getElementById("sourcesList").innerHTML = SOURCES.filter(s => s.name !== "Community").map(s => `
+      <div class="source-row">
+        <span class="src-icon">${s.icon}</span>
+        <div class="src-info">
+          <div class="src-name" style="color:${s.color}">${s.name}</div>
+          <div class="src-desc">${s.desc}</div>
         </div>
-        <p class="source-desc-sm">${s.description}</p>
-        <div class="source-freq">⏱ ${s.freq}</div>
       </div>`).join("");
   }
 
-  // ── Modal ──
-  function openModal() {
-    document.getElementById("submitModal").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeModal() {
-    document.getElementById("submitModal").classList.remove("open");
-    document.body.style.overflow = "";
-    document.getElementById("formView").style.display = "";
-    document.getElementById("successView").style.display = "none";
-    document.getElementById("dealForm").reset();
-  }
-  function onOverlayClick(e) { if (e.target === e.currentTarget) closeModal(); }
+  // ── Modals ───────────────────────────────────────────────────────────────────
+  function openModal()        { document.getElementById("dealModal").classList.add("open");    document.body.style.overflow="hidden"; }
+  function openSuggestModal() { document.getElementById("suggestModal").classList.add("open"); document.body.style.overflow="hidden"; }
 
-  // ── Submit ──
+  function closeModal(id) {
+    document.getElementById(id).classList.remove("open");
+    document.body.style.overflow="";
+    if (id === "dealModal") {
+      document.getElementById("dealFormView").style.display="";
+      document.getElementById("dealSuccessView").style.display="none";
+      document.getElementById("dealForm").reset();
+    } else {
+      document.getElementById("suggestFormView").style.display="";
+      document.getElementById("suggestSuccessView").style.display="none";
+      document.getElementById("suggestForm").reset();
+    }
+  }
+  function onOverlayClick(e, id) { if (e.target===e.currentTarget) closeModal(id); }
+
+  // ── Submit deal ──────────────────────────────────────────────────────────────
   async function submitDeal(e) {
     e.preventDefault();
     const payload = {
@@ -730,33 +777,17 @@
       description: document.getElementById("dealDesc").value.trim(),
     };
     try {
-      const res  = await fetch("/api/deals/submit", {
-        method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(payload),
-      });
+      const res  = await fetch("/api/deals/submit", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
       const data = await res.json();
       if (data.success) {
-        document.getElementById("formView").style.display = "none";
-        document.getElementById("successView").style.display = "";
-        setTimeout(() => { closeModal(); loadDeals(currentFilter); }, 2500);
+        document.getElementById("dealFormView").style.display="none";
+        document.getElementById("dealSuccessView").style.display="";
+        setTimeout(() => { closeModal("dealModal"); loadDeals(currentFilter); }, 2500);
       }
     } catch { alert("Something went wrong — try again!"); }
   }
 
-  // ── Suggest Modal ──
-  function openSuggestModal() {
-    document.getElementById("suggestModal").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeSuggestModal() {
-    document.getElementById("suggestModal").classList.remove("open");
-    document.body.style.overflow = "";
-    document.getElementById("suggestFormView").style.display = "";
-    document.getElementById("suggestSuccessView").style.display = "none";
-    document.getElementById("suggestForm").reset();
-  }
-  function onSuggestOverlayClick(e) { if (e.target === e.currentTarget) closeSuggestModal(); }
-
+  // ── Submit suggestion ────────────────────────────────────────────────────────
   async function submitSuggestion(e) {
     e.preventDefault();
     const payload = {
@@ -765,26 +796,20 @@
       message: document.getElementById("suggestMessage").value.trim(),
     };
     try {
-      const res  = await fetch("/api/suggest", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res  = await fetch("/api/suggest", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
       const data = await res.json();
       if (data.success) {
-        document.getElementById("suggestFormView").style.display = "none";
-        document.getElementById("suggestSuccessView").style.display = "";
-        setTimeout(closeSuggestModal, 3000);
-      } else {
-        alert("Something went wrong — please try again.");
+        document.getElementById("suggestFormView").style.display="none";
+        document.getElementById("suggestSuccessView").style.display="";
+        setTimeout(() => closeModal("suggestModal"), 3000);
       }
-    } catch { alert("Something went wrong — please try again."); }
+    } catch { alert("Something went wrong — try again!"); }
   }
 
-  // ── Auto-refresh every 30 min ──
-  setInterval(() => loadDeals(currentFilter), 30 * 60 * 1000);
+  // ── Auto-refresh every 30 min ─────────────────────────────────────────────────
+  setInterval(() => loadDeals(currentFilter), 30*60*1000);
 
-  // ── Init ──
-  initSeasonBadge();
+  // ── Init ──────────────────────────────────────────────────────────────────────
   renderSources();
   loadDeals();
 </script>
