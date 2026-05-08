@@ -419,12 +419,17 @@
   <div class="cat-nav-inner" id="catNav">
     <button class="cat-tab active" data-filter="all">🏠 All Deals</button>
     <button class="cat-tab" data-filter="tech">💻 Tech</button>
+    <button class="cat-tab" data-filter="gaming">🎮 Gaming</button>
     <button class="cat-tab" data-filter="fashion">👗 Fashion</button>
     <button class="cat-tab" data-filter="travel">✈️ Travel</button>
     <button class="cat-tab" data-filter="food">🍔 Food</button>
     <button class="cat-tab" data-filter="home">🏡 Home</button>
     <button class="cat-tab" data-filter="health">💪 Health</button>
     <button class="cat-tab" data-filter="beauty">✨ Beauty</button>
+    <button class="cat-tab" data-filter="streaming">📺 Streaming</button>
+    <button class="cat-tab" data-filter="kids">🧸 Kids</button>
+    <button class="cat-tab" data-filter="pets">🐾 Pets</button>
+    <button class="cat-tab" data-filter="student">🎓 Student</button>
     <button class="cat-tab" data-filter="spring">🌸 Spring</button>
   </div>
 </nav>
@@ -461,7 +466,7 @@
           <div class="stat-lbl">Deals Live</div>
         </div>
         <div class="stat-box">
-          <div class="stat-val">8</div>
+          <div class="stat-val">18</div>
           <div class="stat-lbl">Sources</div>
         </div>
         <div class="stat-box">
@@ -577,18 +582,32 @@
 <script>
   // ── Config ──────────────────────────────────────────────────────────────────
   const SOURCES = [
-    { name:"Hot Deals",    icon:"🔥", color:"#ff6b35", desc:"Hottest deals right now" },
-    { name:"Tech Deals",   icon:"💻", color:"#6366f1", desc:"Gadgets & electronics" },
-    { name:"Amazon Deals", icon:"📦", color:"#f59e0b", desc:"Amazon sales & offers" },
-    { name:"Fashion Deals",icon:"👗", color:"#ec4899", desc:"Clothing & accessories" },
-    { name:"Travel Deals", icon:"✈️", color:"#0891b2", desc:"Flights, hotels & trips" },
-    { name:"Home Deals",   icon:"🏠", color:"#16a34a", desc:"Furniture & appliances" },
-    { name:"Spring Deals", icon:"🌸", color:"#84cc16", desc:"Seasonal spring picks" },
-    { name:"Coupon Deals", icon:"🎟️", color:"#7c3aed", desc:"Promo codes & coupons" },
-    { name:"Community",    icon:"👤", color:"#06b6d4", desc:"User-submitted deals" },
+    { name:"Hot Deals",       icon:"🔥", color:"#ff6b35", desc:"Hottest deals right now" },
+    { name:"Tech Deals",      icon:"💻", color:"#6366f1", desc:"Gadgets & electronics" },
+    { name:"Amazon Deals",    icon:"📦", color:"#f59e0b", desc:"Amazon sales & offers" },
+    { name:"Fashion Deals",   icon:"👗", color:"#ec4899", desc:"Clothing & accessories" },
+    { name:"Travel Deals",    icon:"✈️", color:"#0891b2", desc:"Flights, hotels & trips" },
+    { name:"Home Deals",      icon:"🏠", color:"#16a34a", desc:"Furniture & appliances" },
+    { name:"Spring Deals",    icon:"🌸", color:"#84cc16", desc:"Seasonal spring picks" },
+    { name:"Coupon Deals",    icon:"🎟️", color:"#7c3aed", desc:"Promo codes & coupons" },
+    { name:"Gaming Deals",    icon:"🎮", color:"#7c3aed", desc:"Console, PC & games" },
+    { name:"Software Deals",  icon:"💿", color:"#0891b2", desc:"App & SaaS discounts" },
+    { name:"Student Deals",   icon:"🎓", color:"#16a34a", desc:"Exclusive student offers" },
+    { name:"Clearance Sales", icon:"🏷️", color:"#dc2626", desc:"Clearance & liquidation" },
+    { name:"Pet Deals",       icon:"🐾", color:"#d97706", desc:"Pet food, toys & supplies" },
+    { name:"Kids & Baby",     icon:"🧸", color:"#ec4899", desc:"Toys & baby essentials" },
+    { name:"Sports & Outdoors",icon:"⛺",color:"#15803d", desc:"Camping, sports & fitness" },
+    { name:"Streaming Deals", icon:"📺", color:"#e11d48", desc:"Streaming & entertainment" },
+    { name:"Grocery Deals",   icon:"🛒", color:"#059669", desc:"Supermarket savings" },
+    { name:"Luxury Deals",    icon:"💎", color:"#92400e", desc:"Premium brand discounts" },
+    { name:"Community",       icon:"👤", color:"#06b6d4", desc:"User-submitted deals" },
   ];
 
-  const CAT_ICONS = { tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏡", health:"💪", beauty:"✨", other:"🏷️" };
+  const CAT_ICONS = {
+    tech:"💻", fashion:"👗", travel:"✈️", food:"🍔", home:"🏡",
+    health:"💪", beauty:"✨", gaming:"🎮", kids:"🧸", pets:"🐾",
+    streaming:"📺", student:"🎓", other:"🏷️"
+  };
   const SRC_COLOR = {};
   SOURCES.forEach(s => { SRC_COLOR[s.name] = s.color; });
 
