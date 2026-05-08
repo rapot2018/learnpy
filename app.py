@@ -12,7 +12,7 @@ from email.mime.text import MIMEText
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -129,6 +129,44 @@ async def manual_refresh():
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+# ── Image / Reel generation ───────────────────────────────────────────────────
+
+@app.get("/api/deals/{deal_id}/card")
+async def deal_post_card(deal_id: int):
+    """1080×1080 Instagram post image for a deal."""
+    from reel_gen import post_card
+    data = load_deals()
+    deal = next((d for d in data.get("deals", []) + data.get("user_deals", []) if d["id"] == deal_id), None)
+    if not deal:
+        return JSONResponse(status_code=404, content={"error": "Deal not found"})
+    img_bytes = await asyncio.to_thread(post_card, deal)
+    return Response(content=img_bytes, media_type="image/png",
+                    headers={"Content-Disposition": f'attachment; filename="lifezai-deal-{deal_id}.png"'})
+
+
+@app.get("/api/deals/{deal_id}/story")
+async def deal_story_card(deal_id: int):
+    """1080×1920 Instagram Story / Reel cover image for a deal."""
+    from reel_gen import story_card
+    data = load_deals()
+    deal = next((d for d in data.get("deals", []) + data.get("user_deals", []) if d["id"] == deal_id), None)
+    if not deal:
+        return JSONResponse(status_code=404, content={"error": "Deal not found"})
+    img_bytes = await asyncio.to_thread(story_card, deal)
+    return Response(content=img_bytes, media_type="image/png",
+                    headers={"Content-Disposition": f'attachment; filename="lifezai-story-{deal_id}.png"'})
+
+
+@app.get("/api/deals/top/story")
+async def top_deals_story_card():
+    """1080×1920 daily top-5 deals story card."""
+    from reel_gen import top_deals_story
+    result = get_top_deals(limit=5)
+    img_bytes = await asyncio.to_thread(top_deals_story, result["deals"])
+    return Response(content=img_bytes, media_type="image/png",
+                    headers={"Content-Disposition": 'attachment; filename="lifezai-top-deals.png"'})
 
 
 # ── Suggestions ───────────────────────────────────────────────────────────────
