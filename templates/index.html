@@ -368,6 +368,76 @@
     }
     .share-copy:hover { background: #f5f5f5; }
 
+    /* ── Profile badge ── */
+    .profile-badge {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: none; border: 1.5px solid var(--border); border-radius: 999px;
+      padding: 0.25rem 0.7rem 0.25rem 0.35rem; cursor: pointer; font: inherit;
+      font-size: 0.78rem; font-weight: 600; color: var(--text); transition: all 0.15s;
+    }
+    .profile-badge:hover { border-color: var(--blue-mid); }
+    .profile-avatar { font-size: 1rem; }
+
+    /* ── Trending badge ── */
+    .trending-badge {
+      display: inline-flex; align-items: center; gap: 0.2rem;
+      background: #fff3e0; border: 1px solid #ffcc80;
+      border-radius: 999px; padding: 0.12rem 0.5rem;
+      font-size: 0.62rem; font-weight: 700; color: #e65100;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+
+    /* ── Comments section ── */
+    .comments-section {
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 0.85rem;
+      display: none;
+    }
+    .comments-section.open { display: block; }
+
+    .comments-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.65rem; }
+    .comment-row {
+      display: flex; gap: 0.55rem; align-items: flex-start;
+    }
+    .comment-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--blue-light); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; flex-shrink: 0;
+    }
+    .comment-body { flex: 1; }
+    .comment-username { font-size: 0.78rem; font-weight: 700; color: var(--text); }
+    .comment-text    { font-size: 0.82rem; color: var(--text); line-height: 1.45; }
+    .comment-time    { font-size: 0.68rem; color: var(--text-dim); margin-top: 0.15rem; }
+    .comment-del     {
+      background: none; border: none; cursor: pointer;
+      font-size: 0.7rem; color: var(--text-dim); padding: 0;
+    }
+    .comment-del:hover { color: var(--red); }
+
+    .comment-input-row {
+      display: flex; gap: 0.5rem; align-items: center; padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .comment-input {
+      flex: 1; border: none; outline: none; background: none;
+      font: inherit; font-size: 0.82rem; color: var(--text);
+      padding: 0.25rem 0;
+    }
+    .comment-input::placeholder { color: var(--text-dim); }
+    .comment-post-btn {
+      background: none; border: none; cursor: pointer; font: inherit;
+      font-size: 0.82rem; font-weight: 700; color: var(--blue-mid); padding: 0;
+    }
+    .comment-post-btn:disabled { color: var(--text-dim); cursor: default; }
+    .comment-login-hint {
+      font-size: 0.78rem; color: var(--text-muted); text-align: center; padding: 0.25rem;
+    }
+    .comment-login-hint button {
+      background: none; border: none; cursor: pointer; font: inherit;
+      font-size: 0.78rem; font-weight: 700; color: var(--blue-mid);
+    }
+
     /* ── Desktop: center column ── */
     @media (min-width: 640px) {
       body { background: #fafafa; }
@@ -385,7 +455,9 @@
   <a href="/" class="ig-logo">Lifez<span>.AI</span></a>
   <div class="ig-header-icons">
     <button class="ig-icon-btn" onclick="openModal('dealModal')" title="Post a deal">➕</button>
-    <button class="ig-icon-btn" onclick="openModal('suggestModal')" title="Suggest">💡</button>
+    <div id="profileArea">
+      <button class="ig-icon-btn" onclick="openModal('loginModal')" title="Login">👤</button>
+    </div>
   </div>
 </header>
 
@@ -505,6 +577,108 @@
   </div>
 </div>
 
+<!-- Profile Modal -->
+<div class="modal-overlay" id="profileModal" onclick="onOverlayClick(event,'profileModal')">
+  <div class="modal-sheet" style="text-align:center">
+    <div class="sheet-handle"></div>
+    <div id="profileContent" style="padding:0.5rem 0 1rem">
+      <div style="font-size:3rem;margin-bottom:0.4rem" id="profileAvatar">👤</div>
+      <div style="font-size:1.1rem;font-weight:700" id="profileName"></div>
+      <div style="font-size:0.82rem;color:#737373;margin-bottom:1.25rem" id="profileUsername"></div>
+      <button class="btn-submit-form" style="background:#ed4956;margin-bottom:0.5rem" onclick="doLogout()">Sign Out</button>
+      <button class="btn-submit-form" style="background:#f3f4f6;color:#262626" onclick="closeModal('profileModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal" onclick="onOverlayClick(event,'loginModal')">
+  <div class="modal-sheet">
+    <div class="sheet-handle"></div>
+
+    <!-- Main login view -->
+    <div id="loginView">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div style="font-size:2.5rem;margin-bottom:0.4rem">💰</div>
+        <div style="font-size:1.15rem;font-weight:800">Sign in to Lifez.AI</div>
+        <div style="font-size:0.8rem;color:#737373;margin-top:0.3rem">Like deals, comment &amp; track your saves</div>
+      </div>
+
+      <!-- Instagram login button -->
+      <a id="igLoginBtn" href="/auth/instagram" style="
+        display:flex;align-items:center;justify-content:center;gap:0.6rem;
+        background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+        color:#fff;border:none;border-radius:10px;padding:0.82rem;width:100%;
+        font:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;
+        text-decoration:none;margin-bottom:0.85rem;transition:opacity 0.2s;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        Continue with Instagram
+      </a>
+
+      <div id="igNotConfigured" style="display:none;background:#fef3c7;border:1px solid #fbbf24;border-radius:8px;padding:0.75rem;margin-bottom:0.85rem;font-size:0.78rem;color:#92400e;line-height:1.5">
+        ⚙️ Instagram login not configured yet. Set <strong>INSTAGRAM_APP_ID</strong> and <strong>INSTAGRAM_APP_SECRET</strong> in Render → use the form below.
+      </div>
+
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.85rem">
+        <div style="flex:1;height:1px;background:#dbdbdb"></div>
+        <span style="font-size:0.72rem;font-weight:600;color:#a8a8a8">OR</span>
+        <div style="flex:1;height:1px;background:#dbdbdb"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="form-input" type="text" id="loginUsername" placeholder="your_username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="loginPassword" placeholder="••••••" autocomplete="current-password"
+               onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <div id="loginError" style="font-size:0.78rem;color:#ed4956;margin-bottom:0.6rem;display:none"></div>
+      <button class="btn-submit-form" onclick="doLogin()">Sign In</button>
+      <p style="text-align:center;font-size:0.78rem;color:#737373;margin-top:1rem">
+        Don't have an account?
+        <button style="background:none;border:none;cursor:pointer;font:inherit;font-size:0.78rem;font-weight:700;color:#2563eb" onclick="showRegister()">Sign up</button>
+      </p>
+    </div>
+
+    <!-- Register view -->
+    <div id="registerView" style="display:none">
+      <div style="text-align:center;margin-bottom:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.3rem">🎉</div>
+        <div style="font-size:1.1rem;font-weight:800">Create your account</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input class="form-input" type="text" id="regUsername" placeholder="e.g. john_doe" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Display Name</label>
+        <input class="form-input" type="text" id="regDisplay" placeholder="e.g. John Doe">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="regPassword" placeholder="Min 6 characters" autocomplete="new-password">
+      </div>
+      <div id="regError" style="font-size:0.78rem;color:#ed4956;margin-bottom:0.6rem;display:none"></div>
+      <button class="btn-submit-form" onclick="doRegister()">Create Account</button>
+      <p style="text-align:center;font-size:0.78rem;color:#737373;margin-top:1rem">
+        Already have an account?
+        <button style="background:none;border:none;cursor:pointer;font:inherit;font-size:0.78rem;font-weight:700;color:#2563eb" onclick="showLogin()">Sign in</button>
+      </p>
+    </div>
+
+    <!-- Success -->
+    <div id="loginSuccess" style="display:none" class="success-view">
+      <div class="big-em">👋</div>
+      <h3 id="loginWelcome">Welcome!</h3>
+      <p>You're all set to like deals and comment.</p>
+    </div>
+  </div>
+</div>
+
 <!-- Share Sheet -->
 <div class="modal-overlay" id="shareModal" onclick="onOverlayClick(event,'shareModal')">
   <div class="modal-sheet">
@@ -578,9 +752,10 @@
   };
 
   let allDeals = [], currentFilter = "all", currentTab = "home";
-  let saved = new Set(JSON.parse(localStorage.getItem("lifez_saved") || "[]"));
-  let liked = new Set(JSON.parse(localStorage.getItem("lifez_liked") || "[]"));
+  let saved      = new Set(JSON.parse(localStorage.getItem("lifez_saved") || "[]"));
+  let liked      = new Set(JSON.parse(localStorage.getItem("lifez_liked") || "[]"));
   let shareTarget = null;
+  let currentUser = null;   // populated from /api/auth/me
 
   // ── Helpers ──
   function esc(s) {
@@ -653,11 +828,13 @@
   }
 
   function postCard(deal) {
-    const src      = deal.source || "";
-    const catIcon  = CAT_ICONS[deal.category] || "🏷️";
-    const isLiked  = liked.has(String(deal.id));
-    const isSaved  = saved.has(String(deal.id));
-    const likeCount = likes(deal);
+    const src       = deal.source || "";
+    const catIcon   = CAT_ICONS[deal.category] || "🏷️";
+    const isLiked   = deal.user_liked || liked.has(String(deal.id));
+    const isSaved   = saved.has(String(deal.id));
+    const likeCount = deal.likes ?? likes(deal);
+    const commentCount = deal.comments ?? 0;
+    const isTrending = likeCount > 10 || commentCount > 3;
     const tags = ["#deals","#lifezai","#savemoney", deal.category ? `#${deal.category}deals` : "#dealoftheday"].join(" ");
 
     return `
@@ -667,13 +844,13 @@
           ${deal.source_icon || "🏷️"}
         </div>
         <div class="post-user">
-          <div class="post-username">${esc(src)}</div>
+          <div class="post-username">${esc(src)} ${isTrending ? '<span class="trending-badge">🔥 Trending</span>' : ""}</div>
           <div class="post-source-time">${timeAgo(deal.fetched_at)} · ${catIcon} ${deal.category||"deal"}</div>
         </div>
         <button class="post-more" onclick="openShareSheet(${deal.id})">•••</button>
       </div>
 
-      <div class="post-image" ondblclick="doubleTapLike(${deal.id},this)" onclick="handlePostClick(event,${deal.id})">
+      <div class="post-image" ondblclick="doubleTapLike(${deal.id},this)">
         <div class="post-image-bg" style="background:${bgGrad(src)}">
           <div class="post-image-source">${esc(src)} ${deal.source_icon||""}</div>
           <div class="post-image-title">${esc(deal.title)}</div>
@@ -688,6 +865,9 @@
         <button class="action-btn${isLiked?" liked":""}" id="like-${deal.id}" onclick="toggleLike(${deal.id},this)">
           ${isLiked?"❤️":"🤍"}
         </button>
+        <button class="action-btn" onclick="toggleComments(${deal.id})" title="Comments">
+          💬
+        </button>
         <a class="grab-btn" href="${esc(deal.link)}" target="_blank" rel="noopener noreferrer">Grab Deal →</a>
         <button class="action-btn save-btn${isSaved?" saved":""}" id="save-${deal.id}" onclick="toggleSave(${deal.id},this)" title="Save">
           ${isSaved?"🔖":"🏷️"}
@@ -701,6 +881,26 @@
       <div class="post-download">
         <a class="dl-btn" href="/api/deals/${deal.id}/card" download="lifezai-post-${deal.id}.png">📸 Post (1:1)</a>
         <a class="dl-btn" href="/api/deals/${deal.id}/story" download="lifezai-story-${deal.id}.png">📱 Story (9:16)</a>
+      </div>
+
+      ${commentCount > 0 ? `<div style="padding:0 0.85rem 0.4rem;font-size:0.78rem;color:#737373;cursor:pointer" onclick="toggleComments(${deal.id})">View all ${commentCount} comment${commentCount>1?"s":""}</div>` : ""}
+
+      <div class="comments-section" id="comments-${deal.id}">
+        <div class="comments-list" id="comments-list-${deal.id}">
+          <div style="font-size:0.78rem;color:#a8a8a8;text-align:center;padding:0.5rem">Loading comments…</div>
+        </div>
+        ${currentUser
+          ? `<div class="comment-input-row">
+               <div class="comment-avatar">${currentUser.avatar}</div>
+               <input class="comment-input" type="text" id="cinput-${deal.id}"
+                 placeholder="Add a comment…"
+                 onkeydown="if(event.key==='Enter')postComment(${deal.id})">
+               <button class="comment-post-btn" onclick="postComment(${deal.id})">Post</button>
+             </div>`
+          : `<div class="comment-login-hint">
+               <button onclick="openModal('loginModal')">Sign in</button> to leave a comment
+             </div>`
+        }
       </div>
     </article>`;
   }
@@ -751,23 +951,17 @@
 
   // ── Like / Save ──
   async function toggleLike(id, btn) {
-    const isLiked = liked.has(String(id));
-    if (!isLiked) {
-      liked.add(String(id));
-      btn.innerHTML = "❤️";
-      btn.classList.add("liked");
-      // Update count
+    try {
+      const res  = await fetch(`/api/deals/vote/${id}`, { method:"POST" });
+      const data = await res.json();
+      const isNowLiked = data.liked;
+      btn.innerHTML = isNowLiked ? "❤️" : "🤍";
+      btn.classList.toggle("liked", isNowLiked);
       const lc = document.getElementById(`likes-${id}`);
-      const cur = parseInt(lc.textContent.replace(/,/g,""));
-      lc.textContent = (cur + 1).toLocaleString() + " likes";
-      // API vote
-      fetch(`/api/deals/vote/${id}`, { method:"POST" }).catch(()=>{});
-    } else {
-      liked.delete(String(id));
-      btn.innerHTML = "🤍";
-      btn.classList.remove("liked");
-    }
-    localStorage.setItem("lifez_liked", JSON.stringify([...liked]));
+      if (lc && data.likes !== undefined) lc.textContent = Number(data.likes).toLocaleString() + " likes";
+      if (isNowLiked) liked.add(String(id)); else liked.delete(String(id));
+      localStorage.setItem("lifez_liked", JSON.stringify([...liked]));
+    } catch {}
   }
 
   function toggleSave(id, btn) {
@@ -861,7 +1055,24 @@
   }
 
   // ── Modals ──
-  function openModal(id) { document.getElementById(id).classList.add("open"); document.body.style.overflow="hidden"; }
+  function openModal(id) {
+    if (id === "profileModal" && currentUser) {
+      document.getElementById("profileAvatar").textContent  = currentUser.profile_picture_url ? "" : currentUser.avatar;
+      if (currentUser.profile_picture_url) {
+        const img = document.createElement("img");
+        img.src = currentUser.profile_picture_url;
+        img.style.cssText = "width:64px;height:64px;border-radius:50%;object-fit:cover";
+        const av = document.getElementById("profileAvatar");
+        av.innerHTML = ""; av.appendChild(img);
+      }
+      document.getElementById("profileName").textContent    = currentUser.display_name;
+      document.getElementById("profileUsername").textContent= "@" + currentUser.username +
+        (currentUser.is_instagram ? " · via Instagram" : "");
+    }
+    if (id === "loginModal") checkIgConfig();
+    document.getElementById(id).classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
   function closeModal(id) {
     document.getElementById(id).classList.remove("open");
     document.body.style.overflow="";
@@ -914,7 +1125,191 @@
     } catch { alert("Error — try again!"); }
   }
 
+  // ── Comments ──────────────────────────────────────────────────────────────────
+  async function toggleComments(id) {
+    const section = document.getElementById(`comments-${id}`);
+    if (!section) return;
+    const isOpen = section.classList.toggle("open");
+    if (isOpen) await loadComments(id);
+  }
+
+  async function loadComments(id) {
+    const list = document.getElementById(`comments-list-${id}`);
+    if (!list) return;
+    try {
+      const res  = await fetch(`/api/deals/${id}/comments`);
+      const data = await res.json();
+      const comments = data.comments || [];
+      if (!comments.length) {
+        list.innerHTML = `<div style="font-size:0.78rem;color:#a8a8a8;text-align:center;padding:0.5rem">No comments yet — be the first!</div>`;
+        return;
+      }
+      list.innerHTML = comments.map(c => `
+        <div class="comment-row" id="crow-${c.id}">
+          <div class="comment-avatar">${c.avatar}</div>
+          <div class="comment-body">
+            <span class="comment-username">@${esc(c.username)}</span>
+            <span class="comment-text"> ${esc(c.text)}</span>
+            <div class="comment-time">${timeAgo(c.ts)}${currentUser && currentUser.id === c.user_id ? ` <button class="comment-del" onclick="delComment(${id},'${c.id}')">✕</button>` : ""}</div>
+          </div>
+        </div>`).join("");
+    } catch {
+      list.innerHTML = `<div style="font-size:0.78rem;color:#a8a8a8;text-align:center">Failed to load</div>`;
+    }
+  }
+
+  async function postComment(dealId) {
+    if (!currentUser) { openModal("loginModal"); return; }
+    const input = document.getElementById(`cinput-${dealId}`);
+    const text  = input?.value.trim();
+    if (!text) return;
+    try {
+      const res  = await fetch(`/api/deals/${dealId}/comments`, {
+        method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ text })
+      });
+      const data = await res.json();
+      if (data.success) { input.value = ""; await loadComments(dealId); }
+      else alert(data.error || "Failed to post");
+    } catch { alert("Error posting comment"); }
+  }
+
+  async function delComment(dealId, commentId) {
+    if (!confirm("Delete this comment?")) return;
+    await fetch(`/api/deals/${dealId}/comments/${commentId}`, { method:"DELETE" });
+    await loadComments(dealId);
+  }
+
+  // ── Auth ───────────────────────────────────────────────────────────────────────
+  async function checkSession() {
+    try {
+      const res  = await fetch("/api/auth/me");
+      const data = await res.json();
+      if (data.user) {
+        currentUser = data.user;
+        liked = new Set(data.liked_deals || []);
+        renderProfileBadge();
+      }
+    } catch {}
+  }
+
+  function renderProfileBadge() {
+    const area = document.getElementById("profileArea");
+    if (!area) return;
+    if (currentUser) {
+      const pic = currentUser.profile_picture_url
+        ? `<img src="${esc(currentUser.profile_picture_url)}" style="width:24px;height:24px;border-radius:50%;object-fit:cover" onerror="this.replaceWith(document.createTextNode('${currentUser.avatar}'))">`
+        : `<span>${currentUser.avatar}</span>`;
+      area.innerHTML = `<button class="profile-badge" onclick="openModal('profileModal')">${pic}<span>@${esc(currentUser.username)}</span></button>`;
+    } else {
+      area.innerHTML = `<button class="ig-icon-btn" onclick="openModal('loginModal')" title="Login">👤</button>`;
+    }
+  }
+
+  async function checkIgConfig() {
+    try {
+      const r = await fetch("/api/auth/instagram/status");
+      const d = await r.json();
+      if (!d.configured) {
+        const btn = document.getElementById("igLoginBtn");
+        const warn = document.getElementById("igNotConfigured");
+        if (btn)  btn.style.opacity = "0.45";
+        if (btn)  btn.style.pointerEvents = "none";
+        if (warn) warn.style.display = "";
+      }
+    } catch {}
+  }
+
+  function showRegister() {
+    document.getElementById("loginView").style.display    = "none";
+    document.getElementById("registerView").style.display = "";
+  }
+  function showLogin() {
+    document.getElementById("registerView").style.display = "none";
+    document.getElementById("loginView").style.display    = "";
+  }
+
+  async function doLogin() {
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const err      = document.getElementById("loginError");
+    err.style.display = "none";
+    try {
+      const res  = await fetch("/api/auth/login", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        currentUser = data.user;
+        liked = new Set();
+        document.getElementById("loginWelcome").textContent = `Welcome back, ${currentUser.display_name}! 👋`;
+        document.getElementById("loginView").style.display    = "none";
+        document.getElementById("loginSuccess").style.display = "";
+        renderProfileBadge();
+        setTimeout(() => { closeModal("loginModal"); renderFeed(allDeals); }, 1800);
+      } else {
+        err.textContent = data.error || "Login failed";
+        err.style.display = "";
+      }
+    } catch { err.textContent = "Network error"; err.style.display = ""; }
+  }
+
+  async function doRegister() {
+    const username     = document.getElementById("regUsername").value.trim();
+    const display_name = document.getElementById("regDisplay").value.trim();
+    const password     = document.getElementById("regPassword").value;
+    const err          = document.getElementById("regError");
+    err.style.display  = "none";
+    try {
+      const res  = await fetch("/api/auth/register", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ username, display_name, password })
+      });
+      const data = await res.json();
+      if (data.success) {
+        currentUser = data.user;
+        document.getElementById("loginWelcome").textContent = `Welcome, ${currentUser.display_name}! 🎉`;
+        document.getElementById("registerView").style.display = "none";
+        document.getElementById("loginSuccess").style.display = "";
+        renderProfileBadge();
+        setTimeout(() => { closeModal("loginModal"); renderFeed(allDeals); }, 1800);
+      } else {
+        err.textContent = data.error || "Registration failed";
+        err.style.display = "";
+      }
+    } catch { err.textContent = "Network error"; err.style.display = ""; }
+  }
+
+  async function doLogout() {
+    await fetch("/api/auth/logout", { method:"POST" });
+    currentUser = null;
+    liked = new Set(JSON.parse(localStorage.getItem("lifez_liked")||"[]"));
+    closeModal("profileModal");
+    renderProfileBadge();
+    renderFeed(allDeals);
+  }
+
+  // ── Handle URL params (Instagram callback errors) ──
+  (function() {
+    const p = new URLSearchParams(location.search);
+    const err = p.get("error");
+    if (err) {
+      const msgs = {
+        instagram_denied:         "Instagram login was cancelled.",
+        instagram_token_failed:   "Could not get your Instagram token. Try again.",
+        instagram_not_configured: "Instagram login is not set up yet.",
+        instagram_error:          "Instagram login failed. Try again.",
+      };
+      setTimeout(() => {
+        alert(msgs[err] || "Login error. Please try again.");
+        openModal("loginModal");
+      }, 300);
+      history.replaceState({}, "", "/");
+    }
+  })();
+
   // ── Init ──
+  checkSession();
   renderStories();
   loadDeals();
   setInterval(()=> loadDeals(currentFilter), 30*60*1000);
